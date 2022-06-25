@@ -134,7 +134,14 @@ class _DecoratorState extends State<Decorator> {
       ),
     );
     return [
-      const TextField(decoration: InputDecoration(hintText: 'Text')),
+      TextField(
+        decoration: const InputDecoration(hintText: 'Text'),
+        onChanged: (text) {
+          setState(() {
+            editingNode = node.copyWith(text: text);
+          });
+        },
+      ),
       const SizedBox(height: 8),
       const Padding(
         padding: EdgeInsets.symmetric(vertical: 4),

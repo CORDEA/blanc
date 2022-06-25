@@ -20,25 +20,14 @@ class _DecoratorState extends State<Decorator> {
   );
   bool inEdit = false;
   _DecorationType type = _DecorationType.text;
-  _DecorationNode? editingNode;
+  _DecorationNode editingNode =
+      const _DecorationNode.base(position: Offset.zero);
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> section;
-    switch (type) {
-      case _DecorationType.text:
-        section = _buildTextSection();
-        break;
-      case _DecorationType.box:
-        section = [];
-        break;
-      case _DecorationType.icon:
-        section = [];
-        break;
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
             Expanded(
               child: AspectRatio(
                 aspectRatio: 1,
@@ -46,11 +35,13 @@ class _DecoratorState extends State<Decorator> {
                   color: Colors.black12,
                   child: GestureDetector(
                     onTapUp: (details) {
-                      if (inEdit) {
+                      if (editingNode is! _BaseNode) {
                         return;
                       }
                       setState(() {
-                        inEdit = !inEdit;
+                        editingNode = _DecorationNode.base(
+                          position: details.localPosition,
+                        );
                       });
                     },
                     child: CustomPaint(painter: _Painter(layer)),
@@ -58,16 +49,8 @@ class _DecoratorState extends State<Decorator> {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                _buildRadio('Text', _DecorationType.text),
-                _buildRadio('Box', _DecorationType.box),
-                _buildRadio('Icon', _DecorationType.icon),
-              ],
-            ),
           ] +
-          section,
+          _buildEditor(),
     );
   }
 
@@ -94,19 +77,47 @@ class _DecoratorState extends State<Decorator> {
     );
   }
 
+  List<Widget> _buildEditor() {
+    if (editingNode.position == Offset.zero) {
+      return [];
+    }
+    final List<Widget> section;
+    switch (type) {
+      case _DecorationType.text:
+        section = _buildTextSection();
+        break;
+      case _DecorationType.box:
+        section = [];
+        break;
+      case _DecorationType.icon:
+        section = [];
+        break;
+    }
+    return <Widget>[
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              _buildRadio('Text', _DecorationType.text),
+              _buildRadio('Box', _DecorationType.box),
+              _buildRadio('Icon', _DecorationType.icon),
+            ],
+          ),
+        ] +
+        section;
+  }
+
   List<Widget> _buildTextSection() {
-    final node = editingNode?.maybeMap(
-          text: (node) => node,
-          orElse: () => null,
-        ) ??
-        const _TextNode(
-          text: '',
-          color: Colors.black,
-          backgroundColor: Colors.transparent,
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
-          position: Offset.zero,
-        );
+    final node = editingNode.maybeMap(
+      text: (node) => node,
+      orElse: () => _TextNode(
+        text: '',
+        color: Colors.black,
+        backgroundColor: Colors.transparent,
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        position: editingNode.position,
+      ),
+    );
     return [
       const TextField(decoration: InputDecoration(hintText: 'Text')),
       const SizedBox(height: 8),
@@ -179,6 +190,7 @@ class _Painter extends CustomPainter {
 
     for (final node in layer.nodes) {
       node.map(
+        base: (_) {},
         text: (node) => _drawText(canvas, node),
         box: (node) => _drawBox(canvas, node),
         icon: (node) => _drawIcon(canvas, node),
@@ -284,6 +296,10 @@ class _DecorationLayer with _$_DecorationLayer {
 
 @freezed
 class _DecorationNode with _$_DecorationNode {
+  const factory _DecorationNode.base({
+    required Offset position,
+  }) = _BaseNode;
+
   const factory _DecorationNode.text({
     required String text,
     required Color color,

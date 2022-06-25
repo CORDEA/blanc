@@ -59,6 +59,29 @@ class _Painter extends CustomPainter {
         ..strokeWidth = layer.strokeWidth
         ..color = layer.strokeColor,
     );
+
+    for (final node in layer.nodes) {
+      node.map(
+        text: (node) => _drawText(canvas, node),
+        box: (node) {},
+        icon: (node) {},
+      );
+    }
+  }
+
+  void _drawText(Canvas canvas, _TextNode node) {
+    final painter = TextPainter(
+      text: TextSpan(
+        text: node.text,
+        style: TextStyle(
+          fontSize: node.fontSize,
+          color: node.color,
+          fontWeight: node.fontWeight,
+          backgroundColor: node.backgroundColor,
+        ),
+      ),
+    )..layout();
+    painter.paint(canvas, node.position);
   }
 
   @override
@@ -80,7 +103,10 @@ class _DecorationLayer with _$_DecorationLayer {
 class _DecorationNode with _$_DecorationNode {
   const factory _DecorationNode.text({
     required String text,
-    required int textSize,
+    required Color color,
+    required Color backgroundColor,
+    required double fontSize,
+    required FontWeight fontWeight,
     required Offset position,
   }) = _TextNode;
 

@@ -232,7 +232,9 @@ mixin _$_DecorationNode {
   Offset get position => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String text, int textSize, Offset position) text,
+    required TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)
+        text,
     required TResult Function(
             Color color, BoxShape shape, Offset position, Size size)
         box,
@@ -241,7 +243,9 @@ mixin _$_DecorationNode {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text, int textSize, Offset position)? text,
+    TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
     TResult Function(Color color, BoxShape shape, Offset position, Size size)?
         box,
     TResult Function(Icon icon, Offset position)? icon,
@@ -249,7 +253,9 @@ mixin _$_DecorationNode {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String text, int textSize, Offset position)? text,
+    TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
     TResult Function(Color color, BoxShape shape, Offset position, Size size)?
         box,
     TResult Function(Icon icon, Offset position)? icon,
@@ -321,7 +327,13 @@ abstract class _$$_TextNodeCopyWith<$Res>
           _$_TextNode value, $Res Function(_$_TextNode) then) =
       __$$_TextNodeCopyWithImpl<$Res>;
   @override
-  $Res call({String text, int textSize, Offset position});
+  $Res call(
+      {String text,
+      Color color,
+      Color backgroundColor,
+      double fontSize,
+      FontWeight fontWeight,
+      Offset position});
 }
 
 /// @nodoc
@@ -338,7 +350,10 @@ class __$$_TextNodeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? text = freezed,
-    Object? textSize = freezed,
+    Object? color = freezed,
+    Object? backgroundColor = freezed,
+    Object? fontSize = freezed,
+    Object? fontWeight = freezed,
     Object? position = freezed,
   }) {
     return _then(_$_TextNode(
@@ -346,10 +361,22 @@ class __$$_TextNodeCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      textSize: textSize == freezed
-          ? _value.textSize
-          : textSize // ignore: cast_nullable_to_non_nullable
-              as int,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
+      backgroundColor: backgroundColor == freezed
+          ? _value.backgroundColor
+          : backgroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
+      fontSize: fontSize == freezed
+          ? _value.fontSize
+          : fontSize // ignore: cast_nullable_to_non_nullable
+              as double,
+      fontWeight: fontWeight == freezed
+          ? _value.fontWeight
+          : fontWeight // ignore: cast_nullable_to_non_nullable
+              as FontWeight,
       position: position == freezed
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -362,18 +389,29 @@ class __$$_TextNodeCopyWithImpl<$Res>
 
 class _$_TextNode implements _TextNode {
   const _$_TextNode(
-      {required this.text, required this.textSize, required this.position});
+      {required this.text,
+      required this.color,
+      required this.backgroundColor,
+      required this.fontSize,
+      required this.fontWeight,
+      required this.position});
 
   @override
   final String text;
   @override
-  final int textSize;
+  final Color color;
+  @override
+  final Color backgroundColor;
+  @override
+  final double fontSize;
+  @override
+  final FontWeight fontWeight;
   @override
   final Offset position;
 
   @override
   String toString() {
-    return '_DecorationNode.text(text: $text, textSize: $textSize, position: $position)';
+    return '_DecorationNode.text(text: $text, color: $color, backgroundColor: $backgroundColor, fontSize: $fontSize, fontWeight: $fontWeight, position: $position)';
   }
 
   @override
@@ -382,7 +420,12 @@ class _$_TextNode implements _TextNode {
         (other.runtimeType == runtimeType &&
             other is _$_TextNode &&
             const DeepCollectionEquality().equals(other.text, text) &&
-            const DeepCollectionEquality().equals(other.textSize, textSize) &&
+            const DeepCollectionEquality().equals(other.color, color) &&
+            const DeepCollectionEquality()
+                .equals(other.backgroundColor, backgroundColor) &&
+            const DeepCollectionEquality().equals(other.fontSize, fontSize) &&
+            const DeepCollectionEquality()
+                .equals(other.fontWeight, fontWeight) &&
             const DeepCollectionEquality().equals(other.position, position));
   }
 
@@ -390,7 +433,10 @@ class _$_TextNode implements _TextNode {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(text),
-      const DeepCollectionEquality().hash(textSize),
+      const DeepCollectionEquality().hash(color),
+      const DeepCollectionEquality().hash(backgroundColor),
+      const DeepCollectionEquality().hash(fontSize),
+      const DeepCollectionEquality().hash(fontWeight),
       const DeepCollectionEquality().hash(position));
 
   @JsonKey(ignore: true)
@@ -401,37 +447,46 @@ class _$_TextNode implements _TextNode {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String text, int textSize, Offset position) text,
+    required TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)
+        text,
     required TResult Function(
             Color color, BoxShape shape, Offset position, Size size)
         box,
     required TResult Function(Icon icon, Offset position) icon,
   }) {
-    return text(this.text, textSize, position);
+    return text(
+        this.text, color, backgroundColor, fontSize, fontWeight, position);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text, int textSize, Offset position)? text,
+    TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
     TResult Function(Color color, BoxShape shape, Offset position, Size size)?
         box,
     TResult Function(Icon icon, Offset position)? icon,
   }) {
-    return text?.call(this.text, textSize, position);
+    return text?.call(
+        this.text, color, backgroundColor, fontSize, fontWeight, position);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String text, int textSize, Offset position)? text,
+    TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
     TResult Function(Color color, BoxShape shape, Offset position, Size size)?
         box,
     TResult Function(Icon icon, Offset position)? icon,
     required TResult orElse(),
   }) {
     if (text != null) {
-      return text(this.text, textSize, position);
+      return text(
+          this.text, color, backgroundColor, fontSize, fontWeight, position);
     }
     return orElse();
   }
@@ -474,11 +529,17 @@ class _$_TextNode implements _TextNode {
 abstract class _TextNode implements _DecorationNode {
   const factory _TextNode(
       {required final String text,
-      required final int textSize,
+      required final Color color,
+      required final Color backgroundColor,
+      required final double fontSize,
+      required final FontWeight fontWeight,
       required final Offset position}) = _$_TextNode;
 
   String get text => throw _privateConstructorUsedError;
-  int get textSize => throw _privateConstructorUsedError;
+  Color get color => throw _privateConstructorUsedError;
+  Color get backgroundColor => throw _privateConstructorUsedError;
+  double get fontSize => throw _privateConstructorUsedError;
+  FontWeight get fontWeight => throw _privateConstructorUsedError;
   @override
   Offset get position => throw _privateConstructorUsedError;
   @override
@@ -584,7 +645,9 @@ class _$_BoxNode implements _BoxNode {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String text, int textSize, Offset position) text,
+    required TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)
+        text,
     required TResult Function(
             Color color, BoxShape shape, Offset position, Size size)
         box,
@@ -596,7 +659,9 @@ class _$_BoxNode implements _BoxNode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text, int textSize, Offset position)? text,
+    TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
     TResult Function(Color color, BoxShape shape, Offset position, Size size)?
         box,
     TResult Function(Icon icon, Offset position)? icon,
@@ -607,7 +672,9 @@ class _$_BoxNode implements _BoxNode {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String text, int textSize, Offset position)? text,
+    TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
     TResult Function(Color color, BoxShape shape, Offset position, Size size)?
         box,
     TResult Function(Icon icon, Offset position)? icon,
@@ -749,7 +816,9 @@ class _$_IconNode implements _IconNode {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String text, int textSize, Offset position) text,
+    required TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)
+        text,
     required TResult Function(
             Color color, BoxShape shape, Offset position, Size size)
         box,
@@ -761,7 +830,9 @@ class _$_IconNode implements _IconNode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String text, int textSize, Offset position)? text,
+    TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
     TResult Function(Color color, BoxShape shape, Offset position, Size size)?
         box,
     TResult Function(Icon icon, Offset position)? icon,
@@ -772,7 +843,9 @@ class _$_IconNode implements _IconNode {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String text, int textSize, Offset position)? text,
+    TResult Function(String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
     TResult Function(Color color, BoxShape shape, Offset position, Size size)?
         box,
     TResult Function(Icon icon, Offset position)? icon,

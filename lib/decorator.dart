@@ -3,8 +3,22 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'decorator.freezed.dart';
 
-class Decorator extends StatelessWidget {
+class Decorator extends StatefulWidget {
   const Decorator({Key? key}) : super(key: key);
+
+  @override
+  State<Decorator> createState() => _DecoratorState();
+}
+
+class _DecoratorState extends State<Decorator> {
+  _DecorationLayer layer = const __DecorationLayer(
+    backgroundColor: Colors.black12,
+    strokeColor: Colors.black,
+    strokeWidth: 1,
+    cornerRadius: 5,
+    nodes: [],
+  );
+  bool inEdit = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +30,15 @@ class Decorator extends StatelessWidget {
             child: ColoredBox(
               color: Colors.black12,
               child: GestureDetector(
-                onTapUp: (details) {},
-                child: CustomPaint(painter: _Painter()),
+                onTapUp: (details) {
+                  if (inEdit) {
+                    return;
+                  }
+                  setState(() {
+                    inEdit = !inEdit;
+                  });
+                },
+                child: CustomPaint(painter: _Painter(layer)),
               ),
             ),
           ),

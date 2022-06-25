@@ -19,34 +19,130 @@ class _DecoratorState extends State<Decorator> {
     nodes: [],
   );
   bool inEdit = false;
+  _DecorationType type = _DecorationType.text;
+  _DecorationNode? editingNode;
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> section;
+    switch (type) {
+      case _DecorationType.text:
+        section = _buildTextSection();
+        break;
+      case _DecorationType.box:
+        section = [];
+        break;
+      case _DecorationType.icon:
+        section = [];
+        break;
+    }
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: ColoredBox(
-              color: Colors.black12,
-              child: GestureDetector(
-                onTapUp: (details) {
-                  if (inEdit) {
-                    return;
-                  }
-                  setState(() {
-                    inEdit = !inEdit;
-                  });
-                },
-                child: CustomPaint(painter: _Painter(layer)),
+            Expanded(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ColoredBox(
+                  color: Colors.black12,
+                  child: GestureDetector(
+                    onTapUp: (details) {
+                      if (inEdit) {
+                        return;
+                      }
+                      setState(() {
+                        inEdit = !inEdit;
+                      });
+                    },
+                    child: CustomPaint(painter: _Painter(layer)),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        const TextField(),
-      ],
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                _buildRadio('Text', _DecorationType.text),
+                _buildRadio('Box', _DecorationType.box),
+                _buildRadio('Icon', _DecorationType.icon),
+              ],
+            ),
+          ] +
+          section,
     );
+  }
+
+  Widget _buildRadio(String title, _DecorationType ownType) {
+    return Flexible(
+      child: Row(
+        children: [
+          Text(title),
+          const SizedBox(width: 2),
+          Radio<_DecorationType>(
+            value: ownType,
+            groupValue: type,
+            onChanged: (value) {
+              if (value == null) {
+                return;
+              }
+              setState(() {
+                type = value;
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildTextSection() {
+    final node = editingNode?.maybeMap(
+          text: (node) => node,
+          orElse: () => null,
+        ) ??
+        const _TextNode(
+          text: '',
+          color: Colors.black,
+          backgroundColor: Colors.transparent,
+          fontSize: 12,
+          fontWeight: FontWeight.normal,
+          position: Offset.zero,
+        );
+    return [
+      const TextField(decoration: InputDecoration(hintText: 'Text')),
+      const SizedBox(height: 8),
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: Text('Font size'),
+      ),
+      Slider(
+        min: 10,
+        max: 60,
+        value: node.fontSize,
+        onChanged: (value) {
+          setState(() {
+            editingNode = node.copyWith(fontSize: value);
+          });
+        },
+      ),
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: Text('Color'),
+      ),
+      _ColorPicker(onSelected: (color) {
+        setState(() {
+          editingNode = node.copyWith(color: color);
+        });
+      }),
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: Text('Background color'),
+      ),
+      _ColorPicker(onSelected: (color) {
+        setState(() {
+          editingNode = node.copyWith(backgroundColor: color);
+        });
+      }),
+    ];
   }
 }
 
@@ -209,3 +305,5 @@ class _DecorationNode with _$_DecorationNode {
     required Offset position,
   }) = _IconNode;
 }
+
+enum _DecorationType { text, box, icon }

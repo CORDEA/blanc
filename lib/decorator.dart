@@ -63,7 +63,7 @@ class _Painter extends CustomPainter {
     for (final node in layer.nodes) {
       node.map(
         text: (node) => _drawText(canvas, node),
-        box: (node) {},
+        box: (node) => _drawBox(canvas, node),
         icon: (node) {},
       );
     }
@@ -82,6 +82,24 @@ class _Painter extends CustomPainter {
       ),
     )..layout();
     painter.paint(canvas, node.position);
+  }
+
+  void _drawBox(Canvas canvas, _BoxNode node) {
+    final paint = Paint()..color = node.color;
+    final rect = Rect.fromLTRB(
+      node.position.dx,
+      node.position.dy,
+      node.size.width,
+      node.size.height,
+    );
+    switch (node.shape) {
+      case BoxShape.rectangle:
+        canvas.drawRect(rect, paint);
+        break;
+      case BoxShape.circle:
+        canvas.drawOval(rect, paint);
+        break;
+    }
   }
 
   @override

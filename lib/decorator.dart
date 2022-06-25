@@ -64,7 +64,7 @@ class _Painter extends CustomPainter {
       node.map(
         text: (node) => _drawText(canvas, node),
         box: (node) => _drawBox(canvas, node),
-        icon: (node) {},
+        icon: (node) => _drawIcon(canvas, node),
       );
     }
   }
@@ -100,6 +100,11 @@ class _Painter extends CustomPainter {
         canvas.drawOval(rect, paint);
         break;
     }
+  }
+
+  void _drawIcon(Canvas canvas, _IconNode node) {
+    final painter = TextPainter(text: WidgetSpan(child: node.icon))..layout();
+    painter.paint(canvas, node.position);
   }
 
   @override

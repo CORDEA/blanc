@@ -11,6 +11,7 @@ class Decorator extends StatefulWidget {
 }
 
 class _DecoratorState extends State<Decorator> {
+  final GlobalKey canvasKey = GlobalKey();
   _DecorationLayer layer = const __DecorationLayer(
     backgroundColor: Colors.black12,
     strokeColor: Colors.black,
@@ -20,7 +21,7 @@ class _DecoratorState extends State<Decorator> {
   );
   _DecorationType type = _DecorationType.text;
   _DecorationNode editingNode =
-      const _DecorationNode.base(position: Offset.zero);
+      const _DecorationNode.base(position: _DecorationNodePosition.empty);
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +34,18 @@ class _DecoratorState extends State<Decorator> {
                 child: ColoredBox(
                   color: Colors.black12,
                   child: GestureDetector(
+                    key: canvasKey,
                     onTapUp: (details) {
                       if (editingNode is! _BaseNode) {
                         return;
                       }
+                      final size = canvasKey.currentContext!.size!;
                       setState(() {
                         editingNode = _DecorationNode.base(
-                          position: details.localPosition,
+                          position: _DecorationNodePosition(
+                            position: details.localPosition,
+                            size: size,
+                          ),
                         );
                       });
                     },
@@ -77,7 +83,7 @@ class _DecoratorState extends State<Decorator> {
   }
 
   List<Widget> _buildEditor() {
-    if (editingNode.position == Offset.zero) {
+    if (editingNode.position.isEmpty) {
       return [];
     }
     final List<Widget> section;
@@ -111,8 +117,9 @@ class _DecoratorState extends State<Decorator> {
               onPressed: () {
                 setState(() {
                   layer = layer.copyWith(nodes: layer.nodes + [editingNode]);
-                  editingNode =
-                      const _DecorationNode.base(position: Offset.zero);
+                  editingNode = const _DecorationNode.base(
+                    position: _DecorationNodePosition.empty,
+                  );
                 });
               },
               child: const Text('Submit'),
@@ -213,15 +220,16 @@ class _Painter extends CustomPainter {
     for (final node in layer.nodes) {
       node.map(
         base: (_) {},
-        text: (node) => _drawText(canvas, node),
-        box: (node) => _drawBox(canvas, node),
-        icon: (node) => _drawIcon(canvas, node),
+        text: (node) => _drawText(canvas, size, node),
+        box: (node) => _drawBox(canvas, size, node),
+        icon: (node) => _drawIcon(canvas, size, node),
       );
     }
   }
 
-  void _drawText(Canvas canvas, _TextNode node) {
+  void _drawText(Canvas canvas, Size size, _TextNode node) {
     final painter = TextPainter(
+      textDirection: TextDirection.ltr,
       text: TextSpan(
         text: node.text,
         style: TextStyle(
@@ -232,14 +240,15 @@ class _Painter extends CustomPainter {
         ),
       ),
     )..layout();
-    painter.paint(canvas, node.position);
+    painter.paint(canvas, node.position.normalizedPosition(size));
   }
 
-  void _drawBox(Canvas canvas, _BoxNode node) {
+  void _drawBox(Canvas canvas, Size size, _BoxNode node) {
     final paint = Paint()..color = node.color;
+    final position = node.position.normalizedPosition(size);
     final rect = Rect.fromLTRB(
-      node.position.dx,
-      node.position.dy,
+      position.dx,
+      position.dy,
       node.size.width,
       node.size.height,
     );
@@ -253,9 +262,9 @@ class _Painter extends CustomPainter {
     }
   }
 
-  void _drawIcon(Canvas canvas, _IconNode node) {
+  void _drawIcon(Canvas canvas, Size size, _IconNode node) {
     final painter = TextPainter(text: WidgetSpan(child: node.icon))..layout();
-    painter.paint(canvas, node.position);
+    painter.paint(canvas, node.position.normalizedPosition(size));
   }
 
   @override
@@ -319,7 +328,7 @@ class _DecorationLayer with _$_DecorationLayer {
 @freezed
 class _DecorationNode with _$_DecorationNode {
   const factory _DecorationNode.base({
-    required Offset position,
+    required _DecorationNodePosition position,
   }) = _BaseNode;
 
   const factory _DecorationNode.text({
@@ -328,20 +337,41 @@ class _DecorationNode with _$_DecorationNode {
     required Color backgroundColor,
     required double fontSize,
     required FontWeight fontWeight,
-    required Offset position,
+    required _DecorationNodePosition position,
   }) = _TextNode;
 
   const factory _DecorationNode.box({
     required Color color,
     required BoxShape shape,
-    required Offset position,
+    required _DecorationNodePosition position,
     required Size size,
   }) = _BoxNode;
 
   const factory _DecorationNode.icon({
     required Icon icon,
-    required Offset position,
+    required _DecorationNodePosition position,
   }) = _IconNode;
+}
+
+@freezed
+class _DecorationNodePosition with _$_DecorationNodePosition {
+  const _DecorationNodePosition._();
+
+  const factory _DecorationNodePosition({
+    required Offset position,
+    required Size size,
+  }) = __DecorationNodePosition;
+
+  static const empty =
+      _DecorationNodePosition(position: Offset.zero, size: Size(0, 0));
+
+  bool get isEmpty => this == empty;
+
+  Offset normalizedPosition(Size size) {
+    final widthFactor = size.width / this.size.width;
+    final heightFactor = size.height / this.size.height;
+    return Offset(position.dx * widthFactor, position.dy * heightFactor);
+  }
 }
 
 enum _DecorationType { text, box, icon }

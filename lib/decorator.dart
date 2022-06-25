@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,7 +12,8 @@ class Decorator extends StatefulWidget {
 }
 
 class _DecoratorState extends State<Decorator> {
-  final GlobalKey canvasKey = GlobalKey();
+  final canvasKey = GlobalKey();
+  final controller = TextEditingController();
   _DecorationLayer layer = const _DecorationLayer(
     backgroundColor: Colors.black12,
     strokeColor: Colors.black,
@@ -22,6 +24,25 @@ class _DecoratorState extends State<Decorator> {
   _DecorationType type = _DecorationType.text;
   _DecorationNode editingNode =
       const _DecorationNode.base(position: _DecorationNodePosition.empty);
+
+  @override
+  void initState() {
+    super.initState();
+    editingNode.map(
+      base: (_) {},
+      text: (e) {
+        controller.text = e.text;
+      },
+      box: (_) {},
+      icon: (_) {},
+    );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +60,22 @@ class _DecoratorState extends State<Decorator> {
                       if (editingNode is! _BaseNode) {
                         return;
                       }
-                      final size = canvasKey.currentContext!.size!;
+                      final size = canvasKey.currentContext?.size ?? Size.zero;
+                      if (size.isEmpty) {
+                        return;
+                      }
+                      final position = details.localPosition;
+                      final tapped = layer.nodes.firstWhereOrNull(
+                        (e) => e.normalizedRect(size).contains(position),
+                      );
                       setState(() {
-                        editingNode = _DecorationNode.base(
-                          position: _DecorationNodePosition(
-                            position: details.localPosition,
-                            size: size,
-                          ),
-                        );
+                        editingNode = tapped ??
+                            _DecorationNode.base(
+                              position: _DecorationNodePosition(
+                                position: position,
+                                size: size,
+                              ),
+                            );
                       });
                     },
                     child: CustomPaint(painter: _Painter(layer)),
@@ -142,6 +171,7 @@ class _DecoratorState extends State<Decorator> {
     );
     return [
       TextField(
+        controller: controller,
         decoration: const InputDecoration(hintText: 'Text'),
         onChanged: (text) {
           setState(() {

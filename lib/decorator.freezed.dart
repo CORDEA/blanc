@@ -603,8 +603,8 @@ class __$$_TextNodeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TextNode implements _TextNode {
-  const _$_TextNode(
+class _$_TextNode with _TextNodeBase implements _TextNode {
+  _$_TextNode(
       {required this.text,
       required this.color,
       required this.backgroundColor,
@@ -765,8 +765,8 @@ class _$_TextNode implements _TextNode {
   }
 }
 
-abstract class _TextNode implements _DecorationNode {
-  const factory _TextNode(
+abstract class _TextNode implements _DecorationNode, _TextNodeBase {
+  factory _TextNode(
       {required final String text,
       required final Color color,
       required final Color backgroundColor,

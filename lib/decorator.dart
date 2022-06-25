@@ -12,7 +12,7 @@ class Decorator extends StatefulWidget {
 
 class _DecoratorState extends State<Decorator> {
   final GlobalKey canvasKey = GlobalKey();
-  _DecorationLayer layer = const __DecorationLayer(
+  _DecorationLayer layer = const _DecorationLayer(
     backgroundColor: Colors.black12,
     strokeColor: Colors.black,
     strokeWidth: 1,
@@ -228,18 +228,7 @@ class _Painter extends CustomPainter {
   }
 
   void _drawText(Canvas canvas, Size size, _TextNode node) {
-    final painter = TextPainter(
-      textDirection: TextDirection.ltr,
-      text: TextSpan(
-        text: node.text,
-        style: TextStyle(
-          fontSize: node.fontSize,
-          color: node.color,
-          fontWeight: node.fontWeight,
-          backgroundColor: node.backgroundColor,
-        ),
-      ),
-    )..layout();
+    final painter = node.painter..layout();
     painter.paint(canvas, node.position.normalizedPosition(size));
   }
 
@@ -331,7 +320,8 @@ class _DecorationNode with _$_DecorationNode {
     required _DecorationNodePosition position,
   }) = _BaseNode;
 
-  const factory _DecorationNode.text({
+  @With<_TextNodeBase>()
+  factory _DecorationNode.text({
     required String text,
     required Color color,
     required Color backgroundColor,
@@ -351,6 +341,63 @@ class _DecorationNode with _$_DecorationNode {
     required Icon icon,
     required _DecorationNodePosition position,
   }) = _IconNode;
+
+  static const _iconSize = 24.0;
+}
+
+mixin _TextNodeBase {
+  String get text;
+
+  Color get color;
+
+  Color get backgroundColor;
+
+  double get fontSize;
+
+  FontWeight get fontWeight;
+
+  TextPainter get painter {
+    _painter ??= TextPainter(
+      textDirection: TextDirection.ltr,
+      text: TextSpan(
+        text: text,
+        style: TextStyle(
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: color,
+          backgroundColor: backgroundColor,
+        ),
+      ),
+    );
+    return _painter!;
+  }
+
+  TextPainter? _painter;
+
+  Size get size => (painter..layout()).size;
+}
+
+extension _DecorationNodeExt on _DecorationNode {
+  Rect normalizedRect(Size canvasSize) {
+    final position = map(
+      base: (_) => Offset.zero,
+      text: (e) => e.position.normalizedPosition(canvasSize),
+      box: (e) => e.position.normalizedPosition(canvasSize),
+      icon: (e) => e.position.normalizedPosition(canvasSize),
+    );
+    final size = map(
+      base: (_) => Size.zero,
+      text: (e) => e.size,
+      box: (e) => e.size,
+      icon: (_) => const Size.square(_DecorationNode._iconSize),
+    );
+    return Rect.fromLTWH(
+      position.dx,
+      position.dy,
+      size.width,
+      size.height,
+    );
+  }
 }
 
 @freezed
@@ -363,7 +410,7 @@ class _DecorationNodePosition with _$_DecorationNodePosition {
   }) = __DecorationNodePosition;
 
   static const empty =
-      _DecorationNodePosition(position: Offset.zero, size: Size(0, 0));
+      _DecorationNodePosition(position: Offset.zero, size: Size.zero);
 
   bool get isEmpty => this == empty;
 

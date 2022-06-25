@@ -18,7 +18,6 @@ class _DecoratorState extends State<Decorator> {
     cornerRadius: 5,
     nodes: [],
   );
-  bool inEdit = false;
   _DecorationType type = _DecorationType.text;
   _DecorationNode editingNode =
       const _DecorationNode.base(position: Offset.zero);
@@ -103,7 +102,23 @@ class _DecoratorState extends State<Decorator> {
             ],
           ),
         ] +
-        section;
+        section +
+        [
+          const SizedBox(height: 36),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  layer = layer.copyWith(nodes: layer.nodes + [editingNode]);
+                  editingNode =
+                      const _DecorationNode.base(position: Offset.zero);
+                });
+              },
+              child: const Text('Submit'),
+            ),
+          ),
+        ];
   }
 
   List<Widget> _buildTextSection() {

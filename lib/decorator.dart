@@ -132,6 +132,49 @@ class _Painter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
+class _ColorPicker extends StatelessWidget {
+  static final colors = [
+    Colors.transparent,
+    Colors.black,
+    Colors.white,
+    Colors.indigo,
+    Colors.blue,
+    Colors.lightBlue,
+    Colors.lightGreen,
+    Colors.lime,
+    Colors.orange,
+    Colors.red,
+    Colors.pink,
+    Colors.purple,
+  ];
+
+  const _ColorPicker({required this.onSelected});
+
+  final ValueChanged<Color> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: Row(
+        children: colors
+            .map(
+              (e) => Expanded(
+                child: InkWell(
+                  onTap: () => onSelected(e),
+                  child: ColoredBox(
+                    color: e,
+                    child: const SizedBox.expand(),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+}
+
 @freezed
 class _DecorationLayer with _$_DecorationLayer {
   const factory _DecorationLayer({

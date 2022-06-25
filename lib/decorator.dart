@@ -30,9 +30,35 @@ class Decorator extends StatelessWidget {
 }
 
 class _Painter extends CustomPainter {
+  _Painter(this.layer);
+
+  final _DecorationLayer layer;
+
   @override
   void paint(Canvas canvas, Size size) {
-    // TODO: implement paint
+    if (size.isEmpty) {
+      return;
+    }
+    final rect = RRect.fromLTRBR(
+      0,
+      0,
+      size.width,
+      size.height,
+      Radius.circular(layer.cornerRadius),
+    );
+    canvas.drawRRect(
+      rect,
+      Paint()
+        ..style = PaintingStyle.fill
+        ..color = layer.backgroundColor,
+    );
+    canvas.drawRRect(
+      rect,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = layer.strokeWidth
+        ..color = layer.strokeColor,
+    );
   }
 
   @override
@@ -44,8 +70,8 @@ class _DecorationLayer with _$_DecorationLayer {
   const factory _DecorationLayer({
     required Color backgroundColor,
     required Color strokeColor,
-    required int strokeWidth,
-    required int cornerRadius,
+    required double strokeWidth,
+    required double cornerRadius,
     required List<_DecorationNode> nodes,
   }) = __DecorationLayer;
 }

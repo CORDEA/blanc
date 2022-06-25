@@ -18,8 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$_DecorationLayer {
   Color get backgroundColor => throw _privateConstructorUsedError;
   Color get strokeColor => throw _privateConstructorUsedError;
-  int get strokeWidth => throw _privateConstructorUsedError;
-  int get cornerRadius => throw _privateConstructorUsedError;
+  double get strokeWidth => throw _privateConstructorUsedError;
+  double get cornerRadius => throw _privateConstructorUsedError;
   List<_DecorationNode> get nodes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,8 +35,8 @@ abstract class _$DecorationLayerCopyWith<$Res> {
   $Res call(
       {Color backgroundColor,
       Color strokeColor,
-      int strokeWidth,
-      int cornerRadius,
+      double strokeWidth,
+      double cornerRadius,
       List<_DecorationNode> nodes});
 }
 
@@ -69,11 +69,11 @@ class __$DecorationLayerCopyWithImpl<$Res>
       strokeWidth: strokeWidth == freezed
           ? _value.strokeWidth
           : strokeWidth // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       cornerRadius: cornerRadius == freezed
           ? _value.cornerRadius
           : cornerRadius // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       nodes: nodes == freezed
           ? _value.nodes
           : nodes // ignore: cast_nullable_to_non_nullable
@@ -92,8 +92,8 @@ abstract class _$$__DecorationLayerCopyWith<$Res>
   $Res call(
       {Color backgroundColor,
       Color strokeColor,
-      int strokeWidth,
-      int cornerRadius,
+      double strokeWidth,
+      double cornerRadius,
       List<_DecorationNode> nodes});
 }
 
@@ -128,11 +128,11 @@ class __$$__DecorationLayerCopyWithImpl<$Res>
       strokeWidth: strokeWidth == freezed
           ? _value.strokeWidth
           : strokeWidth // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       cornerRadius: cornerRadius == freezed
           ? _value.cornerRadius
           : cornerRadius // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       nodes: nodes == freezed
           ? _value._nodes
           : nodes // ignore: cast_nullable_to_non_nullable
@@ -157,9 +157,9 @@ class _$__DecorationLayer implements __DecorationLayer {
   @override
   final Color strokeColor;
   @override
-  final int strokeWidth;
+  final double strokeWidth;
   @override
-  final int cornerRadius;
+  final double cornerRadius;
   final List<_DecorationNode> _nodes;
   @override
   List<_DecorationNode> get nodes {
@@ -207,8 +207,8 @@ abstract class __DecorationLayer implements _DecorationLayer {
   const factory __DecorationLayer(
       {required final Color backgroundColor,
       required final Color strokeColor,
-      required final int strokeWidth,
-      required final int cornerRadius,
+      required final double strokeWidth,
+      required final double cornerRadius,
       required final List<_DecorationNode> nodes}) = _$__DecorationLayer;
 
   @override
@@ -216,9 +216,9 @@ abstract class __DecorationLayer implements _DecorationLayer {
   @override
   Color get strokeColor => throw _privateConstructorUsedError;
   @override
-  int get strokeWidth => throw _privateConstructorUsedError;
+  double get strokeWidth => throw _privateConstructorUsedError;
   @override
-  int get cornerRadius => throw _privateConstructorUsedError;
+  double get cornerRadius => throw _privateConstructorUsedError;
   @override
   List<_DecorationNode> get nodes => throw _privateConstructorUsedError;
   @override

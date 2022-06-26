@@ -12,7 +12,6 @@ class Decorator extends StatefulWidget {
 }
 
 class _DecoratorState extends State<Decorator> {
-  final canvasKey = GlobalKey();
   final controller = TextEditingController();
   _DecorationLayer layer = const _DecorationLayer(
     backgroundColor: Colors.black12,
@@ -22,10 +21,8 @@ class _DecoratorState extends State<Decorator> {
     nodes: [],
   );
   _DecorationType type = _DecorationType.text;
-  _DecorationNode waitingNode =
-      const _DecorationNode.base(position: _DecorationNodePosition.empty);
-  _DecorationNode editingNode =
-      const _DecorationNode.base(position: _DecorationNodePosition.empty);
+  _DecorationNode waitingNode = _DecorationNode.empty;
+  _DecorationNode editingNode = _DecorationNode.empty;
 
   @override
   void dispose() {
@@ -35,43 +32,29 @@ class _DecoratorState extends State<Decorator> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
       children: <Widget>[
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1,
+            Center(
+              child: SizedBox.square(
+                dimension: 500,
                 child: ColoredBox(
                   color: Colors.black12,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
                       GestureDetector(
-                        key: canvasKey,
                         onTapUp: (details) {
                           if (editingNode is! _BaseNode) {
                             return;
                           }
-                          final size =
-                              canvasKey.currentContext?.size ?? Size.zero;
-                          if (size.isEmpty) {
-                            return;
-                          }
                           final position = details.localPosition;
                           final tapped = layer.nodes.firstWhereOrNull(
-                            (e) => e.normalizedRect(size).contains(position),
-                          );
+                              (e) => e.rect.contains(position));
                           setState(() {
                             if (tapped == null) {
-                              editingNode = _DecorationNode.base(
-                                position: _DecorationNodePosition(
-                                  position: position,
-                                  size: size,
-                                ),
-                              );
-                              waitingNode = const _DecorationNode.base(
-                                position: _DecorationNodePosition.empty,
-                              );
+                              editingNode =
+                                  _DecorationNode.base(position: position);
+                              waitingNode = _DecorationNode.empty;
                             } else {
                               waitingNode = tapped;
                             }
@@ -85,10 +68,8 @@ class _DecoratorState extends State<Decorator> {
                           orElse: () => true,
                         ),
                         child: Positioned(
-                          left: waitingNode.position.position.dx +
-                              _Tooltip._margin,
-                          top: waitingNode.position.position.dy +
-                              _Tooltip._margin,
+                          left: waitingNode.position.dx + _Tooltip._margin,
+                          top: waitingNode.position.dy + _Tooltip._margin,
                           child: _Tooltip(
                             onSelected: (e) {
                               switch (e) {
@@ -101,9 +82,7 @@ class _DecoratorState extends State<Decorator> {
                                 case _TooltipResult.edit:
                                   setState(() {
                                     editingNode = waitingNode;
-                                    waitingNode = const _DecorationNode.base(
-                                      position: _DecorationNodePosition.empty,
-                                    );
+                                    waitingNode = _DecorationNode.empty;
                                   });
                                   break;
                               }
@@ -149,7 +128,7 @@ class _DecoratorState extends State<Decorator> {
   }
 
   List<Widget> _buildEditor() {
-    if (editingNode.position.isEmpty) {
+    if (editingNode.position == Offset.zero) {
       return [];
     }
     final List<Widget> section;
@@ -183,9 +162,7 @@ class _DecoratorState extends State<Decorator> {
               onPressed: () {
                 setState(() {
                   layer = layer.copyWith(nodes: layer.nodes + [editingNode]);
-                  editingNode = const _DecorationNode.base(
-                    position: _DecorationNodePosition.empty,
-                  );
+                  editingNode = _DecorationNode.empty;
                 });
               },
               child: const Text('Submit'),
@@ -292,21 +269,21 @@ class _Painter extends CustomPainter {
     for (final node in layer.nodes) {
       node.map(
         base: (_) {},
-        text: (node) => _drawText(canvas, size, node),
-        box: (node) => _drawBox(canvas, size, node),
-        icon: (node) => _drawIcon(canvas, size, node),
+        text: (node) => _drawText(canvas, node),
+        box: (node) => _drawBox(canvas, node),
+        icon: (node) => _drawIcon(canvas, node),
       );
     }
   }
 
-  void _drawText(Canvas canvas, Size size, _TextNode node) {
+  void _drawText(Canvas canvas, _TextNode node) {
     final painter = node.painter..layout();
-    painter.paint(canvas, node.position.normalizedPosition(size));
+    painter.paint(canvas, node.position);
   }
 
-  void _drawBox(Canvas canvas, Size size, _BoxNode node) {
+  void _drawBox(Canvas canvas, _BoxNode node) {
     final paint = Paint()..color = node.color;
-    final position = node.position.normalizedPosition(size);
+    final position = node.position;
     final rect = Rect.fromLTRB(
       position.dx,
       position.dy,
@@ -323,9 +300,9 @@ class _Painter extends CustomPainter {
     }
   }
 
-  void _drawIcon(Canvas canvas, Size size, _IconNode node) {
+  void _drawIcon(Canvas canvas, _IconNode node) {
     final painter = TextPainter(text: WidgetSpan(child: node.icon))..layout();
-    painter.paint(canvas, node.position.normalizedPosition(size));
+    painter.paint(canvas, node.position);
   }
 
   @override
@@ -429,8 +406,10 @@ class _DecorationLayer with _$_DecorationLayer {
 
 @freezed
 class _DecorationNode with _$_DecorationNode {
+  const _DecorationNode._();
+
   const factory _DecorationNode.base({
-    required _DecorationNodePosition position,
+    required Offset position,
   }) = _BaseNode;
 
   @With<_TextNodeBase>()
@@ -440,22 +419,23 @@ class _DecorationNode with _$_DecorationNode {
     required Color backgroundColor,
     required double fontSize,
     required FontWeight fontWeight,
-    required _DecorationNodePosition position,
+    required Offset position,
   }) = _TextNode;
 
   const factory _DecorationNode.box({
     required Color color,
     required BoxShape shape,
-    required _DecorationNodePosition position,
+    required Offset position,
     required Size size,
   }) = _BoxNode;
 
   const factory _DecorationNode.icon({
     required Icon icon,
-    required _DecorationNodePosition position,
+    required Offset position,
   }) = _IconNode;
 
   static const _iconSize = 24.0;
+  static const empty = _DecorationNode.base(position: Offset.zero);
 }
 
 mixin _TextNodeBase {
@@ -491,12 +471,12 @@ mixin _TextNodeBase {
 }
 
 extension _DecorationNodeExt on _DecorationNode {
-  Rect normalizedRect(Size canvasSize) {
+  Rect get rect {
     final position = map(
       base: (_) => Offset.zero,
-      text: (e) => e.position.normalizedPosition(canvasSize),
-      box: (e) => e.position.normalizedPosition(canvasSize),
-      icon: (e) => e.position.normalizedPosition(canvasSize),
+      text: (e) => e.position,
+      box: (e) => e.position,
+      icon: (e) => e.position,
     );
     final size = map(
       base: (_) => Size.zero,
@@ -510,27 +490,6 @@ extension _DecorationNodeExt on _DecorationNode {
       size.width,
       size.height,
     );
-  }
-}
-
-@freezed
-class _DecorationNodePosition with _$_DecorationNodePosition {
-  const _DecorationNodePosition._();
-
-  const factory _DecorationNodePosition({
-    required Offset position,
-    required Size size,
-  }) = __DecorationNodePosition;
-
-  static const empty =
-      _DecorationNodePosition(position: Offset.zero, size: Size.zero);
-
-  bool get isEmpty => this == empty;
-
-  Offset normalizedPosition(Size size) {
-    final widthFactor = size.width / this.size.width;
-    final heightFactor = size.height / this.size.height;
-    return Offset(position.dx * widthFactor, position.dy * heightFactor);
   }
 }
 

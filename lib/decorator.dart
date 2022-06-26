@@ -1,8 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'decorator.freezed.dart';
+
+const uuid = Uuid();
 
 class Decorator extends StatefulWidget {
   const Decorator({Key? key}) : super(key: key);
@@ -22,6 +25,7 @@ class _DecoratorState extends State<Decorator> {
   );
   _DecorationType type = _DecorationType.text;
   _DecorationNode waitingNode = _DecorationNode.empty;
+  _DecorationNode movingNode = _DecorationNode.empty;
   _DecorationNode editingNode = _DecorationNode.empty;
 
   @override
@@ -49,17 +53,24 @@ class _DecoratorState extends State<Decorator> {
                           }
                           final position = details.localPosition;
                           final tapped = layer.nodes.firstWhereOrNull(
-                              (e) => e.rect.contains(position));
+                            (e) => e.rect.contains(position),
+                          );
                           setState(() {
                             if (tapped == null) {
-                              editingNode =
-                                  _DecorationNode.base(position: position);
+                              editingNode = _DecorationNode.base(
+                                id: uuid.v4(),
+                                position: position,
+                              );
                               waitingNode = _DecorationNode.empty;
                             } else {
                               waitingNode = tapped;
                             }
                           });
                         },
+                        onHorizontalDragStart: _onDragStart,
+                        onVerticalDragStart: _onDragStart,
+                        onHorizontalDragUpdate: _onDragUpdate,
+                        onVerticalDragUpdate: _onDragUpdate,
                         child: CustomPaint(painter: _Painter(layer)),
                       ),
                       Visibility(
@@ -102,6 +113,31 @@ class _DecoratorState extends State<Decorator> {
           ] +
           _buildEditor(),
     );
+  }
+
+  void _onDragStart(DragStartDetails details) {
+    final position = details.localPosition;
+    final tapped = layer.nodes.firstWhereOrNull(
+      (e) => e.rect.contains(position),
+    );
+    if (tapped == null) {
+      return;
+    }
+    setState(() {
+      movingNode = tapped;
+    });
+  }
+
+  void _onDragUpdate(DragUpdateDetails details) {
+    setState(() {
+      layer = layer.copyWith(
+        nodes: layer.nodes
+            .map((e) => e.id == movingNode.id
+                ? e.copyWith(position: details.localPosition)
+                : e)
+            .toList(growable: false),
+      );
+    });
   }
 
   Widget _buildRadio(String title, _DecorationType ownType) {
@@ -175,6 +211,7 @@ class _DecoratorState extends State<Decorator> {
     final node = editingNode.maybeMap(
       text: (node) => node,
       orElse: () => _TextNode(
+        id: editingNode.id,
         text: '',
         color: Colors.black,
         backgroundColor: Colors.transparent,
@@ -409,11 +446,13 @@ class _DecorationNode with _$_DecorationNode {
   const _DecorationNode._();
 
   const factory _DecorationNode.base({
+    required String id,
     required Offset position,
   }) = _BaseNode;
 
   @With<_TextNodeBase>()
   factory _DecorationNode.text({
+    required String id,
     required String text,
     required Color color,
     required Color backgroundColor,
@@ -423,6 +462,7 @@ class _DecorationNode with _$_DecorationNode {
   }) = _TextNode;
 
   const factory _DecorationNode.box({
+    required String id,
     required Color color,
     required BoxShape shape,
     required Offset position,
@@ -430,12 +470,13 @@ class _DecorationNode with _$_DecorationNode {
   }) = _BoxNode;
 
   const factory _DecorationNode.icon({
+    required String id,
     required Icon icon,
     required Offset position,
   }) = _IconNode;
 
   static const _iconSize = 24.0;
-  static const empty = _DecorationNode.base(position: Offset.zero);
+  static const empty = _DecorationNode.base(id: '', position: Offset.zero);
 }
 
 mixin _TextNodeBase {

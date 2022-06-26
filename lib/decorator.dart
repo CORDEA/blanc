@@ -24,7 +24,6 @@ class _DecoratorState extends State<Decorator> {
     nodes: [],
   );
   _DecorationType type = _DecorationType.text;
-  _DecorationNode waitingNode = _DecorationNode.empty;
   _DecorationNode movingNode = _DecorationNode.empty;
   _DecorationNode editingNode = _DecorationNode.empty;
 
@@ -43,69 +42,28 @@ class _DecoratorState extends State<Decorator> {
                 dimension: 500,
                 child: ColoredBox(
                   color: Colors.black12,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      GestureDetector(
-                        onTapUp: (details) {
-                          if (editingNode is! _BaseNode) {
-                            return;
-                          }
-                          final position = details.localPosition;
-                          final tapped = layer.nodes.firstWhereOrNull(
-                            (e) => e.rect.contains(position),
-                          );
-                          setState(() {
-                            if (tapped == null) {
-                              editingNode = _DecorationNode.base(
-                                id: uuid.v4(),
-                                position: position,
-                              );
-                              waitingNode = _DecorationNode.empty;
-                            } else {
-                              waitingNode = tapped;
-                            }
-                          });
-                        },
-                        onHorizontalDragStart: _onDragStart,
-                        onVerticalDragStart: _onDragStart,
-                        onHorizontalDragUpdate: _onDragUpdate,
-                        onVerticalDragUpdate: _onDragUpdate,
-                        child: CustomPaint(painter: _Painter(layer)),
-                      ),
-                      Visibility(
-                        visible: waitingNode.maybeMap(
-                          base: (_) => false,
-                          orElse: () => true,
-                        ),
-                        child: Positioned(
-                          left: waitingNode.position.dx + _Tooltip._margin,
-                          top: waitingNode.position.dy + _Tooltip._margin,
-                          child: _Tooltip(
-                            onSelected: (e) {
-                              switch (e) {
-                                case _TooltipResult.move:
-                                  // TODO: Handle this case.
-                                  break;
-                                case _TooltipResult.resize:
-                                  // TODO: Handle this case.
-                                  break;
-                                case _TooltipResult.edit:
-                                  setState(() {
-                                    editingNode = waitingNode;
-                                    waitingNode = _DecorationNode.empty;
-                                  });
-                                  break;
-                              }
-                            },
-                            resizable: waitingNode.maybeMap(
-                              box: (_) => true,
-                              orElse: () => false,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  child: GestureDetector(
+                    onTapUp: (details) {
+                      if (editingNode is! _BaseNode) {
+                        return;
+                      }
+                      final position = details.localPosition;
+                      final tapped = layer.nodes.firstWhereOrNull(
+                        (e) => e.rect.contains(position),
+                      );
+                      setState(() {
+                        editingNode = tapped ??
+                            _DecorationNode.base(
+                              id: uuid.v4(),
+                              position: position,
+                            );
+                      });
+                    },
+                    onHorizontalDragStart: _onDragStart,
+                    onVerticalDragStart: _onDragStart,
+                    onHorizontalDragUpdate: _onDragUpdate,
+                    onVerticalDragUpdate: _onDragUpdate,
+                    child: CustomPaint(painter: _Painter(layer)),
                   ),
                 ),
               ),
@@ -388,47 +346,6 @@ class _ColorPicker extends StatelessWidget {
     );
   }
 }
-
-class _Tooltip extends StatelessWidget {
-  const _Tooltip({
-    required this.onSelected,
-    required this.resizable,
-  });
-
-  static const _margin = 16;
-
-  final ValueChanged<_TooltipResult> onSelected;
-  final bool resizable;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      borderRadius: BorderRadius.circular(5),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            TextButton(
-              onPressed: () => onSelected(_TooltipResult.move),
-              child: const Text('Move'),
-            ),
-            if (resizable)
-              TextButton(
-                onPressed: () => onSelected(_TooltipResult.resize),
-                child: const Text('Resize'),
-              ),
-            TextButton(
-              onPressed: () => onSelected(_TooltipResult.edit),
-              child: const Text('Edit'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-enum _TooltipResult { move, resize, edit }
 
 @freezed
 class _DecorationLayer with _$_DecorationLayer {

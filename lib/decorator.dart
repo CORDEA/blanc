@@ -22,21 +22,10 @@ class _DecoratorState extends State<Decorator> {
     nodes: [],
   );
   _DecorationType type = _DecorationType.text;
+  _DecorationNode waitingNode =
+      const _DecorationNode.base(position: _DecorationNodePosition.empty);
   _DecorationNode editingNode =
       const _DecorationNode.base(position: _DecorationNodePosition.empty);
-
-  @override
-  void initState() {
-    super.initState();
-    editingNode.map(
-      base: (_) {},
-      text: (e) {
-        controller.text = e.text;
-      },
-      box: (_) {},
-      icon: (_) {},
-    );
-  }
 
   @override
   void dispose() {
@@ -54,31 +43,79 @@ class _DecoratorState extends State<Decorator> {
                 aspectRatio: 1,
                 child: ColoredBox(
                   color: Colors.black12,
-                  child: GestureDetector(
-                    key: canvasKey,
-                    onTapUp: (details) {
-                      if (editingNode is! _BaseNode) {
-                        return;
-                      }
-                      final size = canvasKey.currentContext?.size ?? Size.zero;
-                      if (size.isEmpty) {
-                        return;
-                      }
-                      final position = details.localPosition;
-                      final tapped = layer.nodes.firstWhereOrNull(
-                        (e) => e.normalizedRect(size).contains(position),
-                      );
-                      setState(() {
-                        editingNode = tapped ??
-                            _DecorationNode.base(
-                              position: _DecorationNodePosition(
-                                position: position,
-                                size: size,
-                              ),
-                            );
-                      });
-                    },
-                    child: CustomPaint(painter: _Painter(layer)),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      GestureDetector(
+                        key: canvasKey,
+                        onTapUp: (details) {
+                          if (editingNode is! _BaseNode) {
+                            return;
+                          }
+                          final size =
+                              canvasKey.currentContext?.size ?? Size.zero;
+                          if (size.isEmpty) {
+                            return;
+                          }
+                          final position = details.localPosition;
+                          final tapped = layer.nodes.firstWhereOrNull(
+                            (e) => e.normalizedRect(size).contains(position),
+                          );
+                          setState(() {
+                            if (tapped == null) {
+                              editingNode = _DecorationNode.base(
+                                position: _DecorationNodePosition(
+                                  position: position,
+                                  size: size,
+                                ),
+                              );
+                              waitingNode = const _DecorationNode.base(
+                                position: _DecorationNodePosition.empty,
+                              );
+                            } else {
+                              waitingNode = tapped;
+                            }
+                          });
+                        },
+                        child: CustomPaint(painter: _Painter(layer)),
+                      ),
+                      Visibility(
+                        visible: waitingNode.maybeMap(
+                          base: (_) => false,
+                          orElse: () => true,
+                        ),
+                        child: Positioned(
+                          left: waitingNode.position.position.dx +
+                              _Tooltip._margin,
+                          top: waitingNode.position.position.dy +
+                              _Tooltip._margin,
+                          child: _Tooltip(
+                            onSelected: (e) {
+                              switch (e) {
+                                case _TooltipResult.move:
+                                  // TODO: Handle this case.
+                                  break;
+                                case _TooltipResult.resize:
+                                  // TODO: Handle this case.
+                                  break;
+                                case _TooltipResult.edit:
+                                  setState(() {
+                                    editingNode = waitingNode;
+                                    waitingNode = const _DecorationNode.base(
+                                      position: _DecorationNodePosition.empty,
+                                    );
+                                  });
+                                  break;
+                              }
+                            },
+                            resizable: waitingNode.maybeMap(
+                              box: (_) => true,
+                              orElse: () => false,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -170,15 +207,20 @@ class _DecoratorState extends State<Decorator> {
       ),
     );
     return [
-      TextField(
-        controller: controller,
-        decoration: const InputDecoration(hintText: 'Text'),
-        onChanged: (text) {
-          setState(() {
-            editingNode = node.copyWith(text: text);
-          });
-        },
-      ),
+      Builder(builder: (context) {
+        if (controller.text != node.text) {
+          controller.text = node.text;
+        }
+        return TextField(
+          controller: controller,
+          decoration: const InputDecoration(hintText: 'Text'),
+          onChanged: (text) {
+            setState(() {
+              editingNode = node.copyWith(text: text);
+            });
+          },
+        );
+      }),
       const SizedBox(height: 8),
       const Padding(
         padding: EdgeInsets.symmetric(vertical: 4),
@@ -332,6 +374,47 @@ class _ColorPicker extends StatelessWidget {
     );
   }
 }
+
+class _Tooltip extends StatelessWidget {
+  const _Tooltip({
+    required this.onSelected,
+    required this.resizable,
+  });
+
+  static const _margin = 16;
+
+  final ValueChanged<_TooltipResult> onSelected;
+  final bool resizable;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      borderRadius: BorderRadius.circular(5),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            TextButton(
+              onPressed: () => onSelected(_TooltipResult.move),
+              child: const Text('Move'),
+            ),
+            if (resizable)
+              TextButton(
+                onPressed: () => onSelected(_TooltipResult.resize),
+                child: const Text('Resize'),
+              ),
+            TextButton(
+              onPressed: () => onSelected(_TooltipResult.edit),
+              child: const Text('Edit'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+enum _TooltipResult { move, resize, edit }
 
 @freezed
 class _DecorationLayer with _$_DecorationLayer {

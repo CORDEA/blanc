@@ -125,16 +125,32 @@ class _DecoratorState extends State<Decorator> {
     if (editingNode.position == Offset.zero) {
       return [];
     }
+    final removeIcon = Align(
+      alignment: Alignment.centerRight,
+      child: IconButton(
+        onPressed: () {
+          setState(() {
+            layer = layer.copyWith(
+              nodes: layer.nodes
+                  .whereNot((e) => e.id == editingNode.id)
+                  .toList(growable: false),
+            );
+            editingNode = _DecorationNode.empty;
+          });
+        },
+        icon: const Icon(Icons.delete),
+      ),
+    );
     final List<Widget> section;
     switch (type) {
       case _DecorationType.text:
-        section = _buildTextSection();
+        section = <Widget>[removeIcon] + _buildTextSection();
         break;
       case _DecorationType.box:
-        section = [];
+        section = [removeIcon];
         break;
       case _DecorationType.icon:
-        section = [];
+        section = [removeIcon];
         break;
     }
     return <Widget>[

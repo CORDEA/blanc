@@ -246,7 +246,9 @@ mixin _$_DecorationNode {
     required TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)
         box,
-    required TResult Function(String id, Icon icon, Offset position) icon,
+    required TResult Function(
+            String id, IconData icon, Color color, Offset position)
+        icon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -258,7 +260,8 @@ mixin _$_DecorationNode {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -270,7 +273,8 @@ mixin _$_DecorationNode {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -430,7 +434,9 @@ class _$_BaseNode extends _BaseNode {
     required TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)
         box,
-    required TResult Function(String id, Icon icon, Offset position) icon,
+    required TResult Function(
+            String id, IconData icon, Color color, Offset position)
+        icon,
   }) {
     return base(id, position);
   }
@@ -445,7 +451,8 @@ class _$_BaseNode extends _BaseNode {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
   }) {
     return base?.call(id, position);
   }
@@ -460,7 +467,8 @@ class _$_BaseNode extends _BaseNode {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
     required TResult orElse(),
   }) {
     if (base != null) {
@@ -674,7 +682,9 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
     required TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)
         box,
-    required TResult Function(String id, Icon icon, Offset position) icon,
+    required TResult Function(
+            String id, IconData icon, Color color, Offset position)
+        icon,
   }) {
     return text(
         id, this.text, color, backgroundColor, fontSize, fontWeight, position);
@@ -690,7 +700,8 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
   }) {
     return text?.call(
         id, this.text, color, backgroundColor, fontSize, fontWeight, position);
@@ -706,7 +717,8 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
     required TResult orElse(),
   }) {
     if (text != null) {
@@ -902,7 +914,9 @@ class _$_BoxNode extends _BoxNode {
     required TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)
         box,
-    required TResult Function(String id, Icon icon, Offset position) icon,
+    required TResult Function(
+            String id, IconData icon, Color color, Offset position)
+        icon,
   }) {
     return box(id, color, shape, position, size);
   }
@@ -917,7 +931,8 @@ class _$_BoxNode extends _BoxNode {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
   }) {
     return box?.call(id, color, shape, position, size);
   }
@@ -932,7 +947,8 @@ class _$_BoxNode extends _BoxNode {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
     required TResult orElse(),
   }) {
     if (box != null) {
@@ -1008,7 +1024,7 @@ abstract class _$$_IconNodeCopyWith<$Res>
           _$_IconNode value, $Res Function(_$_IconNode) then) =
       __$$_IconNodeCopyWithImpl<$Res>;
   @override
-  $Res call({String id, Icon icon, Offset position});
+  $Res call({String id, IconData icon, Color color, Offset position});
 }
 
 /// @nodoc
@@ -1026,6 +1042,7 @@ class __$$_IconNodeCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? icon = freezed,
+    Object? color = freezed,
     Object? position = freezed,
   }) {
     return _then(_$_IconNode(
@@ -1036,7 +1053,11 @@ class __$$_IconNodeCopyWithImpl<$Res>
       icon: icon == freezed
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as Icon,
+              as IconData,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
       position: position == freezed
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -1049,19 +1070,24 @@ class __$$_IconNodeCopyWithImpl<$Res>
 
 class _$_IconNode extends _IconNode {
   const _$_IconNode(
-      {required this.id, required this.icon, required this.position})
+      {required this.id,
+      required this.icon,
+      required this.color,
+      required this.position})
       : super._();
 
   @override
   final String id;
   @override
-  final Icon icon;
+  final IconData icon;
+  @override
+  final Color color;
   @override
   final Offset position;
 
   @override
   String toString() {
-    return '_DecorationNode.icon(id: $id, icon: $icon, position: $position)';
+    return '_DecorationNode.icon(id: $id, icon: $icon, color: $color, position: $position)';
   }
 
   @override
@@ -1071,6 +1097,7 @@ class _$_IconNode extends _IconNode {
             other is _$_IconNode &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.icon, icon) &&
+            const DeepCollectionEquality().equals(other.color, color) &&
             const DeepCollectionEquality().equals(other.position, position));
   }
 
@@ -1079,6 +1106,7 @@ class _$_IconNode extends _IconNode {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(icon),
+      const DeepCollectionEquality().hash(color),
       const DeepCollectionEquality().hash(position));
 
   @JsonKey(ignore: true)
@@ -1102,9 +1130,11 @@ class _$_IconNode extends _IconNode {
     required TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)
         box,
-    required TResult Function(String id, Icon icon, Offset position) icon,
+    required TResult Function(
+            String id, IconData icon, Color color, Offset position)
+        icon,
   }) {
-    return icon(id, this.icon, position);
+    return icon(id, this.icon, color, position);
   }
 
   @override
@@ -1117,9 +1147,10 @@ class _$_IconNode extends _IconNode {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
   }) {
-    return icon?.call(id, this.icon, position);
+    return icon?.call(id, this.icon, color, position);
   }
 
   @override
@@ -1132,11 +1163,12 @@ class _$_IconNode extends _IconNode {
     TResult Function(
             String id, Color color, BoxShape shape, Offset position, Size size)?
         box,
-    TResult Function(String id, Icon icon, Offset position)? icon,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
     required TResult orElse(),
   }) {
     if (icon != null) {
-      return icon(id, this.icon, position);
+      return icon(id, this.icon, color, position);
     }
     return orElse();
   }
@@ -1182,13 +1214,15 @@ class _$_IconNode extends _IconNode {
 abstract class _IconNode extends _DecorationNode {
   const factory _IconNode(
       {required final String id,
-      required final Icon icon,
+      required final IconData icon,
+      required final Color color,
       required final Offset position}) = _$_IconNode;
   const _IconNode._() : super._();
 
   @override
   String get id => throw _privateConstructorUsedError;
-  Icon get icon => throw _privateConstructorUsedError;
+  IconData get icon => throw _privateConstructorUsedError;
+  Color get color => throw _privateConstructorUsedError;
   @override
   Offset get position => throw _privateConstructorUsedError;
   @override

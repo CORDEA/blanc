@@ -150,7 +150,7 @@ class _DecoratorState extends State<Decorator> {
         section = [removeIcon];
         break;
       case _DecorationType.icon:
-        section = [removeIcon];
+        section = <Widget>[removeIcon] + _buildIconSection();
         break;
     }
     return <Widget>[
@@ -244,6 +244,38 @@ class _DecoratorState extends State<Decorator> {
       }),
     ];
   }
+
+  List<Widget> _buildIconSection() {
+    final node = editingNode.maybeMap(
+      icon: (node) => node,
+      orElse: () => _IconNode(
+        id: editingNode.id,
+        icon: Icons.add,
+        color: Colors.black,
+        position: editingNode.position,
+      ),
+    );
+    return [
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: Text('Icon'),
+      ),
+      _IconPicker(onSelected: (icon) {
+        setState(() {
+          editingNode = node.copyWith(icon: icon);
+        });
+      }),
+      const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: Text('Color'),
+      ),
+      _ColorPicker(onSelected: (color) {
+        setState(() {
+          editingNode = node.copyWith(color: color);
+        });
+      }),
+    ];
+  }
 }
 
 class _Painter extends CustomPainter {
@@ -312,7 +344,19 @@ class _Painter extends CustomPainter {
   }
 
   void _drawIcon(Canvas canvas, _IconNode node) {
-    final painter = TextPainter(text: WidgetSpan(child: node.icon))..layout();
+    final painter = TextPainter(
+      text: TextSpan(
+        text: String.fromCharCode(node.icon.codePoint),
+        style: TextStyle(
+          inherit: false,
+          color: node.color,
+          fontSize: _DecorationNode._iconSize,
+          fontFamily: node.icon.fontFamily,
+          package: node.icon.fontPackage,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
     painter.paint(canvas, node.position);
   }
 
@@ -363,6 +407,34 @@ class _ColorPicker extends StatelessWidget {
   }
 }
 
+class _IconPicker extends StatelessWidget {
+  static final icons = [
+    Icons.add,
+    Icons.arrow_back,
+    Icons.arrow_upward,
+    Icons.arrow_forward,
+    Icons.arrow_downward,
+  ];
+
+  const _IconPicker({required this.onSelected});
+
+  final ValueChanged<IconData> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: icons
+          .map(
+            (e) => IconButton(
+              onPressed: () => onSelected(e),
+              icon: Icon(e),
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
 @freezed
 class _DecorationLayer with _$_DecorationLayer {
   const factory _DecorationLayer({
@@ -404,7 +476,8 @@ class _DecorationNode with _$_DecorationNode {
 
   const factory _DecorationNode.icon({
     required String id,
-    required Icon icon,
+    required IconData icon,
+    required Color color,
     required Offset position,
   }) = _IconNode;
 

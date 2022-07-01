@@ -8,280 +8,81 @@ part 'decorator.freezed.dart';
 const uuid = Uuid();
 
 class Decorator extends StatefulWidget {
-  const Decorator({Key? key}) : super(key: key);
+  const Decorator({
+    Key? key,
+    required this.layer,
+    required this.onTap,
+    required this.onNodeDrag,
+  }) : super(key: key);
+
+  final DecorationLayer layer;
+  final ValueChanged<DecorationTapDetails> onTap;
+  final ValueChanged<DecorationDragDetails> onNodeDrag;
 
   @override
   State<Decorator> createState() => _DecoratorState();
 }
 
 class _DecoratorState extends State<Decorator> {
-  final controller = TextEditingController();
-  _DecorationLayer layer = const _DecorationLayer(
-    backgroundColor: Colors.black12,
-    strokeColor: Colors.black,
-    strokeWidth: 1,
-    cornerRadius: 5,
-    nodes: [],
-  );
-  _DecorationType type = _DecorationType.text;
-  _DecorationNode movingNode = _DecorationNode.empty;
-  _DecorationNode editingNode = _DecorationNode.empty;
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  String movingNodeId = '';
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-            Center(
-              child: SizedBox.square(
-                dimension: 500,
-                child: ColoredBox(
-                  color: Colors.black12,
-                  child: GestureDetector(
-                    onTapUp: (details) {
-                      if (editingNode is! _BaseNode) {
-                        return;
-                      }
-                      final position = details.localPosition;
-                      final tapped = layer.nodes.firstWhereOrNull(
-                        (e) => e.rect.contains(position),
-                      );
-                      setState(() {
-                        editingNode = tapped ??
-                            _DecorationNode.base(
-                              id: uuid.v4(),
-                              position: position,
-                            );
-                      });
-                    },
-                    onHorizontalDragStart: _onDragStart,
-                    onVerticalDragStart: _onDragStart,
-                    onHorizontalDragUpdate: _onDragUpdate,
-                    onVerticalDragUpdate: _onDragUpdate,
-                    child: CustomPaint(painter: _Painter(layer)),
-                  ),
-                ),
-              ),
-            ),
-          ] +
-          _buildEditor(),
+    return GestureDetector(
+      onTapUp: (details) {
+        final position = details.localPosition;
+        final tapped = widget.layer.nodes.firstWhereOrNull(
+          (e) => e.rect.contains(position),
+        );
+        if (tapped == null) {
+          widget.onTap(DecorationTapDetails.blank(position: position));
+          return;
+        }
+        widget.onTap(DecorationTapDetails.node(
+          id: tapped.id,
+          position: position,
+        ));
+      },
+      onHorizontalDragStart: _onDragStart,
+      onVerticalDragStart: _onDragStart,
+      onHorizontalDragUpdate: _onDragUpdate,
+      onVerticalDragUpdate: _onDragUpdate,
+      onHorizontalDragEnd: _onDragEnd,
+      onVerticalDragEnd: _onDragEnd,
+      child: CustomPaint(painter: _Painter(widget.layer)),
     );
   }
 
   void _onDragStart(DragStartDetails details) {
     final position = details.localPosition;
-    final tapped = layer.nodes.firstWhereOrNull(
+    final tapped = widget.layer.nodes.firstWhereOrNull(
       (e) => e.rect.contains(position),
     );
     if (tapped == null) {
       return;
     }
-    setState(() {
-      movingNode = tapped;
-    });
+    movingNodeId = tapped.id;
   }
 
   void _onDragUpdate(DragUpdateDetails details) {
-    setState(() {
-      layer = layer.copyWith(
-        nodes: layer.nodes
-            .map((e) => e.id == movingNode.id
-                ? e.copyWith(position: details.localPosition)
-                : e)
-            .toList(growable: false),
-      );
-    });
-  }
-
-  Widget _buildRadio(String title, _DecorationType ownType) {
-    return Flexible(
-      child: Row(
-        children: [
-          Text(title),
-          const SizedBox(width: 2),
-          Radio<_DecorationType>(
-            value: ownType,
-            groupValue: type,
-            onChanged: (value) {
-              if (value == null) {
-                return;
-              }
-              setState(() {
-                type = value;
-              });
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  List<Widget> _buildEditor() {
-    if (editingNode.position == Offset.zero) {
-      return [];
+    if (movingNodeId.isEmpty) {
+      return;
     }
-    final removeIcon = Align(
-      alignment: Alignment.centerRight,
-      child: IconButton(
-        onPressed: () {
-          setState(() {
-            layer = layer.copyWith(
-              nodes: layer.nodes
-                  .whereNot((e) => e.id == editingNode.id)
-                  .toList(growable: false),
-            );
-            editingNode = _DecorationNode.empty;
-          });
-        },
-        icon: const Icon(Icons.delete),
-      ),
-    );
-    final List<Widget> section;
-    switch (type) {
-      case _DecorationType.text:
-        section = <Widget>[removeIcon] + _buildTextSection();
-        break;
-      case _DecorationType.box:
-        section = [removeIcon];
-        break;
-      case _DecorationType.icon:
-        section = <Widget>[removeIcon] + _buildIconSection();
-        break;
-    }
-    return <Widget>[
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              _buildRadio('Text', _DecorationType.text),
-              _buildRadio('Box', _DecorationType.box),
-              _buildRadio('Icon', _DecorationType.icon),
-            ],
-          ),
-        ] +
-        section +
-        [
-          const SizedBox(height: 36),
-          Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  layer = layer.copyWith(nodes: layer.nodes + [editingNode]);
-                  editingNode = _DecorationNode.empty;
-                });
-              },
-              child: const Text('Submit'),
-            ),
-          ),
-        ];
+    widget.onNodeDrag(DecorationDragDetails(
+      id: movingNodeId,
+      position: details.localPosition,
+    ));
   }
 
-  List<Widget> _buildTextSection() {
-    final node = editingNode.maybeMap(
-      text: (node) => node,
-      orElse: () => _TextNode(
-        id: editingNode.id,
-        text: '',
-        color: Colors.black,
-        backgroundColor: Colors.transparent,
-        fontSize: 12,
-        fontWeight: FontWeight.normal,
-        position: editingNode.position,
-      ),
-    );
-    return [
-      Builder(builder: (context) {
-        if (controller.text != node.text) {
-          controller.text = node.text;
-        }
-        return TextField(
-          controller: controller,
-          decoration: const InputDecoration(hintText: 'Text'),
-          onChanged: (text) {
-            setState(() {
-              editingNode = node.copyWith(text: text);
-            });
-          },
-        );
-      }),
-      const SizedBox(height: 8),
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Font size'),
-      ),
-      Slider(
-        min: 10,
-        max: 60,
-        value: node.fontSize,
-        onChanged: (value) {
-          setState(() {
-            editingNode = node.copyWith(fontSize: value);
-          });
-        },
-      ),
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Color'),
-      ),
-      _ColorPicker(onSelected: (color) {
-        setState(() {
-          editingNode = node.copyWith(color: color);
-        });
-      }),
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Background color'),
-      ),
-      _ColorPicker(onSelected: (color) {
-        setState(() {
-          editingNode = node.copyWith(backgroundColor: color);
-        });
-      }),
-    ];
-  }
-
-  List<Widget> _buildIconSection() {
-    final node = editingNode.maybeMap(
-      icon: (node) => node,
-      orElse: () => _IconNode(
-        id: editingNode.id,
-        icon: Icons.add,
-        color: Colors.black,
-        position: editingNode.position,
-      ),
-    );
-    return [
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Icon'),
-      ),
-      _IconPicker(onSelected: (icon) {
-        setState(() {
-          editingNode = node.copyWith(icon: icon);
-        });
-      }),
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Color'),
-      ),
-      _ColorPicker(onSelected: (color) {
-        setState(() {
-          editingNode = node.copyWith(color: color);
-        });
-      }),
-    ];
+  void _onDragEnd(DragEndDetails details) {
+    movingNodeId = '';
   }
 }
 
 class _Painter extends CustomPainter {
   _Painter(this.layer);
 
-  final _DecorationLayer layer;
+  final DecorationLayer layer;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -319,12 +120,12 @@ class _Painter extends CustomPainter {
     }
   }
 
-  void _drawText(Canvas canvas, _TextNode node) {
+  void _drawText(Canvas canvas, DecorationTextNode node) {
     final painter = node.painter..layout();
     painter.paint(canvas, node.position);
   }
 
-  void _drawBox(Canvas canvas, _BoxNode node) {
+  void _drawBox(Canvas canvas, DecorationBoxNode node) {
     final paint = Paint()..color = node.color;
     final position = node.position;
     final rect = Rect.fromLTRB(
@@ -343,14 +144,14 @@ class _Painter extends CustomPainter {
     }
   }
 
-  void _drawIcon(Canvas canvas, _IconNode node) {
+  void _drawIcon(Canvas canvas, DecorationIconNode node) {
     final painter = TextPainter(
       text: TextSpan(
         text: String.fromCharCode(node.icon.codePoint),
         style: TextStyle(
           inherit: false,
           color: node.color,
-          fontSize: _DecorationNode._iconSize,
+          fontSize: DecorationNode._iconSize,
           fontFamily: node.icon.fontFamily,
           package: node.icon.fontPackage,
         ),
@@ -364,99 +165,48 @@ class _Painter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
-class _ColorPicker extends StatelessWidget {
-  static final colors = [
-    Colors.transparent,
-    Colors.black,
-    Colors.white,
-    Colors.indigo,
-    Colors.blue,
-    Colors.lightBlue,
-    Colors.lightGreen,
-    Colors.lime,
-    Colors.orange,
-    Colors.red,
-    Colors.pink,
-    Colors.purple,
-  ];
+@freezed
+class DecorationTapDetails with _$DecorationTapDetails {
+  const factory DecorationTapDetails.blank({
+    required Offset position,
+  }) = _Blank;
 
-  const _ColorPicker({required this.onSelected});
-
-  final ValueChanged<Color> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40,
-      child: Row(
-        children: colors
-            .map(
-              (e) => Expanded(
-                child: InkWell(
-                  onTap: () => onSelected(e),
-                  child: ColoredBox(
-                    color: e,
-                    child: const SizedBox.expand(),
-                  ),
-                ),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
-}
-
-class _IconPicker extends StatelessWidget {
-  static final icons = [
-    Icons.add,
-    Icons.arrow_back,
-    Icons.arrow_upward,
-    Icons.arrow_forward,
-    Icons.arrow_downward,
-  ];
-
-  const _IconPicker({required this.onSelected});
-
-  final ValueChanged<IconData> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: icons
-          .map(
-            (e) => IconButton(
-              onPressed: () => onSelected(e),
-              icon: Icon(e),
-            ),
-          )
-          .toList(),
-    );
-  }
+  const factory DecorationTapDetails.node({
+    required String id,
+    required Offset position,
+  }) = _Node;
 }
 
 @freezed
-class _DecorationLayer with _$_DecorationLayer {
-  const factory _DecorationLayer({
+class DecorationDragDetails with _$DecorationDragDetails {
+  const factory DecorationDragDetails({
+    required String id,
+    required Offset position,
+  }) = _DecorationDragDetails;
+}
+
+@freezed
+class DecorationLayer with _$DecorationLayer {
+  const factory DecorationLayer({
     required Color backgroundColor,
     required Color strokeColor,
     required double strokeWidth,
     required double cornerRadius,
-    required List<_DecorationNode> nodes,
-  }) = __DecorationLayer;
+    required List<DecorationNode> nodes,
+  }) = _DecorationLayer;
 }
 
 @freezed
-class _DecorationNode with _$_DecorationNode {
-  const _DecorationNode._();
+class DecorationNode with _$DecorationNode {
+  const DecorationNode._();
 
-  const factory _DecorationNode.base({
+  const factory DecorationNode.base({
     required String id,
     required Offset position,
   }) = _BaseNode;
 
   @With<_TextNodeBase>()
-  factory _DecorationNode.text({
+  factory DecorationNode.text({
     required String id,
     required String text,
     required Color color,
@@ -464,25 +214,25 @@ class _DecorationNode with _$_DecorationNode {
     required double fontSize,
     required FontWeight fontWeight,
     required Offset position,
-  }) = _TextNode;
+  }) = DecorationTextNode;
 
-  const factory _DecorationNode.box({
+  const factory DecorationNode.box({
     required String id,
     required Color color,
     required BoxShape shape,
     required Offset position,
     required Size size,
-  }) = _BoxNode;
+  }) = DecorationBoxNode;
 
-  const factory _DecorationNode.icon({
+  const factory DecorationNode.icon({
     required String id,
     required IconData icon,
     required Color color,
     required Offset position,
-  }) = _IconNode;
+  }) = DecorationIconNode;
 
   static const _iconSize = 24.0;
-  static const empty = _DecorationNode.base(id: '', position: Offset.zero);
+  static const empty = DecorationNode.base(id: '', position: Offset.zero);
 }
 
 mixin _TextNodeBase {
@@ -517,7 +267,7 @@ mixin _TextNodeBase {
   Size get size => (painter..layout()).size;
 }
 
-extension _DecorationNodeExt on _DecorationNode {
+extension DecorationNodeExt on DecorationNode {
   Rect get rect {
     final position = map(
       base: (_) => Offset.zero,
@@ -529,7 +279,7 @@ extension _DecorationNodeExt on _DecorationNode {
       base: (_) => Size.zero,
       text: (e) => e.size,
       box: (e) => e.size,
-      icon: (_) => const Size.square(_DecorationNode._iconSize),
+      icon: (_) => const Size.square(DecorationNode._iconSize),
     );
     return Rect.fromLTWH(
       position.dx,
@@ -539,5 +289,3 @@ extension _DecorationNodeExt on _DecorationNode {
     );
   }
 }
-
-enum _DecorationType { text, box, icon }

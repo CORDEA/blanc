@@ -15,39 +15,536 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$_DecorationLayer {
-  Color get backgroundColor => throw _privateConstructorUsedError;
-  Color get strokeColor => throw _privateConstructorUsedError;
-  double get strokeWidth => throw _privateConstructorUsedError;
-  double get cornerRadius => throw _privateConstructorUsedError;
-  List<_DecorationNode> get nodes => throw _privateConstructorUsedError;
+mixin _$DecorationTapDetails {
+  Offset get position => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Offset position) blank,
+    required TResult Function(String id, Offset position) node,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Offset position)? blank,
+    TResult Function(String id, Offset position)? node,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Offset position)? blank,
+    TResult Function(String id, Offset position)? node,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Blank value) blank,
+    required TResult Function(_Node value) node,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Blank value)? blank,
+    TResult Function(_Node value)? node,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Blank value)? blank,
+    TResult Function(_Node value)? node,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  _$DecorationLayerCopyWith<_DecorationLayer> get copyWith =>
+  $DecorationTapDetailsCopyWith<DecorationTapDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$DecorationLayerCopyWith<$Res> {
-  factory _$DecorationLayerCopyWith(
-          _DecorationLayer value, $Res Function(_DecorationLayer) then) =
-      __$DecorationLayerCopyWithImpl<$Res>;
+abstract class $DecorationTapDetailsCopyWith<$Res> {
+  factory $DecorationTapDetailsCopyWith(DecorationTapDetails value,
+          $Res Function(DecorationTapDetails) then) =
+      _$DecorationTapDetailsCopyWithImpl<$Res>;
+  $Res call({Offset position});
+}
+
+/// @nodoc
+class _$DecorationTapDetailsCopyWithImpl<$Res>
+    implements $DecorationTapDetailsCopyWith<$Res> {
+  _$DecorationTapDetailsCopyWithImpl(this._value, this._then);
+
+  final DecorationTapDetails _value;
+  // ignore: unused_field
+  final $Res Function(DecorationTapDetails) _then;
+
+  @override
+  $Res call({
+    Object? position = freezed,
+  }) {
+    return _then(_value.copyWith(
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Offset,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_BlankCopyWith<$Res>
+    implements $DecorationTapDetailsCopyWith<$Res> {
+  factory _$$_BlankCopyWith(_$_Blank value, $Res Function(_$_Blank) then) =
+      __$$_BlankCopyWithImpl<$Res>;
+  @override
+  $Res call({Offset position});
+}
+
+/// @nodoc
+class __$$_BlankCopyWithImpl<$Res>
+    extends _$DecorationTapDetailsCopyWithImpl<$Res>
+    implements _$$_BlankCopyWith<$Res> {
+  __$$_BlankCopyWithImpl(_$_Blank _value, $Res Function(_$_Blank) _then)
+      : super(_value, (v) => _then(v as _$_Blank));
+
+  @override
+  _$_Blank get _value => super._value as _$_Blank;
+
+  @override
+  $Res call({
+    Object? position = freezed,
+  }) {
+    return _then(_$_Blank(
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Offset,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Blank implements _Blank {
+  const _$_Blank({required this.position});
+
+  @override
+  final Offset position;
+
+  @override
+  String toString() {
+    return 'DecorationTapDetails.blank(position: $position)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Blank &&
+            const DeepCollectionEquality().equals(other.position, position));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(position));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_BlankCopyWith<_$_Blank> get copyWith =>
+      __$$_BlankCopyWithImpl<_$_Blank>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Offset position) blank,
+    required TResult Function(String id, Offset position) node,
+  }) {
+    return blank(position);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Offset position)? blank,
+    TResult Function(String id, Offset position)? node,
+  }) {
+    return blank?.call(position);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Offset position)? blank,
+    TResult Function(String id, Offset position)? node,
+    required TResult orElse(),
+  }) {
+    if (blank != null) {
+      return blank(position);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Blank value) blank,
+    required TResult Function(_Node value) node,
+  }) {
+    return blank(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Blank value)? blank,
+    TResult Function(_Node value)? node,
+  }) {
+    return blank?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Blank value)? blank,
+    TResult Function(_Node value)? node,
+    required TResult orElse(),
+  }) {
+    if (blank != null) {
+      return blank(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Blank implements DecorationTapDetails {
+  const factory _Blank({required final Offset position}) = _$_Blank;
+
+  @override
+  Offset get position => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_BlankCopyWith<_$_Blank> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_NodeCopyWith<$Res>
+    implements $DecorationTapDetailsCopyWith<$Res> {
+  factory _$$_NodeCopyWith(_$_Node value, $Res Function(_$_Node) then) =
+      __$$_NodeCopyWithImpl<$Res>;
+  @override
+  $Res call({String id, Offset position});
+}
+
+/// @nodoc
+class __$$_NodeCopyWithImpl<$Res>
+    extends _$DecorationTapDetailsCopyWithImpl<$Res>
+    implements _$$_NodeCopyWith<$Res> {
+  __$$_NodeCopyWithImpl(_$_Node _value, $Res Function(_$_Node) _then)
+      : super(_value, (v) => _then(v as _$_Node));
+
+  @override
+  _$_Node get _value => super._value as _$_Node;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? position = freezed,
+  }) {
+    return _then(_$_Node(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Offset,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Node implements _Node {
+  const _$_Node({required this.id, required this.position});
+
+  @override
+  final String id;
+  @override
+  final Offset position;
+
+  @override
+  String toString() {
+    return 'DecorationTapDetails.node(id: $id, position: $position)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Node &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.position, position));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(position));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_NodeCopyWith<_$_Node> get copyWith =>
+      __$$_NodeCopyWithImpl<_$_Node>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Offset position) blank,
+    required TResult Function(String id, Offset position) node,
+  }) {
+    return node(id, position);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(Offset position)? blank,
+    TResult Function(String id, Offset position)? node,
+  }) {
+    return node?.call(id, position);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Offset position)? blank,
+    TResult Function(String id, Offset position)? node,
+    required TResult orElse(),
+  }) {
+    if (node != null) {
+      return node(id, position);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Blank value) blank,
+    required TResult Function(_Node value) node,
+  }) {
+    return node(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Blank value)? blank,
+    TResult Function(_Node value)? node,
+  }) {
+    return node?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Blank value)? blank,
+    TResult Function(_Node value)? node,
+    required TResult orElse(),
+  }) {
+    if (node != null) {
+      return node(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Node implements DecorationTapDetails {
+  const factory _Node(
+      {required final String id, required final Offset position}) = _$_Node;
+
+  String get id => throw _privateConstructorUsedError;
+  @override
+  Offset get position => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_NodeCopyWith<_$_Node> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$DecorationDragDetails {
+  String get id => throw _privateConstructorUsedError;
+  Offset get position => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $DecorationDragDetailsCopyWith<DecorationDragDetails> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DecorationDragDetailsCopyWith<$Res> {
+  factory $DecorationDragDetailsCopyWith(DecorationDragDetails value,
+          $Res Function(DecorationDragDetails) then) =
+      _$DecorationDragDetailsCopyWithImpl<$Res>;
+  $Res call({String id, Offset position});
+}
+
+/// @nodoc
+class _$DecorationDragDetailsCopyWithImpl<$Res>
+    implements $DecorationDragDetailsCopyWith<$Res> {
+  _$DecorationDragDetailsCopyWithImpl(this._value, this._then);
+
+  final DecorationDragDetails _value;
+  // ignore: unused_field
+  final $Res Function(DecorationDragDetails) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? position = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Offset,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_DecorationDragDetailsCopyWith<$Res>
+    implements $DecorationDragDetailsCopyWith<$Res> {
+  factory _$$_DecorationDragDetailsCopyWith(_$_DecorationDragDetails value,
+          $Res Function(_$_DecorationDragDetails) then) =
+      __$$_DecorationDragDetailsCopyWithImpl<$Res>;
+  @override
+  $Res call({String id, Offset position});
+}
+
+/// @nodoc
+class __$$_DecorationDragDetailsCopyWithImpl<$Res>
+    extends _$DecorationDragDetailsCopyWithImpl<$Res>
+    implements _$$_DecorationDragDetailsCopyWith<$Res> {
+  __$$_DecorationDragDetailsCopyWithImpl(_$_DecorationDragDetails _value,
+      $Res Function(_$_DecorationDragDetails) _then)
+      : super(_value, (v) => _then(v as _$_DecorationDragDetails));
+
+  @override
+  _$_DecorationDragDetails get _value =>
+      super._value as _$_DecorationDragDetails;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? position = freezed,
+  }) {
+    return _then(_$_DecorationDragDetails(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Offset,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_DecorationDragDetails implements _DecorationDragDetails {
+  const _$_DecorationDragDetails({required this.id, required this.position});
+
+  @override
+  final String id;
+  @override
+  final Offset position;
+
+  @override
+  String toString() {
+    return 'DecorationDragDetails(id: $id, position: $position)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DecorationDragDetails &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.position, position));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(position));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_DecorationDragDetailsCopyWith<_$_DecorationDragDetails> get copyWith =>
+      __$$_DecorationDragDetailsCopyWithImpl<_$_DecorationDragDetails>(
+          this, _$identity);
+}
+
+abstract class _DecorationDragDetails implements DecorationDragDetails {
+  const factory _DecorationDragDetails(
+      {required final String id,
+      required final Offset position}) = _$_DecorationDragDetails;
+
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  Offset get position => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DecorationDragDetailsCopyWith<_$_DecorationDragDetails> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$DecorationLayer {
+  Color get backgroundColor => throw _privateConstructorUsedError;
+  Color get strokeColor => throw _privateConstructorUsedError;
+  double get strokeWidth => throw _privateConstructorUsedError;
+  double get cornerRadius => throw _privateConstructorUsedError;
+  List<DecorationNode> get nodes => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $DecorationLayerCopyWith<DecorationLayer> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DecorationLayerCopyWith<$Res> {
+  factory $DecorationLayerCopyWith(
+          DecorationLayer value, $Res Function(DecorationLayer) then) =
+      _$DecorationLayerCopyWithImpl<$Res>;
   $Res call(
       {Color backgroundColor,
       Color strokeColor,
       double strokeWidth,
       double cornerRadius,
-      List<_DecorationNode> nodes});
+      List<DecorationNode> nodes});
 }
 
 /// @nodoc
-class __$DecorationLayerCopyWithImpl<$Res>
-    implements _$DecorationLayerCopyWith<$Res> {
-  __$DecorationLayerCopyWithImpl(this._value, this._then);
+class _$DecorationLayerCopyWithImpl<$Res>
+    implements $DecorationLayerCopyWith<$Res> {
+  _$DecorationLayerCopyWithImpl(this._value, this._then);
 
-  final _DecorationLayer _value;
+  final DecorationLayer _value;
   // ignore: unused_field
-  final $Res Function(_DecorationLayer) _then;
+  final $Res Function(DecorationLayer) _then;
 
   @override
   $Res call({
@@ -77,36 +574,36 @@ class __$DecorationLayerCopyWithImpl<$Res>
       nodes: nodes == freezed
           ? _value.nodes
           : nodes // ignore: cast_nullable_to_non_nullable
-              as List<_DecorationNode>,
+              as List<DecorationNode>,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$$__DecorationLayerCopyWith<$Res>
-    implements _$DecorationLayerCopyWith<$Res> {
-  factory _$$__DecorationLayerCopyWith(
-          _$__DecorationLayer value, $Res Function(_$__DecorationLayer) then) =
-      __$$__DecorationLayerCopyWithImpl<$Res>;
+abstract class _$$_DecorationLayerCopyWith<$Res>
+    implements $DecorationLayerCopyWith<$Res> {
+  factory _$$_DecorationLayerCopyWith(
+          _$_DecorationLayer value, $Res Function(_$_DecorationLayer) then) =
+      __$$_DecorationLayerCopyWithImpl<$Res>;
   @override
   $Res call(
       {Color backgroundColor,
       Color strokeColor,
       double strokeWidth,
       double cornerRadius,
-      List<_DecorationNode> nodes});
+      List<DecorationNode> nodes});
 }
 
 /// @nodoc
-class __$$__DecorationLayerCopyWithImpl<$Res>
-    extends __$DecorationLayerCopyWithImpl<$Res>
-    implements _$$__DecorationLayerCopyWith<$Res> {
-  __$$__DecorationLayerCopyWithImpl(
-      _$__DecorationLayer _value, $Res Function(_$__DecorationLayer) _then)
-      : super(_value, (v) => _then(v as _$__DecorationLayer));
+class __$$_DecorationLayerCopyWithImpl<$Res>
+    extends _$DecorationLayerCopyWithImpl<$Res>
+    implements _$$_DecorationLayerCopyWith<$Res> {
+  __$$_DecorationLayerCopyWithImpl(
+      _$_DecorationLayer _value, $Res Function(_$_DecorationLayer) _then)
+      : super(_value, (v) => _then(v as _$_DecorationLayer));
 
   @override
-  _$__DecorationLayer get _value => super._value as _$__DecorationLayer;
+  _$_DecorationLayer get _value => super._value as _$_DecorationLayer;
 
   @override
   $Res call({
@@ -116,7 +613,7 @@ class __$$__DecorationLayerCopyWithImpl<$Res>
     Object? cornerRadius = freezed,
     Object? nodes = freezed,
   }) {
-    return _then(_$__DecorationLayer(
+    return _then(_$_DecorationLayer(
       backgroundColor: backgroundColor == freezed
           ? _value.backgroundColor
           : backgroundColor // ignore: cast_nullable_to_non_nullable
@@ -136,20 +633,20 @@ class __$$__DecorationLayerCopyWithImpl<$Res>
       nodes: nodes == freezed
           ? _value._nodes
           : nodes // ignore: cast_nullable_to_non_nullable
-              as List<_DecorationNode>,
+              as List<DecorationNode>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$__DecorationLayer implements __DecorationLayer {
-  const _$__DecorationLayer(
+class _$_DecorationLayer implements _DecorationLayer {
+  const _$_DecorationLayer(
       {required this.backgroundColor,
       required this.strokeColor,
       required this.strokeWidth,
       required this.cornerRadius,
-      required final List<_DecorationNode> nodes})
+      required final List<DecorationNode> nodes})
       : _nodes = nodes;
 
   @override
@@ -160,23 +657,23 @@ class _$__DecorationLayer implements __DecorationLayer {
   final double strokeWidth;
   @override
   final double cornerRadius;
-  final List<_DecorationNode> _nodes;
+  final List<DecorationNode> _nodes;
   @override
-  List<_DecorationNode> get nodes {
+  List<DecorationNode> get nodes {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_nodes);
   }
 
   @override
   String toString() {
-    return '_DecorationLayer(backgroundColor: $backgroundColor, strokeColor: $strokeColor, strokeWidth: $strokeWidth, cornerRadius: $cornerRadius, nodes: $nodes)';
+    return 'DecorationLayer(backgroundColor: $backgroundColor, strokeColor: $strokeColor, strokeWidth: $strokeWidth, cornerRadius: $cornerRadius, nodes: $nodes)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$__DecorationLayer &&
+            other is _$_DecorationLayer &&
             const DeepCollectionEquality()
                 .equals(other.backgroundColor, backgroundColor) &&
             const DeepCollectionEquality()
@@ -199,17 +696,17 @@ class _$__DecorationLayer implements __DecorationLayer {
 
   @JsonKey(ignore: true)
   @override
-  _$$__DecorationLayerCopyWith<_$__DecorationLayer> get copyWith =>
-      __$$__DecorationLayerCopyWithImpl<_$__DecorationLayer>(this, _$identity);
+  _$$_DecorationLayerCopyWith<_$_DecorationLayer> get copyWith =>
+      __$$_DecorationLayerCopyWithImpl<_$_DecorationLayer>(this, _$identity);
 }
 
-abstract class __DecorationLayer implements _DecorationLayer {
-  const factory __DecorationLayer(
+abstract class _DecorationLayer implements DecorationLayer {
+  const factory _DecorationLayer(
       {required final Color backgroundColor,
       required final Color strokeColor,
       required final double strokeWidth,
       required final double cornerRadius,
-      required final List<_DecorationNode> nodes}) = _$__DecorationLayer;
+      required final List<DecorationNode> nodes}) = _$_DecorationLayer;
 
   @override
   Color get backgroundColor => throw _privateConstructorUsedError;
@@ -220,15 +717,15 @@ abstract class __DecorationLayer implements _DecorationLayer {
   @override
   double get cornerRadius => throw _privateConstructorUsedError;
   @override
-  List<_DecorationNode> get nodes => throw _privateConstructorUsedError;
+  List<DecorationNode> get nodes => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$__DecorationLayerCopyWith<_$__DecorationLayer> get copyWith =>
+  _$$_DecorationLayerCopyWith<_$_DecorationLayer> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$_DecorationNode {
+mixin _$DecorationNode {
   String get id => throw _privateConstructorUsedError;
   Offset get position => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -281,50 +778,50 @@ mixin _$_DecorationNode {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_BaseNode value) base,
-    required TResult Function(_TextNode value) text,
-    required TResult Function(_BoxNode value) box,
-    required TResult Function(_IconNode value) icon,
+    required TResult Function(DecorationTextNode value) text,
+    required TResult Function(DecorationBoxNode value) box,
+    required TResult Function(DecorationIconNode value) icon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  _$DecorationNodeCopyWith<_DecorationNode> get copyWith =>
+  $DecorationNodeCopyWith<DecorationNode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$DecorationNodeCopyWith<$Res> {
-  factory _$DecorationNodeCopyWith(
-          _DecorationNode value, $Res Function(_DecorationNode) then) =
-      __$DecorationNodeCopyWithImpl<$Res>;
+abstract class $DecorationNodeCopyWith<$Res> {
+  factory $DecorationNodeCopyWith(
+          DecorationNode value, $Res Function(DecorationNode) then) =
+      _$DecorationNodeCopyWithImpl<$Res>;
   $Res call({String id, Offset position});
 }
 
 /// @nodoc
-class __$DecorationNodeCopyWithImpl<$Res>
-    implements _$DecorationNodeCopyWith<$Res> {
-  __$DecorationNodeCopyWithImpl(this._value, this._then);
+class _$DecorationNodeCopyWithImpl<$Res>
+    implements $DecorationNodeCopyWith<$Res> {
+  _$DecorationNodeCopyWithImpl(this._value, this._then);
 
-  final _DecorationNode _value;
+  final DecorationNode _value;
   // ignore: unused_field
-  final $Res Function(_DecorationNode) _then;
+  final $Res Function(DecorationNode) _then;
 
   @override
   $Res call({
@@ -346,7 +843,7 @@ class __$DecorationNodeCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$$_BaseNodeCopyWith<$Res>
-    implements _$DecorationNodeCopyWith<$Res> {
+    implements $DecorationNodeCopyWith<$Res> {
   factory _$$_BaseNodeCopyWith(
           _$_BaseNode value, $Res Function(_$_BaseNode) then) =
       __$$_BaseNodeCopyWithImpl<$Res>;
@@ -355,8 +852,7 @@ abstract class _$$_BaseNodeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BaseNodeCopyWithImpl<$Res>
-    extends __$DecorationNodeCopyWithImpl<$Res>
+class __$$_BaseNodeCopyWithImpl<$Res> extends _$DecorationNodeCopyWithImpl<$Res>
     implements _$$_BaseNodeCopyWith<$Res> {
   __$$_BaseNodeCopyWithImpl(
       _$_BaseNode _value, $Res Function(_$_BaseNode) _then)
@@ -395,7 +891,7 @@ class _$_BaseNode extends _BaseNode {
 
   @override
   String toString() {
-    return '_DecorationNode.base(id: $id, position: $position)';
+    return 'DecorationNode.base(id: $id, position: $position)';
   }
 
   @override
@@ -481,9 +977,9 @@ class _$_BaseNode extends _BaseNode {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_BaseNode value) base,
-    required TResult Function(_TextNode value) text,
-    required TResult Function(_BoxNode value) box,
-    required TResult Function(_IconNode value) icon,
+    required TResult Function(DecorationTextNode value) text,
+    required TResult Function(DecorationBoxNode value) box,
+    required TResult Function(DecorationIconNode value) icon,
   }) {
     return base(this);
   }
@@ -492,9 +988,9 @@ class _$_BaseNode extends _BaseNode {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
   }) {
     return base?.call(this);
   }
@@ -503,9 +999,9 @@ class _$_BaseNode extends _BaseNode {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
     required TResult orElse(),
   }) {
     if (base != null) {
@@ -515,7 +1011,7 @@ class _$_BaseNode extends _BaseNode {
   }
 }
 
-abstract class _BaseNode extends _DecorationNode {
+abstract class _BaseNode extends DecorationNode {
   const factory _BaseNode(
       {required final String id, required final Offset position}) = _$_BaseNode;
   const _BaseNode._() : super._();
@@ -531,11 +1027,11 @@ abstract class _BaseNode extends _DecorationNode {
 }
 
 /// @nodoc
-abstract class _$$_TextNodeCopyWith<$Res>
-    implements _$DecorationNodeCopyWith<$Res> {
-  factory _$$_TextNodeCopyWith(
-          _$_TextNode value, $Res Function(_$_TextNode) then) =
-      __$$_TextNodeCopyWithImpl<$Res>;
+abstract class _$$DecorationTextNodeCopyWith<$Res>
+    implements $DecorationNodeCopyWith<$Res> {
+  factory _$$DecorationTextNodeCopyWith(_$DecorationTextNode value,
+          $Res Function(_$DecorationTextNode) then) =
+      __$$DecorationTextNodeCopyWithImpl<$Res>;
   @override
   $Res call(
       {String id,
@@ -548,15 +1044,15 @@ abstract class _$$_TextNodeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TextNodeCopyWithImpl<$Res>
-    extends __$DecorationNodeCopyWithImpl<$Res>
-    implements _$$_TextNodeCopyWith<$Res> {
-  __$$_TextNodeCopyWithImpl(
-      _$_TextNode _value, $Res Function(_$_TextNode) _then)
-      : super(_value, (v) => _then(v as _$_TextNode));
+class __$$DecorationTextNodeCopyWithImpl<$Res>
+    extends _$DecorationNodeCopyWithImpl<$Res>
+    implements _$$DecorationTextNodeCopyWith<$Res> {
+  __$$DecorationTextNodeCopyWithImpl(
+      _$DecorationTextNode _value, $Res Function(_$DecorationTextNode) _then)
+      : super(_value, (v) => _then(v as _$DecorationTextNode));
 
   @override
-  _$_TextNode get _value => super._value as _$_TextNode;
+  _$DecorationTextNode get _value => super._value as _$DecorationTextNode;
 
   @override
   $Res call({
@@ -568,7 +1064,7 @@ class __$$_TextNodeCopyWithImpl<$Res>
     Object? fontWeight = freezed,
     Object? position = freezed,
   }) {
-    return _then(_$_TextNode(
+    return _then(_$DecorationTextNode(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -603,8 +1099,8 @@ class __$$_TextNodeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TextNode extends _TextNode with _TextNodeBase {
-  _$_TextNode(
+class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
+  _$DecorationTextNode(
       {required this.id,
       required this.text,
       required this.color,
@@ -631,14 +1127,14 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
 
   @override
   String toString() {
-    return '_DecorationNode.text(id: $id, text: $text, color: $color, backgroundColor: $backgroundColor, fontSize: $fontSize, fontWeight: $fontWeight, position: $position)';
+    return 'DecorationNode.text(id: $id, text: $text, color: $color, backgroundColor: $backgroundColor, fontSize: $fontSize, fontWeight: $fontWeight, position: $position)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TextNode &&
+            other is _$DecorationTextNode &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.text, text) &&
             const DeepCollectionEquality().equals(other.color, color) &&
@@ -663,8 +1159,9 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
 
   @JsonKey(ignore: true)
   @override
-  _$$_TextNodeCopyWith<_$_TextNode> get copyWith =>
-      __$$_TextNodeCopyWithImpl<_$_TextNode>(this, _$identity);
+  _$$DecorationTextNodeCopyWith<_$DecorationTextNode> get copyWith =>
+      __$$DecorationTextNodeCopyWithImpl<_$DecorationTextNode>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -732,9 +1229,9 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_BaseNode value) base,
-    required TResult Function(_TextNode value) text,
-    required TResult Function(_BoxNode value) box,
-    required TResult Function(_IconNode value) icon,
+    required TResult Function(DecorationTextNode value) text,
+    required TResult Function(DecorationBoxNode value) box,
+    required TResult Function(DecorationIconNode value) icon,
   }) {
     return text(this);
   }
@@ -743,9 +1240,9 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
   }) {
     return text?.call(this);
   }
@@ -754,9 +1251,9 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
     required TResult orElse(),
   }) {
     if (text != null) {
@@ -766,16 +1263,17 @@ class _$_TextNode extends _TextNode with _TextNodeBase {
   }
 }
 
-abstract class _TextNode extends _DecorationNode implements _TextNodeBase {
-  factory _TextNode(
+abstract class DecorationTextNode extends DecorationNode
+    implements _TextNodeBase {
+  factory DecorationTextNode(
       {required final String id,
       required final String text,
       required final Color color,
       required final Color backgroundColor,
       required final double fontSize,
       required final FontWeight fontWeight,
-      required final Offset position}) = _$_TextNode;
-  _TextNode._() : super._();
+      required final Offset position}) = _$DecorationTextNode;
+  DecorationTextNode._() : super._();
 
   @override
   String get id => throw _privateConstructorUsedError;
@@ -788,29 +1286,31 @@ abstract class _TextNode extends _DecorationNode implements _TextNodeBase {
   Offset get position => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_TextNodeCopyWith<_$_TextNode> get copyWith =>
+  _$$DecorationTextNodeCopyWith<_$DecorationTextNode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_BoxNodeCopyWith<$Res>
-    implements _$DecorationNodeCopyWith<$Res> {
-  factory _$$_BoxNodeCopyWith(
-          _$_BoxNode value, $Res Function(_$_BoxNode) then) =
-      __$$_BoxNodeCopyWithImpl<$Res>;
+abstract class _$$DecorationBoxNodeCopyWith<$Res>
+    implements $DecorationNodeCopyWith<$Res> {
+  factory _$$DecorationBoxNodeCopyWith(
+          _$DecorationBoxNode value, $Res Function(_$DecorationBoxNode) then) =
+      __$$DecorationBoxNodeCopyWithImpl<$Res>;
   @override
   $Res call(
       {String id, Color color, BoxShape shape, Offset position, Size size});
 }
 
 /// @nodoc
-class __$$_BoxNodeCopyWithImpl<$Res> extends __$DecorationNodeCopyWithImpl<$Res>
-    implements _$$_BoxNodeCopyWith<$Res> {
-  __$$_BoxNodeCopyWithImpl(_$_BoxNode _value, $Res Function(_$_BoxNode) _then)
-      : super(_value, (v) => _then(v as _$_BoxNode));
+class __$$DecorationBoxNodeCopyWithImpl<$Res>
+    extends _$DecorationNodeCopyWithImpl<$Res>
+    implements _$$DecorationBoxNodeCopyWith<$Res> {
+  __$$DecorationBoxNodeCopyWithImpl(
+      _$DecorationBoxNode _value, $Res Function(_$DecorationBoxNode) _then)
+      : super(_value, (v) => _then(v as _$DecorationBoxNode));
 
   @override
-  _$_BoxNode get _value => super._value as _$_BoxNode;
+  _$DecorationBoxNode get _value => super._value as _$DecorationBoxNode;
 
   @override
   $Res call({
@@ -820,7 +1320,7 @@ class __$$_BoxNodeCopyWithImpl<$Res> extends __$DecorationNodeCopyWithImpl<$Res>
     Object? position = freezed,
     Object? size = freezed,
   }) {
-    return _then(_$_BoxNode(
+    return _then(_$DecorationBoxNode(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -847,8 +1347,8 @@ class __$$_BoxNodeCopyWithImpl<$Res> extends __$DecorationNodeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BoxNode extends _BoxNode {
-  const _$_BoxNode(
+class _$DecorationBoxNode extends DecorationBoxNode {
+  const _$DecorationBoxNode(
       {required this.id,
       required this.color,
       required this.shape,
@@ -869,14 +1369,14 @@ class _$_BoxNode extends _BoxNode {
 
   @override
   String toString() {
-    return '_DecorationNode.box(id: $id, color: $color, shape: $shape, position: $position, size: $size)';
+    return 'DecorationNode.box(id: $id, color: $color, shape: $shape, position: $position, size: $size)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BoxNode &&
+            other is _$DecorationBoxNode &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.color, color) &&
             const DeepCollectionEquality().equals(other.shape, shape) &&
@@ -895,8 +1395,8 @@ class _$_BoxNode extends _BoxNode {
 
   @JsonKey(ignore: true)
   @override
-  _$$_BoxNodeCopyWith<_$_BoxNode> get copyWith =>
-      __$$_BoxNodeCopyWithImpl<_$_BoxNode>(this, _$identity);
+  _$$DecorationBoxNodeCopyWith<_$DecorationBoxNode> get copyWith =>
+      __$$DecorationBoxNodeCopyWithImpl<_$DecorationBoxNode>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -961,9 +1461,9 @@ class _$_BoxNode extends _BoxNode {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_BaseNode value) base,
-    required TResult Function(_TextNode value) text,
-    required TResult Function(_BoxNode value) box,
-    required TResult Function(_IconNode value) icon,
+    required TResult Function(DecorationTextNode value) text,
+    required TResult Function(DecorationBoxNode value) box,
+    required TResult Function(DecorationIconNode value) icon,
   }) {
     return box(this);
   }
@@ -972,9 +1472,9 @@ class _$_BoxNode extends _BoxNode {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
   }) {
     return box?.call(this);
   }
@@ -983,9 +1483,9 @@ class _$_BoxNode extends _BoxNode {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
     required TResult orElse(),
   }) {
     if (box != null) {
@@ -995,14 +1495,14 @@ class _$_BoxNode extends _BoxNode {
   }
 }
 
-abstract class _BoxNode extends _DecorationNode {
-  const factory _BoxNode(
+abstract class DecorationBoxNode extends DecorationNode {
+  const factory DecorationBoxNode(
       {required final String id,
       required final Color color,
       required final BoxShape shape,
       required final Offset position,
-      required final Size size}) = _$_BoxNode;
-  const _BoxNode._() : super._();
+      required final Size size}) = _$DecorationBoxNode;
+  const DecorationBoxNode._() : super._();
 
   @override
   String get id => throw _privateConstructorUsedError;
@@ -1013,30 +1513,30 @@ abstract class _BoxNode extends _DecorationNode {
   Size get size => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_BoxNodeCopyWith<_$_BoxNode> get copyWith =>
+  _$$DecorationBoxNodeCopyWith<_$DecorationBoxNode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_IconNodeCopyWith<$Res>
-    implements _$DecorationNodeCopyWith<$Res> {
-  factory _$$_IconNodeCopyWith(
-          _$_IconNode value, $Res Function(_$_IconNode) then) =
-      __$$_IconNodeCopyWithImpl<$Res>;
+abstract class _$$DecorationIconNodeCopyWith<$Res>
+    implements $DecorationNodeCopyWith<$Res> {
+  factory _$$DecorationIconNodeCopyWith(_$DecorationIconNode value,
+          $Res Function(_$DecorationIconNode) then) =
+      __$$DecorationIconNodeCopyWithImpl<$Res>;
   @override
   $Res call({String id, IconData icon, Color color, Offset position});
 }
 
 /// @nodoc
-class __$$_IconNodeCopyWithImpl<$Res>
-    extends __$DecorationNodeCopyWithImpl<$Res>
-    implements _$$_IconNodeCopyWith<$Res> {
-  __$$_IconNodeCopyWithImpl(
-      _$_IconNode _value, $Res Function(_$_IconNode) _then)
-      : super(_value, (v) => _then(v as _$_IconNode));
+class __$$DecorationIconNodeCopyWithImpl<$Res>
+    extends _$DecorationNodeCopyWithImpl<$Res>
+    implements _$$DecorationIconNodeCopyWith<$Res> {
+  __$$DecorationIconNodeCopyWithImpl(
+      _$DecorationIconNode _value, $Res Function(_$DecorationIconNode) _then)
+      : super(_value, (v) => _then(v as _$DecorationIconNode));
 
   @override
-  _$_IconNode get _value => super._value as _$_IconNode;
+  _$DecorationIconNode get _value => super._value as _$DecorationIconNode;
 
   @override
   $Res call({
@@ -1045,7 +1545,7 @@ class __$$_IconNodeCopyWithImpl<$Res>
     Object? color = freezed,
     Object? position = freezed,
   }) {
-    return _then(_$_IconNode(
+    return _then(_$DecorationIconNode(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1068,8 +1568,8 @@ class __$$_IconNodeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_IconNode extends _IconNode {
-  const _$_IconNode(
+class _$DecorationIconNode extends DecorationIconNode {
+  const _$DecorationIconNode(
       {required this.id,
       required this.icon,
       required this.color,
@@ -1087,14 +1587,14 @@ class _$_IconNode extends _IconNode {
 
   @override
   String toString() {
-    return '_DecorationNode.icon(id: $id, icon: $icon, color: $color, position: $position)';
+    return 'DecorationNode.icon(id: $id, icon: $icon, color: $color, position: $position)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_IconNode &&
+            other is _$DecorationIconNode &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.icon, icon) &&
             const DeepCollectionEquality().equals(other.color, color) &&
@@ -1111,8 +1611,9 @@ class _$_IconNode extends _IconNode {
 
   @JsonKey(ignore: true)
   @override
-  _$$_IconNodeCopyWith<_$_IconNode> get copyWith =>
-      __$$_IconNodeCopyWithImpl<_$_IconNode>(this, _$identity);
+  _$$DecorationIconNodeCopyWith<_$DecorationIconNode> get copyWith =>
+      __$$DecorationIconNodeCopyWithImpl<_$DecorationIconNode>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1177,9 +1678,9 @@ class _$_IconNode extends _IconNode {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_BaseNode value) base,
-    required TResult Function(_TextNode value) text,
-    required TResult Function(_BoxNode value) box,
-    required TResult Function(_IconNode value) icon,
+    required TResult Function(DecorationTextNode value) text,
+    required TResult Function(DecorationBoxNode value) box,
+    required TResult Function(DecorationIconNode value) icon,
   }) {
     return icon(this);
   }
@@ -1188,9 +1689,9 @@ class _$_IconNode extends _IconNode {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
   }) {
     return icon?.call(this);
   }
@@ -1199,9 +1700,9 @@ class _$_IconNode extends _IconNode {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_BaseNode value)? base,
-    TResult Function(_TextNode value)? text,
-    TResult Function(_BoxNode value)? box,
-    TResult Function(_IconNode value)? icon,
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
     required TResult orElse(),
   }) {
     if (icon != null) {
@@ -1211,13 +1712,13 @@ class _$_IconNode extends _IconNode {
   }
 }
 
-abstract class _IconNode extends _DecorationNode {
-  const factory _IconNode(
+abstract class DecorationIconNode extends DecorationNode {
+  const factory DecorationIconNode(
       {required final String id,
       required final IconData icon,
       required final Color color,
-      required final Offset position}) = _$_IconNode;
-  const _IconNode._() : super._();
+      required final Offset position}) = _$DecorationIconNode;
+  const DecorationIconNode._() : super._();
 
   @override
   String get id => throw _privateConstructorUsedError;
@@ -1227,6 +1728,6 @@ abstract class _IconNode extends _DecorationNode {
   Offset get position => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_IconNodeCopyWith<_$_IconNode> get copyWith =>
+  _$$DecorationIconNodeCopyWith<_$DecorationIconNode> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -5,14 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 part 'redux.freezed.dart';
+
+const _uuid = Uuid();
 
 @freezed
 class AppState with _$AppState {
   const factory AppState({
     required DecorationLayer layer,
-    required AppEditingState editingState,
+    required AppEditingState? editingState,
   }) = _AppState;
 
   static final empty = AppState(
@@ -23,7 +26,7 @@ class AppState with _$AppState {
       cornerRadius: 6,
       nodes: [],
     ),
-    editingState: AppEditingState.empty,
+    editingState: null,
   );
 }
 
@@ -32,6 +35,7 @@ class AppEditingState with _$AppEditingState {
   const factory AppEditingState({
     required DecorationNodeType type,
     required String id,
+    required Offset position,
     required AppEditingTextState textState,
     required AppEditingBoxState boxState,
     required AppEditingIconState iconState,
@@ -40,6 +44,7 @@ class AppEditingState with _$AppEditingState {
   static final empty = AppEditingState(
     type: DecorationNodeType.text,
     id: '',
+    position: Offset.zero,
     textState: AppEditingTextState.empty,
     boxState: AppEditingBoxState.empty,
     iconState: AppEditingIconState.empty,
@@ -101,7 +106,50 @@ class AppAction with _$AppAction {
 }
 
 AppState reducer(AppState state, AppAction action) {
-  return state;
+  return action.when(
+    none: () => state,
+    addNewNode: (position) => state.copyWith(
+      editingState: AppEditingState.empty.copyWith(
+        id: _uuid.v4(),
+      ),
+    ),
+    selectNode: (id, position) {
+      final node = state.layer.nodes.firstWhere((e) => e.id == id);
+      final editingState = node.map(
+        base: (_) {
+          throw StateError('Illegal state');
+        },
+        text: (n) => AppEditingState.empty.copyWith(
+          id: id,
+          position: position,
+          textState: AppEditingTextState(
+            text: n.text,
+            fontSize: n.fontSize,
+            color: n.color,
+            backgroundColor: n.backgroundColor,
+          ),
+        ),
+        box: (n) => AppEditingState.empty.copyWith(
+          id: id,
+          position: position,
+          boxState: AppEditingBoxState(color: n.color, shape: n.shape),
+        ),
+        icon: (n) => AppEditingState.empty.copyWith(
+          id: id,
+          position: position,
+          iconState: AppEditingIconState(icon: n.icon, color: n.color),
+        ),
+      );
+      return state.copyWith(editingState: editingState);
+    },
+    moveNode: (id, position) => state.copyWith(
+      layer: state.layer.copyWith(
+        nodes: state.layer.nodes
+            .map((e) => e.id == id ? e.copyWith(position: position) : e)
+            .toList(growable: false),
+      ),
+    ),
+  );
 }
 
 final storeProvider = Provider<Store<AppState, AppAction>>(

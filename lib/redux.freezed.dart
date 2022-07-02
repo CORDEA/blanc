@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppState {
   DecorationLayer get layer => throw _privateConstructorUsedError;
-  AppEditingState get editingState => throw _privateConstructorUsedError;
+  AppEditingState? get editingState => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -28,10 +28,10 @@ mixin _$AppState {
 abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res>;
-  $Res call({DecorationLayer layer, AppEditingState editingState});
+  $Res call({DecorationLayer layer, AppEditingState? editingState});
 
   $DecorationLayerCopyWith<$Res> get layer;
-  $AppEditingStateCopyWith<$Res> get editingState;
+  $AppEditingStateCopyWith<$Res>? get editingState;
 }
 
 /// @nodoc
@@ -55,7 +55,7 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
       editingState: editingState == freezed
           ? _value.editingState
           : editingState // ignore: cast_nullable_to_non_nullable
-              as AppEditingState,
+              as AppEditingState?,
     ));
   }
 
@@ -67,8 +67,12 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
   }
 
   @override
-  $AppEditingStateCopyWith<$Res> get editingState {
-    return $AppEditingStateCopyWith<$Res>(_value.editingState, (value) {
+  $AppEditingStateCopyWith<$Res>? get editingState {
+    if (_value.editingState == null) {
+      return null;
+    }
+
+    return $AppEditingStateCopyWith<$Res>(_value.editingState!, (value) {
       return _then(_value.copyWith(editingState: value));
     });
   }
@@ -80,12 +84,12 @@ abstract class _$$_AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res> {
           _$_AppState value, $Res Function(_$_AppState) then) =
       __$$_AppStateCopyWithImpl<$Res>;
   @override
-  $Res call({DecorationLayer layer, AppEditingState editingState});
+  $Res call({DecorationLayer layer, AppEditingState? editingState});
 
   @override
   $DecorationLayerCopyWith<$Res> get layer;
   @override
-  $AppEditingStateCopyWith<$Res> get editingState;
+  $AppEditingStateCopyWith<$Res>? get editingState;
 }
 
 /// @nodoc
@@ -111,7 +115,7 @@ class __$$_AppStateCopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
       editingState: editingState == freezed
           ? _value.editingState
           : editingState // ignore: cast_nullable_to_non_nullable
-              as AppEditingState,
+              as AppEditingState?,
     ));
   }
 }
@@ -124,7 +128,7 @@ class _$_AppState implements _AppState {
   @override
   final DecorationLayer layer;
   @override
-  final AppEditingState editingState;
+  final AppEditingState? editingState;
 
   @override
   String toString() {
@@ -156,12 +160,12 @@ class _$_AppState implements _AppState {
 abstract class _AppState implements AppState {
   const factory _AppState(
       {required final DecorationLayer layer,
-      required final AppEditingState editingState}) = _$_AppState;
+      required final AppEditingState? editingState}) = _$_AppState;
 
   @override
   DecorationLayer get layer => throw _privateConstructorUsedError;
   @override
-  AppEditingState get editingState => throw _privateConstructorUsedError;
+  AppEditingState? get editingState => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_AppStateCopyWith<_$_AppState> get copyWith =>
@@ -172,6 +176,7 @@ abstract class _AppState implements AppState {
 mixin _$AppEditingState {
   DecorationNodeType get type => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  Offset get position => throw _privateConstructorUsedError;
   AppEditingTextState get textState => throw _privateConstructorUsedError;
   AppEditingBoxState get boxState => throw _privateConstructorUsedError;
   AppEditingIconState get iconState => throw _privateConstructorUsedError;
@@ -189,6 +194,7 @@ abstract class $AppEditingStateCopyWith<$Res> {
   $Res call(
       {DecorationNodeType type,
       String id,
+      Offset position,
       AppEditingTextState textState,
       AppEditingBoxState boxState,
       AppEditingIconState iconState});
@@ -211,6 +217,7 @@ class _$AppEditingStateCopyWithImpl<$Res>
   $Res call({
     Object? type = freezed,
     Object? id = freezed,
+    Object? position = freezed,
     Object? textState = freezed,
     Object? boxState = freezed,
     Object? iconState = freezed,
@@ -224,6 +231,10 @@ class _$AppEditingStateCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Offset,
       textState: textState == freezed
           ? _value.textState
           : textState // ignore: cast_nullable_to_non_nullable
@@ -271,6 +282,7 @@ abstract class _$$_AppEditingStateCopyWith<$Res>
   $Res call(
       {DecorationNodeType type,
       String id,
+      Offset position,
       AppEditingTextState textState,
       AppEditingBoxState boxState,
       AppEditingIconState iconState});
@@ -298,6 +310,7 @@ class __$$_AppEditingStateCopyWithImpl<$Res>
   $Res call({
     Object? type = freezed,
     Object? id = freezed,
+    Object? position = freezed,
     Object? textState = freezed,
     Object? boxState = freezed,
     Object? iconState = freezed,
@@ -311,6 +324,10 @@ class __$$_AppEditingStateCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Offset,
       textState: textState == freezed
           ? _value.textState
           : textState // ignore: cast_nullable_to_non_nullable
@@ -333,6 +350,7 @@ class _$_AppEditingState implements _AppEditingState {
   const _$_AppEditingState(
       {required this.type,
       required this.id,
+      required this.position,
       required this.textState,
       required this.boxState,
       required this.iconState});
@@ -342,6 +360,8 @@ class _$_AppEditingState implements _AppEditingState {
   @override
   final String id;
   @override
+  final Offset position;
+  @override
   final AppEditingTextState textState;
   @override
   final AppEditingBoxState boxState;
@@ -350,7 +370,7 @@ class _$_AppEditingState implements _AppEditingState {
 
   @override
   String toString() {
-    return 'AppEditingState(type: $type, id: $id, textState: $textState, boxState: $boxState, iconState: $iconState)';
+    return 'AppEditingState(type: $type, id: $id, position: $position, textState: $textState, boxState: $boxState, iconState: $iconState)';
   }
 
   @override
@@ -360,6 +380,7 @@ class _$_AppEditingState implements _AppEditingState {
             other is _$_AppEditingState &&
             const DeepCollectionEquality().equals(other.type, type) &&
             const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.position, position) &&
             const DeepCollectionEquality().equals(other.textState, textState) &&
             const DeepCollectionEquality().equals(other.boxState, boxState) &&
             const DeepCollectionEquality().equals(other.iconState, iconState));
@@ -370,6 +391,7 @@ class _$_AppEditingState implements _AppEditingState {
       runtimeType,
       const DeepCollectionEquality().hash(type),
       const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(position),
       const DeepCollectionEquality().hash(textState),
       const DeepCollectionEquality().hash(boxState),
       const DeepCollectionEquality().hash(iconState));
@@ -384,6 +406,7 @@ abstract class _AppEditingState implements AppEditingState {
   const factory _AppEditingState(
       {required final DecorationNodeType type,
       required final String id,
+      required final Offset position,
       required final AppEditingTextState textState,
       required final AppEditingBoxState boxState,
       required final AppEditingIconState iconState}) = _$_AppEditingState;
@@ -392,6 +415,8 @@ abstract class _AppEditingState implements AppEditingState {
   DecorationNodeType get type => throw _privateConstructorUsedError;
   @override
   String get id => throw _privateConstructorUsedError;
+  @override
+  Offset get position => throw _privateConstructorUsedError;
   @override
   AppEditingTextState get textState => throw _privateConstructorUsedError;
   @override

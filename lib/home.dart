@@ -10,19 +10,11 @@ class Home extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final store = useReducer<AppState, AppAction>(
-      reducer,
-      initialState: AppState.empty,
-      initialAction: const AppAction.none(),
-    );
-    return ProviderScope(
-      overrides: [storeProvider.overrideWithValue(store)],
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Home')),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: _Home(),
-        ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home')),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: _Home(),
       ),
     );
   }
@@ -31,28 +23,33 @@ class Home extends HookConsumerWidget {
 class _Home extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final store = ref.watch(storeProvider);
     return ListView(children: <Widget>[
       Center(
         child: SizedBox.square(
           dimension: 500,
           child: ColoredBox(
             color: Colors.black12,
-            child: Decorator(
-              layer: store.state.layer,
-              onTap: (details) {
-                details.when(
-                  blank: (position) =>
-                      store.dispatch(AppAction.addNewNode(position)),
-                  node: (id, position) =>
-                      store.dispatch(AppAction.selectNode(id, position)),
-                );
-              },
-              onNodeDrag: (details) {
-                store
-                    .dispatch(AppAction.moveNode(details.id, details.position));
-              },
-            ),
+            child: HookConsumer(builder: (context, ref, _) {
+              final store = ref.read(appStoreProvider);
+              final layer = ref
+                  .watch(appStoreProvider.select((value) => value.state.layer));
+              return Decorator(
+                layer: layer,
+                onTap: (details) {
+                  details.when(
+                    blank: (position) =>
+                        store.dispatch(AppAction.addNewNode(position)),
+                    node: (id, position) =>
+                        store.dispatch(AppAction.selectNode(id, position)),
+                  );
+                },
+                onNodeDrag: (details) {
+                  store.dispatch(
+                    AppAction.moveNode(details.id, details.position),
+                  );
+                },
+              );
+            }),
           ),
         ),
       ),
@@ -64,13 +61,15 @@ class _Home extends HookConsumerWidget {
 class _Editor extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final store = ref.watch(storeProvider);
-    final editingState = store.state.editingState;
-    if (editingState == null) {
+    final type = ref.watch(
+      appStoreProvider.select((value) => value.state.editingState?.type),
+    );
+    if (type == null) {
       return const SizedBox.shrink();
     }
+    final store = ref.read(appStoreProvider);
     final List<Widget> children;
-    switch (editingState.type) {
+    switch (type) {
       case DecorationNodeType.text:
         children = [_TextEditor()];
         break;
@@ -84,7 +83,7 @@ class _Editor extends HookConsumerWidget {
     return Column(
       children: <Widget>[
             DropdownButton<DecorationNodeType>(
-              value: editingState.type,
+              value: type,
               items: const [
                 DropdownMenuItem(
                   value: DecorationNodeType.text,
@@ -129,15 +128,17 @@ class _Editor extends HookConsumerWidget {
 class _TextEditor extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final store = ref.watch(storeProvider);
-    final state = store.state.editingState!.textState;
+    final state = ref.watch(appStoreProvider.select(
+      (value) => value.state.editingState?.textState,
+    ));
+    if (state == null) {
+      return const SizedBox();
+    }
     final controller = useTextEditingController();
-    useEffect(() {
-      if (controller.text != state.text) {
-        controller.text = state.text;
-      }
-      return null;
-    }, [state.text]);
+    if (controller.text != state.text) {
+      controller.text = state.text;
+    }
+    final store = ref.read(appStoreProvider);
     return Column(
       children: [
         TextField(
@@ -180,7 +181,7 @@ class _TextEditor extends HookConsumerWidget {
 class _IconEditor extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final store = ref.watch(storeProvider);
+    final store = ref.read(appStoreProvider);
     return Column(
       children: [
         const Padding(

@@ -340,6 +340,21 @@ AppState reducer(AppState state, AppAction action) {
   );
 }
 
-final storeProvider = Provider<Store<AppState, AppAction>>(
-  (ref) => throw UnimplementedError(),
-);
+class AppStore extends ChangeNotifier implements Store<AppState, AppAction> {
+  AppState _state = AppState.empty;
+
+  @override
+  AppState get state => _state;
+
+  @override
+  void dispatch(AppAction action) {
+    final newState = reducer(state, action);
+    if (state == newState) {
+      return;
+    }
+    _state = newState;
+    notifyListeners();
+  }
+}
+
+final appStoreProvider = ChangeNotifierProvider<AppStore>((ref) => AppStore());

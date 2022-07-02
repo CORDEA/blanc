@@ -1,4 +1,6 @@
 import 'package:collection/collection.dart';
+import 'package:decoration_demo/gesture_recognizer.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -25,33 +27,55 @@ class _DecoratorState extends State<Decorator> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapUp: (details) {
-        final position = details.localPosition;
-        final tapped = widget.layer.nodes.firstWhereOrNull(
-          (e) => e.rect.contains(position),
-        );
-        if (tapped == null) {
-          widget.onTap(DecorationTapDetails.blank(position: position));
-          return;
-        }
-        widget.onTap(DecorationTapDetails.node(
-          id: tapped.id,
-          position: position,
-        ));
+    final Map<Type, GestureRecognizerFactory> gestures =
+        <Type, GestureRecognizerFactory>{};
+    final DeviceGestureSettings? gestureSettings =
+        MediaQuery.maybeOf(context)?.gestureSettings;
+    gestures[TapGestureRecognizer] =
+        GestureRecognizerFactoryWithHandlers<TapGestureRecognizer>(
+      () => TapGestureRecognizer(debugOwner: this),
+      (TapGestureRecognizer instance) {
+        instance
+          ..gestureSettings = gestureSettings
+          ..onTapDown = (details) {
+            final position = details.localPosition;
+            final tapped = widget.layer.nodes.firstWhereOrNull(
+              (e) => e.rect.contains(position),
+            );
+            if (tapped == null) {
+              widget.onTap(DecorationTapDetails.blank(position: position));
+              return;
+            }
+            widget.onTap(DecorationTapDetails.node(
+              id: tapped.id,
+              position: position,
+            ));
+          };
       },
-      onHorizontalDragStart: _onDragStart,
-      onVerticalDragStart: _onDragStart,
-      onHorizontalDragUpdate: _onDragUpdate,
-      onVerticalDragUpdate: _onDragUpdate,
-      onHorizontalDragEnd: _onDragEnd,
-      onVerticalDragEnd: _onDragEnd,
+    );
+    gestures[ScaleDetectableMultiDragGestureRecognizer] =
+        GestureRecognizerFactoryWithHandlers<
+            ScaleDetectableMultiDragGestureRecognizer>(
+      () => ScaleDetectableMultiDragGestureRecognizer(context),
+      (ScaleDetectableMultiDragGestureRecognizer instance) {
+        instance
+          ..gestureSettings = gestureSettings
+          ..onDragStart = _onDragStart
+          ..onDragUpdate = _onDragUpdate
+          ..onDragEnd = _onDragEnd
+          ..onScaleStart = (_) {}
+          ..onScaleUpdate = (_) {}
+          ..onScaleEnd = () {};
+      },
+    );
+    return RawGestureDetector(
+      gestures: gestures,
       child: CustomPaint(painter: _Painter(widget.layer)),
     );
   }
 
-  void _onDragStart(DragStartDetails details) {
-    final position = details.localPosition;
+  void _onDragStart(DragGestureDetails details) {
+    final position = details.position;
     final tapped = widget.layer.nodes.firstWhereOrNull(
       (e) => e.rect.contains(position),
     );
@@ -61,17 +85,17 @@ class _DecoratorState extends State<Decorator> {
     movingNodeId = tapped.id;
   }
 
-  void _onDragUpdate(DragUpdateDetails details) {
+  void _onDragUpdate(DragGestureDetails details) {
     if (movingNodeId.isEmpty) {
       return;
     }
     widget.onNodeDrag(DecorationDragDetails(
       id: movingNodeId,
-      position: details.localPosition,
+      position: details.position,
     ));
   }
 
-  void _onDragEnd(DragEndDetails details) {
+  void _onDragEnd() {
     movingNodeId = '';
   }
 }

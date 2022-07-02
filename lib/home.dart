@@ -40,8 +40,18 @@ class _Home extends HookConsumerWidget {
             color: Colors.black12,
             child: Decorator(
               layer: store.state.layer,
-              onTap: (details) {},
-              onNodeDrag: (details) {},
+              onTap: (details) {
+                details.when(
+                  blank: (position) =>
+                      store.dispatch(AppAction.addNewNode(position)),
+                  node: (id, position) =>
+                      store.dispatch(AppAction.selectNode(id, position)),
+                );
+              },
+              onNodeDrag: (details) {
+                store
+                    .dispatch(AppAction.moveNode(details.id, details.position));
+              },
             ),
           ),
         ),

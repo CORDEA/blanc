@@ -109,7 +109,6 @@ class _Painter extends CustomPainter {
 
     for (final node in layer.nodes) {
       node.map(
-        base: (_) {},
         text: (node) => _drawText(canvas, node),
         box: (node) => _drawBox(canvas, node),
         icon: (node) => _drawIcon(canvas, node),
@@ -197,11 +196,6 @@ class DecorationLayer with _$DecorationLayer {
 class DecorationNode with _$DecorationNode {
   const DecorationNode._();
 
-  const factory DecorationNode.base({
-    required String id,
-    required Offset position,
-  }) = _BaseNode;
-
   @With<_TextNodeBase>()
   factory DecorationNode.text({
     required String id,
@@ -229,7 +223,6 @@ class DecorationNode with _$DecorationNode {
   }) = DecorationIconNode;
 
   static const _iconSize = 24.0;
-  static const empty = DecorationNode.base(id: '', position: Offset.zero);
 }
 
 mixin _TextNodeBase {
@@ -267,13 +260,11 @@ mixin _TextNodeBase {
 extension DecorationNodeExt on DecorationNode {
   Rect get rect {
     final position = map(
-      base: (_) => Offset.zero,
       text: (e) => e.position,
       box: (e) => e.position,
       icon: (e) => e.position,
     );
     final size = map(
-      base: (_) => Size.zero,
       text: (e) => e.size,
       box: (e) => e.size,
       icon: (_) => const Size.square(DecorationNode._iconSize),

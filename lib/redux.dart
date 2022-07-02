@@ -116,9 +116,6 @@ AppState reducer(AppState state, AppAction action) {
     selectNode: (id, position) {
       final node = state.layer.nodes.firstWhere((e) => e.id == id);
       final editingState = node.map(
-        base: (_) {
-          throw StateError('Illegal state');
-        },
         text: (n) => AppEditingState.empty.copyWith(
           id: id,
           position: position,

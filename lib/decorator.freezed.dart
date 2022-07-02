@@ -727,10 +727,10 @@ abstract class _DecorationLayer implements DecorationLayer {
 /// @nodoc
 mixin _$DecorationNode {
   String get id => throw _privateConstructorUsedError;
+  Color get color => throw _privateConstructorUsedError;
   Offset get position => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, Offset position) base,
     required TResult Function(
             String id,
             String text,
@@ -750,7 +750,6 @@ mixin _$DecorationNode {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
     TResult Function(String id, String text, Color color, Color backgroundColor,
             double fontSize, FontWeight fontWeight, Offset position)?
         text,
@@ -763,7 +762,6 @@ mixin _$DecorationNode {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
     TResult Function(String id, String text, Color color, Color backgroundColor,
             double fontSize, FontWeight fontWeight, Offset position)?
         text,
@@ -777,7 +775,6 @@ mixin _$DecorationNode {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BaseNode value) base,
     required TResult Function(DecorationTextNode value) text,
     required TResult Function(DecorationBoxNode value) box,
     required TResult Function(DecorationIconNode value) icon,
@@ -785,7 +782,6 @@ mixin _$DecorationNode {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
@@ -793,7 +789,6 @@ mixin _$DecorationNode {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
@@ -811,7 +806,7 @@ abstract class $DecorationNodeCopyWith<$Res> {
   factory $DecorationNodeCopyWith(
           DecorationNode value, $Res Function(DecorationNode) then) =
       _$DecorationNodeCopyWithImpl<$Res>;
-  $Res call({String id, Offset position});
+  $Res call({String id, Color color, Offset position});
 }
 
 /// @nodoc
@@ -826,6 +821,7 @@ class _$DecorationNodeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? color = freezed,
     Object? position = freezed,
   }) {
     return _then(_value.copyWith(
@@ -833,197 +829,16 @@ class _$DecorationNodeCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
       position: position == freezed
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
               as Offset,
     ));
   }
-}
-
-/// @nodoc
-abstract class _$$_BaseNodeCopyWith<$Res>
-    implements $DecorationNodeCopyWith<$Res> {
-  factory _$$_BaseNodeCopyWith(
-          _$_BaseNode value, $Res Function(_$_BaseNode) then) =
-      __$$_BaseNodeCopyWithImpl<$Res>;
-  @override
-  $Res call({String id, Offset position});
-}
-
-/// @nodoc
-class __$$_BaseNodeCopyWithImpl<$Res> extends _$DecorationNodeCopyWithImpl<$Res>
-    implements _$$_BaseNodeCopyWith<$Res> {
-  __$$_BaseNodeCopyWithImpl(
-      _$_BaseNode _value, $Res Function(_$_BaseNode) _then)
-      : super(_value, (v) => _then(v as _$_BaseNode));
-
-  @override
-  _$_BaseNode get _value => super._value as _$_BaseNode;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? position = freezed,
-  }) {
-    return _then(_$_BaseNode(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      position: position == freezed
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Offset,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_BaseNode extends _BaseNode {
-  const _$_BaseNode({required this.id, required this.position}) : super._();
-
-  @override
-  final String id;
-  @override
-  final Offset position;
-
-  @override
-  String toString() {
-    return 'DecorationNode.base(id: $id, position: $position)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_BaseNode &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.position, position));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(position));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$_BaseNodeCopyWith<_$_BaseNode> get copyWith =>
-      __$$_BaseNodeCopyWithImpl<_$_BaseNode>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String id, Offset position) base,
-    required TResult Function(
-            String id,
-            String text,
-            Color color,
-            Color backgroundColor,
-            double fontSize,
-            FontWeight fontWeight,
-            Offset position)
-        text,
-    required TResult Function(
-            String id, Color color, BoxShape shape, Offset position, Size size)
-        box,
-    required TResult Function(
-            String id, IconData icon, Color color, Offset position)
-        icon,
-  }) {
-    return base(id, position);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
-    TResult Function(String id, String text, Color color, Color backgroundColor,
-            double fontSize, FontWeight fontWeight, Offset position)?
-        text,
-    TResult Function(
-            String id, Color color, BoxShape shape, Offset position, Size size)?
-        box,
-    TResult Function(String id, IconData icon, Color color, Offset position)?
-        icon,
-  }) {
-    return base?.call(id, position);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
-    TResult Function(String id, String text, Color color, Color backgroundColor,
-            double fontSize, FontWeight fontWeight, Offset position)?
-        text,
-    TResult Function(
-            String id, Color color, BoxShape shape, Offset position, Size size)?
-        box,
-    TResult Function(String id, IconData icon, Color color, Offset position)?
-        icon,
-    required TResult orElse(),
-  }) {
-    if (base != null) {
-      return base(id, position);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_BaseNode value) base,
-    required TResult Function(DecorationTextNode value) text,
-    required TResult Function(DecorationBoxNode value) box,
-    required TResult Function(DecorationIconNode value) icon,
-  }) {
-    return base(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
-    TResult Function(DecorationTextNode value)? text,
-    TResult Function(DecorationBoxNode value)? box,
-    TResult Function(DecorationIconNode value)? icon,
-  }) {
-    return base?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
-    TResult Function(DecorationTextNode value)? text,
-    TResult Function(DecorationBoxNode value)? box,
-    TResult Function(DecorationIconNode value)? icon,
-    required TResult orElse(),
-  }) {
-    if (base != null) {
-      return base(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _BaseNode extends DecorationNode {
-  const factory _BaseNode(
-      {required final String id, required final Offset position}) = _$_BaseNode;
-  const _BaseNode._() : super._();
-
-  @override
-  String get id => throw _privateConstructorUsedError;
-  @override
-  Offset get position => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(ignore: true)
-  _$$_BaseNodeCopyWith<_$_BaseNode> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1166,7 +981,6 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, Offset position) base,
     required TResult Function(
             String id,
             String text,
@@ -1190,7 +1004,6 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
     TResult Function(String id, String text, Color color, Color backgroundColor,
             double fontSize, FontWeight fontWeight, Offset position)?
         text,
@@ -1207,7 +1020,6 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
     TResult Function(String id, String text, Color color, Color backgroundColor,
             double fontSize, FontWeight fontWeight, Offset position)?
         text,
@@ -1228,7 +1040,6 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BaseNode value) base,
     required TResult Function(DecorationTextNode value) text,
     required TResult Function(DecorationBoxNode value) box,
     required TResult Function(DecorationIconNode value) icon,
@@ -1239,7 +1050,6 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
@@ -1250,7 +1060,6 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
@@ -1278,6 +1087,7 @@ abstract class DecorationTextNode extends DecorationNode
   @override
   String get id => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
+  @override
   Color get color => throw _privateConstructorUsedError;
   Color get backgroundColor => throw _privateConstructorUsedError;
   double get fontSize => throw _privateConstructorUsedError;
@@ -1401,7 +1211,6 @@ class _$DecorationBoxNode extends DecorationBoxNode {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, Offset position) base,
     required TResult Function(
             String id,
             String text,
@@ -1424,7 +1233,6 @@ class _$DecorationBoxNode extends DecorationBoxNode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
     TResult Function(String id, String text, Color color, Color backgroundColor,
             double fontSize, FontWeight fontWeight, Offset position)?
         text,
@@ -1440,7 +1248,6 @@ class _$DecorationBoxNode extends DecorationBoxNode {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
     TResult Function(String id, String text, Color color, Color backgroundColor,
             double fontSize, FontWeight fontWeight, Offset position)?
         text,
@@ -1460,7 +1267,6 @@ class _$DecorationBoxNode extends DecorationBoxNode {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BaseNode value) base,
     required TResult Function(DecorationTextNode value) text,
     required TResult Function(DecorationBoxNode value) box,
     required TResult Function(DecorationIconNode value) icon,
@@ -1471,7 +1277,6 @@ class _$DecorationBoxNode extends DecorationBoxNode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
@@ -1482,7 +1287,6 @@ class _$DecorationBoxNode extends DecorationBoxNode {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
@@ -1506,6 +1310,7 @@ abstract class DecorationBoxNode extends DecorationNode {
 
   @override
   String get id => throw _privateConstructorUsedError;
+  @override
   Color get color => throw _privateConstructorUsedError;
   BoxShape get shape => throw _privateConstructorUsedError;
   @override
@@ -1618,7 +1423,6 @@ class _$DecorationIconNode extends DecorationIconNode {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, Offset position) base,
     required TResult Function(
             String id,
             String text,
@@ -1641,7 +1445,6 @@ class _$DecorationIconNode extends DecorationIconNode {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
     TResult Function(String id, String text, Color color, Color backgroundColor,
             double fontSize, FontWeight fontWeight, Offset position)?
         text,
@@ -1657,7 +1460,6 @@ class _$DecorationIconNode extends DecorationIconNode {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, Offset position)? base,
     TResult Function(String id, String text, Color color, Color backgroundColor,
             double fontSize, FontWeight fontWeight, Offset position)?
         text,
@@ -1677,7 +1479,6 @@ class _$DecorationIconNode extends DecorationIconNode {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BaseNode value) base,
     required TResult Function(DecorationTextNode value) text,
     required TResult Function(DecorationBoxNode value) box,
     required TResult Function(DecorationIconNode value) icon,
@@ -1688,7 +1489,6 @@ class _$DecorationIconNode extends DecorationIconNode {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
@@ -1699,7 +1499,6 @@ class _$DecorationIconNode extends DecorationIconNode {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BaseNode value)? base,
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
@@ -1723,6 +1522,7 @@ abstract class DecorationIconNode extends DecorationNode {
   @override
   String get id => throw _privateConstructorUsedError;
   IconData get icon => throw _privateConstructorUsedError;
+  @override
   Color get color => throw _privateConstructorUsedError;
   @override
   Offset get position => throw _privateConstructorUsedError;

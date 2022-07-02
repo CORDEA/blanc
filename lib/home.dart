@@ -72,13 +72,13 @@ class _Editor extends HookConsumerWidget {
     final List<Widget> children;
     switch (editingState.type) {
       case DecorationNodeType.text:
-        children = _buildTextSection(editingState.textState);
+        children = [_TextEditor()];
         break;
       case DecorationNodeType.box:
         children = [];
         break;
       case DecorationNodeType.icon:
-        children = _buildIconSection();
+        children = [_IconEditor()];
         break;
     }
     return Column(
@@ -99,13 +99,14 @@ class _Editor extends HookConsumerWidget {
                   child: Text('Icon'),
                 ),
               ],
-              onChanged: (value) {},
+              onChanged: (value) =>
+                  store.dispatch(AppAction.changeNodeType(value)),
             ),
             const Divider(),
             Align(
               alignment: Alignment.centerRight,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () => store.dispatch(const AppAction.removeNode()),
                 icon: const Icon(Icons.delete),
               ),
             )
@@ -116,15 +117,20 @@ class _Editor extends HookConsumerWidget {
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => store.dispatch(const AppAction.applyNode()),
                 child: const Text('Submit'),
               ),
             ),
           ],
     );
   }
+}
 
-  List<Widget> _buildTextSection(AppEditingTextState state) {
+class _TextEditor extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final store = ref.watch(storeProvider);
+    final state = store.state.editingState!.textState;
     final controller = useTextEditingController();
     useEffect(() {
       if (controller.text != state.text) {
@@ -132,51 +138,68 @@ class _Editor extends HookConsumerWidget {
       }
       return null;
     }, [state.text]);
-    return [
-      Builder(builder: (context) {
-        return TextField(
+    return Column(
+      children: [
+        TextField(
           controller: controller,
           decoration: const InputDecoration(hintText: 'Text'),
-          onChanged: (text) {},
-        );
-      }),
-      const SizedBox(height: 8),
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Font size'),
-      ),
-      Slider(
-        min: 10,
-        max: 60,
-        value: state.fontSize,
-        onChanged: (value) {},
-      ),
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Color'),
-      ),
-      ColorPicker(onSelected: (color) {}),
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Background color'),
-      ),
-      ColorPicker(onSelected: (color) {}),
-    ];
+          onChanged: (text) => store.dispatch(AppAction.updateText(text)),
+        ),
+        const SizedBox(height: 8),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: Text('Font size'),
+        ),
+        Slider(
+          min: 10,
+          max: 60,
+          value: state.fontSize,
+          onChanged: (value) => store.dispatch(AppAction.updateFontSize(value)),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: Text('Color'),
+        ),
+        ColorPicker(
+          onSelected: (color) =>
+              store.dispatch(AppAction.selectTextColor(color)),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: Text('Background color'),
+        ),
+        ColorPicker(
+          onSelected: (color) =>
+              store.dispatch(AppAction.selectTextBackgroundColor(color)),
+        ),
+      ],
+    );
   }
+}
 
-  List<Widget> _buildIconSection() {
-    return [
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Icon'),
-      ),
-      IconPicker(onSelected: (icon) {}),
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
-        child: Text('Color'),
-      ),
-      ColorPicker(onSelected: (color) {}),
-    ];
+class _IconEditor extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final store = ref.watch(storeProvider);
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: Text('Icon'),
+        ),
+        IconPicker(
+          onSelected: (icon) => store.dispatch(AppAction.selectIcon(icon)),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: Text('Color'),
+        ),
+        ColorPicker(
+          onSelected: (color) =>
+              store.dispatch(AppAction.selectIconColor(color)),
+        ),
+      ],
+    );
   }
 }
 

@@ -346,14 +346,15 @@ class __$$_AppEditingStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AppEditingState implements _AppEditingState {
+class _$_AppEditingState extends _AppEditingState {
   const _$_AppEditingState(
       {required this.type,
       required this.id,
       required this.position,
       required this.textState,
       required this.boxState,
-      required this.iconState});
+      required this.iconState})
+      : super._();
 
   @override
   final DecorationNodeType type;
@@ -402,7 +403,7 @@ class _$_AppEditingState implements _AppEditingState {
       __$$_AppEditingStateCopyWithImpl<_$_AppEditingState>(this, _$identity);
 }
 
-abstract class _AppEditingState implements AppEditingState {
+abstract class _AppEditingState extends AppEditingState {
   const factory _AppEditingState(
       {required final DecorationNodeType type,
       required final String id,
@@ -410,6 +411,7 @@ abstract class _AppEditingState implements AppEditingState {
       required final AppEditingTextState textState,
       required final AppEditingBoxState boxState,
       required final AppEditingIconState iconState}) = _$_AppEditingState;
+  const _AppEditingState._() : super._();
 
   @override
   DecorationNodeType get type => throw _privateConstructorUsedError;
@@ -537,12 +539,13 @@ class __$$_AppEditingTextStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AppEditingTextState implements _AppEditingTextState {
+class _$_AppEditingTextState extends _AppEditingTextState {
   const _$_AppEditingTextState(
       {required this.text,
       required this.fontSize,
       required this.color,
-      required this.backgroundColor});
+      required this.backgroundColor})
+      : super._();
 
   @override
   final String text;
@@ -585,12 +588,13 @@ class _$_AppEditingTextState implements _AppEditingTextState {
           this, _$identity);
 }
 
-abstract class _AppEditingTextState implements AppEditingTextState {
+abstract class _AppEditingTextState extends AppEditingTextState {
   const factory _AppEditingTextState(
       {required final String text,
       required final double fontSize,
       required final Color color,
       required final Color backgroundColor}) = _$_AppEditingTextState;
+  const _AppEditingTextState._() : super._();
 
   @override
   String get text => throw _privateConstructorUsedError;
@@ -692,8 +696,9 @@ class __$$_AppEditingBoxStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AppEditingBoxState implements _AppEditingBoxState {
-  const _$_AppEditingBoxState({required this.color, required this.shape});
+class _$_AppEditingBoxState extends _AppEditingBoxState {
+  const _$_AppEditingBoxState({required this.color, required this.shape})
+      : super._();
 
   @override
   final Color color;
@@ -727,10 +732,11 @@ class _$_AppEditingBoxState implements _AppEditingBoxState {
           this, _$identity);
 }
 
-abstract class _AppEditingBoxState implements AppEditingBoxState {
+abstract class _AppEditingBoxState extends AppEditingBoxState {
   const factory _AppEditingBoxState(
       {required final Color color,
       required final BoxShape shape}) = _$_AppEditingBoxState;
+  const _AppEditingBoxState._() : super._();
 
   @override
   Color get color => throw _privateConstructorUsedError;
@@ -828,8 +834,9 @@ class __$$_AppEditingIconStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AppEditingIconState implements _AppEditingIconState {
-  const _$_AppEditingIconState({required this.icon, required this.color});
+class _$_AppEditingIconState extends _AppEditingIconState {
+  const _$_AppEditingIconState({required this.icon, required this.color})
+      : super._();
 
   @override
   final IconData? icon;
@@ -863,10 +870,11 @@ class _$_AppEditingIconState implements _AppEditingIconState {
           this, _$identity);
 }
 
-abstract class _AppEditingIconState implements AppEditingIconState {
+abstract class _AppEditingIconState extends AppEditingIconState {
   const factory _AppEditingIconState(
       {required final IconData? icon,
       required final Color color}) = _$_AppEditingIconState;
+  const _AppEditingIconState._() : super._();
 
   @override
   IconData? get icon => throw _privateConstructorUsedError;
@@ -886,6 +894,15 @@ mixin _$AppAction {
     required TResult Function(Offset position) addNewNode,
     required TResult Function(String id, Offset position) selectNode,
     required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -894,6 +911,15 @@ mixin _$AppAction {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -902,6 +928,15 @@ mixin _$AppAction {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -911,6 +946,16 @@ mixin _$AppAction {
     required TResult Function(_AddNewNode value) addNewNode,
     required TResult Function(_SelectNode value) selectNode,
     required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -919,6 +964,16 @@ mixin _$AppAction {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -927,6 +982,16 @@ mixin _$AppAction {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -989,6 +1054,15 @@ class _$_None implements _None {
     required TResult Function(Offset position) addNewNode,
     required TResult Function(String id, Offset position) selectNode,
     required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
   }) {
     return none();
   }
@@ -1000,6 +1074,15 @@ class _$_None implements _None {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
   }) {
     return none?.call();
   }
@@ -1011,6 +1094,15 @@ class _$_None implements _None {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
     required TResult orElse(),
   }) {
     if (none != null) {
@@ -1026,6 +1118,16 @@ class _$_None implements _None {
     required TResult Function(_AddNewNode value) addNewNode,
     required TResult Function(_SelectNode value) selectNode,
     required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
   }) {
     return none(this);
   }
@@ -1037,6 +1139,16 @@ class _$_None implements _None {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
   }) {
     return none?.call(this);
   }
@@ -1048,6 +1160,16 @@ class _$_None implements _None {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
     required TResult orElse(),
   }) {
     if (none != null) {
@@ -1129,6 +1251,15 @@ class _$_AddNewNode implements _AddNewNode {
     required TResult Function(Offset position) addNewNode,
     required TResult Function(String id, Offset position) selectNode,
     required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
   }) {
     return addNewNode(position);
   }
@@ -1140,6 +1271,15 @@ class _$_AddNewNode implements _AddNewNode {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
   }) {
     return addNewNode?.call(position);
   }
@@ -1151,6 +1291,15 @@ class _$_AddNewNode implements _AddNewNode {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
     required TResult orElse(),
   }) {
     if (addNewNode != null) {
@@ -1166,6 +1315,16 @@ class _$_AddNewNode implements _AddNewNode {
     required TResult Function(_AddNewNode value) addNewNode,
     required TResult Function(_SelectNode value) selectNode,
     required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
   }) {
     return addNewNode(this);
   }
@@ -1177,6 +1336,16 @@ class _$_AddNewNode implements _AddNewNode {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
   }) {
     return addNewNode?.call(this);
   }
@@ -1188,6 +1357,16 @@ class _$_AddNewNode implements _AddNewNode {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
     required TResult orElse(),
   }) {
     if (addNewNode != null) {
@@ -1284,6 +1463,15 @@ class _$_SelectNode implements _SelectNode {
     required TResult Function(Offset position) addNewNode,
     required TResult Function(String id, Offset position) selectNode,
     required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
   }) {
     return selectNode(id, position);
   }
@@ -1295,6 +1483,15 @@ class _$_SelectNode implements _SelectNode {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
   }) {
     return selectNode?.call(id, position);
   }
@@ -1306,6 +1503,15 @@ class _$_SelectNode implements _SelectNode {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
     required TResult orElse(),
   }) {
     if (selectNode != null) {
@@ -1321,6 +1527,16 @@ class _$_SelectNode implements _SelectNode {
     required TResult Function(_AddNewNode value) addNewNode,
     required TResult Function(_SelectNode value) selectNode,
     required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
   }) {
     return selectNode(this);
   }
@@ -1332,6 +1548,16 @@ class _$_SelectNode implements _SelectNode {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
   }) {
     return selectNode?.call(this);
   }
@@ -1343,6 +1569,16 @@ class _$_SelectNode implements _SelectNode {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
     required TResult orElse(),
   }) {
     if (selectNode != null) {
@@ -1441,6 +1677,15 @@ class _$_MoveNode implements _MoveNode {
     required TResult Function(Offset position) addNewNode,
     required TResult Function(String id, Offset position) selectNode,
     required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
   }) {
     return moveNode(id, position);
   }
@@ -1452,6 +1697,15 @@ class _$_MoveNode implements _MoveNode {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
   }) {
     return moveNode?.call(id, position);
   }
@@ -1463,6 +1717,15 @@ class _$_MoveNode implements _MoveNode {
     TResult Function(Offset position)? addNewNode,
     TResult Function(String id, Offset position)? selectNode,
     TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
     required TResult orElse(),
   }) {
     if (moveNode != null) {
@@ -1478,6 +1741,16 @@ class _$_MoveNode implements _MoveNode {
     required TResult Function(_AddNewNode value) addNewNode,
     required TResult Function(_SelectNode value) selectNode,
     required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
   }) {
     return moveNode(this);
   }
@@ -1489,6 +1762,16 @@ class _$_MoveNode implements _MoveNode {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
   }) {
     return moveNode?.call(this);
   }
@@ -1500,6 +1783,16 @@ class _$_MoveNode implements _MoveNode {
     TResult Function(_AddNewNode value)? addNewNode,
     TResult Function(_SelectNode value)? selectNode,
     TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
     required TResult orElse(),
   }) {
     if (moveNode != null) {
@@ -1517,4 +1810,1775 @@ abstract class _MoveNode implements AppAction {
   @JsonKey(ignore: true)
   _$$_MoveNodeCopyWith<_$_MoveNode> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_RemoveNodeCopyWith<$Res> {
+  factory _$$_RemoveNodeCopyWith(
+          _$_RemoveNode value, $Res Function(_$_RemoveNode) then) =
+      __$$_RemoveNodeCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_RemoveNodeCopyWithImpl<$Res> extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_RemoveNodeCopyWith<$Res> {
+  __$$_RemoveNodeCopyWithImpl(
+      _$_RemoveNode _value, $Res Function(_$_RemoveNode) _then)
+      : super(_value, (v) => _then(v as _$_RemoveNode));
+
+  @override
+  _$_RemoveNode get _value => super._value as _$_RemoveNode;
+}
+
+/// @nodoc
+
+class _$_RemoveNode implements _RemoveNode {
+  const _$_RemoveNode();
+
+  @override
+  String toString() {
+    return 'AppAction.removeNode()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_RemoveNode);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return removeNode();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return removeNode?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (removeNode != null) {
+      return removeNode();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return removeNode(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return removeNode?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (removeNode != null) {
+      return removeNode(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RemoveNode implements AppAction {
+  const factory _RemoveNode() = _$_RemoveNode;
+}
+
+/// @nodoc
+abstract class _$$_ChangeNodeTypeCopyWith<$Res> {
+  factory _$$_ChangeNodeTypeCopyWith(
+          _$_ChangeNodeType value, $Res Function(_$_ChangeNodeType) then) =
+      __$$_ChangeNodeTypeCopyWithImpl<$Res>;
+  $Res call({DecorationNodeType? type});
+}
+
+/// @nodoc
+class __$$_ChangeNodeTypeCopyWithImpl<$Res>
+    extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_ChangeNodeTypeCopyWith<$Res> {
+  __$$_ChangeNodeTypeCopyWithImpl(
+      _$_ChangeNodeType _value, $Res Function(_$_ChangeNodeType) _then)
+      : super(_value, (v) => _then(v as _$_ChangeNodeType));
+
+  @override
+  _$_ChangeNodeType get _value => super._value as _$_ChangeNodeType;
+
+  @override
+  $Res call({
+    Object? type = freezed,
+  }) {
+    return _then(_$_ChangeNodeType(
+      type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as DecorationNodeType?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ChangeNodeType implements _ChangeNodeType {
+  const _$_ChangeNodeType(this.type);
+
+  @override
+  final DecorationNodeType? type;
+
+  @override
+  String toString() {
+    return 'AppAction.changeNodeType(type: $type)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ChangeNodeType &&
+            const DeepCollectionEquality().equals(other.type, type));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(type));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_ChangeNodeTypeCopyWith<_$_ChangeNodeType> get copyWith =>
+      __$$_ChangeNodeTypeCopyWithImpl<_$_ChangeNodeType>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return changeNodeType(type);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return changeNodeType?.call(type);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (changeNodeType != null) {
+      return changeNodeType(type);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return changeNodeType(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return changeNodeType?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (changeNodeType != null) {
+      return changeNodeType(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ChangeNodeType implements AppAction {
+  const factory _ChangeNodeType(final DecorationNodeType? type) =
+      _$_ChangeNodeType;
+
+  DecorationNodeType? get type => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_ChangeNodeTypeCopyWith<_$_ChangeNodeType> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_UpdateTextCopyWith<$Res> {
+  factory _$$_UpdateTextCopyWith(
+          _$_UpdateText value, $Res Function(_$_UpdateText) then) =
+      __$$_UpdateTextCopyWithImpl<$Res>;
+  $Res call({String text});
+}
+
+/// @nodoc
+class __$$_UpdateTextCopyWithImpl<$Res> extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_UpdateTextCopyWith<$Res> {
+  __$$_UpdateTextCopyWithImpl(
+      _$_UpdateText _value, $Res Function(_$_UpdateText) _then)
+      : super(_value, (v) => _then(v as _$_UpdateText));
+
+  @override
+  _$_UpdateText get _value => super._value as _$_UpdateText;
+
+  @override
+  $Res call({
+    Object? text = freezed,
+  }) {
+    return _then(_$_UpdateText(
+      text == freezed
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_UpdateText implements _UpdateText {
+  const _$_UpdateText(this.text);
+
+  @override
+  final String text;
+
+  @override
+  String toString() {
+    return 'AppAction.updateText(text: $text)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_UpdateText &&
+            const DeepCollectionEquality().equals(other.text, text));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(text));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_UpdateTextCopyWith<_$_UpdateText> get copyWith =>
+      __$$_UpdateTextCopyWithImpl<_$_UpdateText>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return updateText(text);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return updateText?.call(text);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (updateText != null) {
+      return updateText(text);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return updateText(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return updateText?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (updateText != null) {
+      return updateText(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateText implements AppAction {
+  const factory _UpdateText(final String text) = _$_UpdateText;
+
+  String get text => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_UpdateTextCopyWith<_$_UpdateText> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_UpdateFontSizeCopyWith<$Res> {
+  factory _$$_UpdateFontSizeCopyWith(
+          _$_UpdateFontSize value, $Res Function(_$_UpdateFontSize) then) =
+      __$$_UpdateFontSizeCopyWithImpl<$Res>;
+  $Res call({double fontSize});
+}
+
+/// @nodoc
+class __$$_UpdateFontSizeCopyWithImpl<$Res>
+    extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_UpdateFontSizeCopyWith<$Res> {
+  __$$_UpdateFontSizeCopyWithImpl(
+      _$_UpdateFontSize _value, $Res Function(_$_UpdateFontSize) _then)
+      : super(_value, (v) => _then(v as _$_UpdateFontSize));
+
+  @override
+  _$_UpdateFontSize get _value => super._value as _$_UpdateFontSize;
+
+  @override
+  $Res call({
+    Object? fontSize = freezed,
+  }) {
+    return _then(_$_UpdateFontSize(
+      fontSize == freezed
+          ? _value.fontSize
+          : fontSize // ignore: cast_nullable_to_non_nullable
+              as double,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_UpdateFontSize implements _UpdateFontSize {
+  const _$_UpdateFontSize(this.fontSize);
+
+  @override
+  final double fontSize;
+
+  @override
+  String toString() {
+    return 'AppAction.updateFontSize(fontSize: $fontSize)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_UpdateFontSize &&
+            const DeepCollectionEquality().equals(other.fontSize, fontSize));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(fontSize));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_UpdateFontSizeCopyWith<_$_UpdateFontSize> get copyWith =>
+      __$$_UpdateFontSizeCopyWithImpl<_$_UpdateFontSize>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return updateFontSize(fontSize);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return updateFontSize?.call(fontSize);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (updateFontSize != null) {
+      return updateFontSize(fontSize);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return updateFontSize(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return updateFontSize?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (updateFontSize != null) {
+      return updateFontSize(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UpdateFontSize implements AppAction {
+  const factory _UpdateFontSize(final double fontSize) = _$_UpdateFontSize;
+
+  double get fontSize => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_UpdateFontSizeCopyWith<_$_UpdateFontSize> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_SelectTextColorCopyWith<$Res> {
+  factory _$$_SelectTextColorCopyWith(
+          _$_SelectTextColor value, $Res Function(_$_SelectTextColor) then) =
+      __$$_SelectTextColorCopyWithImpl<$Res>;
+  $Res call({Color color});
+}
+
+/// @nodoc
+class __$$_SelectTextColorCopyWithImpl<$Res>
+    extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_SelectTextColorCopyWith<$Res> {
+  __$$_SelectTextColorCopyWithImpl(
+      _$_SelectTextColor _value, $Res Function(_$_SelectTextColor) _then)
+      : super(_value, (v) => _then(v as _$_SelectTextColor));
+
+  @override
+  _$_SelectTextColor get _value => super._value as _$_SelectTextColor;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+  }) {
+    return _then(_$_SelectTextColor(
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SelectTextColor implements _SelectTextColor {
+  const _$_SelectTextColor(this.color);
+
+  @override
+  final Color color;
+
+  @override
+  String toString() {
+    return 'AppAction.selectTextColor(color: $color)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SelectTextColor &&
+            const DeepCollectionEquality().equals(other.color, color));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(color));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SelectTextColorCopyWith<_$_SelectTextColor> get copyWith =>
+      __$$_SelectTextColorCopyWithImpl<_$_SelectTextColor>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return selectTextColor(color);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return selectTextColor?.call(color);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (selectTextColor != null) {
+      return selectTextColor(color);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return selectTextColor(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return selectTextColor?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (selectTextColor != null) {
+      return selectTextColor(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SelectTextColor implements AppAction {
+  const factory _SelectTextColor(final Color color) = _$_SelectTextColor;
+
+  Color get color => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_SelectTextColorCopyWith<_$_SelectTextColor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_SelectTextBackgroundColorCopyWith<$Res> {
+  factory _$$_SelectTextBackgroundColorCopyWith(
+          _$_SelectTextBackgroundColor value,
+          $Res Function(_$_SelectTextBackgroundColor) then) =
+      __$$_SelectTextBackgroundColorCopyWithImpl<$Res>;
+  $Res call({Color color});
+}
+
+/// @nodoc
+class __$$_SelectTextBackgroundColorCopyWithImpl<$Res>
+    extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_SelectTextBackgroundColorCopyWith<$Res> {
+  __$$_SelectTextBackgroundColorCopyWithImpl(
+      _$_SelectTextBackgroundColor _value,
+      $Res Function(_$_SelectTextBackgroundColor) _then)
+      : super(_value, (v) => _then(v as _$_SelectTextBackgroundColor));
+
+  @override
+  _$_SelectTextBackgroundColor get _value =>
+      super._value as _$_SelectTextBackgroundColor;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+  }) {
+    return _then(_$_SelectTextBackgroundColor(
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SelectTextBackgroundColor implements _SelectTextBackgroundColor {
+  const _$_SelectTextBackgroundColor(this.color);
+
+  @override
+  final Color color;
+
+  @override
+  String toString() {
+    return 'AppAction.selectTextBackgroundColor(color: $color)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SelectTextBackgroundColor &&
+            const DeepCollectionEquality().equals(other.color, color));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(color));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SelectTextBackgroundColorCopyWith<_$_SelectTextBackgroundColor>
+      get copyWith => __$$_SelectTextBackgroundColorCopyWithImpl<
+          _$_SelectTextBackgroundColor>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return selectTextBackgroundColor(color);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return selectTextBackgroundColor?.call(color);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (selectTextBackgroundColor != null) {
+      return selectTextBackgroundColor(color);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return selectTextBackgroundColor(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return selectTextBackgroundColor?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (selectTextBackgroundColor != null) {
+      return selectTextBackgroundColor(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SelectTextBackgroundColor implements AppAction {
+  const factory _SelectTextBackgroundColor(final Color color) =
+      _$_SelectTextBackgroundColor;
+
+  Color get color => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_SelectTextBackgroundColorCopyWith<_$_SelectTextBackgroundColor>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_SelectIconCopyWith<$Res> {
+  factory _$$_SelectIconCopyWith(
+          _$_SelectIcon value, $Res Function(_$_SelectIcon) then) =
+      __$$_SelectIconCopyWithImpl<$Res>;
+  $Res call({IconData icon});
+}
+
+/// @nodoc
+class __$$_SelectIconCopyWithImpl<$Res> extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_SelectIconCopyWith<$Res> {
+  __$$_SelectIconCopyWithImpl(
+      _$_SelectIcon _value, $Res Function(_$_SelectIcon) _then)
+      : super(_value, (v) => _then(v as _$_SelectIcon));
+
+  @override
+  _$_SelectIcon get _value => super._value as _$_SelectIcon;
+
+  @override
+  $Res call({
+    Object? icon = freezed,
+  }) {
+    return _then(_$_SelectIcon(
+      icon == freezed
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as IconData,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SelectIcon implements _SelectIcon {
+  const _$_SelectIcon(this.icon);
+
+  @override
+  final IconData icon;
+
+  @override
+  String toString() {
+    return 'AppAction.selectIcon(icon: $icon)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SelectIcon &&
+            const DeepCollectionEquality().equals(other.icon, icon));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(icon));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SelectIconCopyWith<_$_SelectIcon> get copyWith =>
+      __$$_SelectIconCopyWithImpl<_$_SelectIcon>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return selectIcon(icon);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return selectIcon?.call(icon);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (selectIcon != null) {
+      return selectIcon(icon);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return selectIcon(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return selectIcon?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (selectIcon != null) {
+      return selectIcon(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SelectIcon implements AppAction {
+  const factory _SelectIcon(final IconData icon) = _$_SelectIcon;
+
+  IconData get icon => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_SelectIconCopyWith<_$_SelectIcon> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_SelectIconColorCopyWith<$Res> {
+  factory _$$_SelectIconColorCopyWith(
+          _$_SelectIconColor value, $Res Function(_$_SelectIconColor) then) =
+      __$$_SelectIconColorCopyWithImpl<$Res>;
+  $Res call({Color color});
+}
+
+/// @nodoc
+class __$$_SelectIconColorCopyWithImpl<$Res>
+    extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_SelectIconColorCopyWith<$Res> {
+  __$$_SelectIconColorCopyWithImpl(
+      _$_SelectIconColor _value, $Res Function(_$_SelectIconColor) _then)
+      : super(_value, (v) => _then(v as _$_SelectIconColor));
+
+  @override
+  _$_SelectIconColor get _value => super._value as _$_SelectIconColor;
+
+  @override
+  $Res call({
+    Object? color = freezed,
+  }) {
+    return _then(_$_SelectIconColor(
+      color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SelectIconColor implements _SelectIconColor {
+  const _$_SelectIconColor(this.color);
+
+  @override
+  final Color color;
+
+  @override
+  String toString() {
+    return 'AppAction.selectIconColor(color: $color)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SelectIconColor &&
+            const DeepCollectionEquality().equals(other.color, color));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(color));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SelectIconColorCopyWith<_$_SelectIconColor> get copyWith =>
+      __$$_SelectIconColorCopyWithImpl<_$_SelectIconColor>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return selectIconColor(color);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return selectIconColor?.call(color);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (selectIconColor != null) {
+      return selectIconColor(color);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return selectIconColor(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return selectIconColor?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (selectIconColor != null) {
+      return selectIconColor(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SelectIconColor implements AppAction {
+  const factory _SelectIconColor(final Color color) = _$_SelectIconColor;
+
+  Color get color => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_SelectIconColorCopyWith<_$_SelectIconColor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_ApplyNodeCopyWith<$Res> {
+  factory _$$_ApplyNodeCopyWith(
+          _$_ApplyNode value, $Res Function(_$_ApplyNode) then) =
+      __$$_ApplyNodeCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_ApplyNodeCopyWithImpl<$Res> extends _$AppActionCopyWithImpl<$Res>
+    implements _$$_ApplyNodeCopyWith<$Res> {
+  __$$_ApplyNodeCopyWithImpl(
+      _$_ApplyNode _value, $Res Function(_$_ApplyNode) _then)
+      : super(_value, (v) => _then(v as _$_ApplyNode));
+
+  @override
+  _$_ApplyNode get _value => super._value as _$_ApplyNode;
+}
+
+/// @nodoc
+
+class _$_ApplyNode implements _ApplyNode {
+  const _$_ApplyNode();
+
+  @override
+  String toString() {
+    return 'AppAction.applyNode()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_ApplyNode);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(Offset position) addNewNode,
+    required TResult Function(String id, Offset position) selectNode,
+    required TResult Function(String id, Offset position) moveNode,
+    required TResult Function() removeNode,
+    required TResult Function(DecorationNodeType? type) changeNodeType,
+    required TResult Function(String text) updateText,
+    required TResult Function(double fontSize) updateFontSize,
+    required TResult Function(Color color) selectTextColor,
+    required TResult Function(Color color) selectTextBackgroundColor,
+    required TResult Function(IconData icon) selectIcon,
+    required TResult Function(Color color) selectIconColor,
+    required TResult Function() applyNode,
+  }) {
+    return applyNode();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+  }) {
+    return applyNode?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(Offset position)? addNewNode,
+    TResult Function(String id, Offset position)? selectNode,
+    TResult Function(String id, Offset position)? moveNode,
+    TResult Function()? removeNode,
+    TResult Function(DecorationNodeType? type)? changeNodeType,
+    TResult Function(String text)? updateText,
+    TResult Function(double fontSize)? updateFontSize,
+    TResult Function(Color color)? selectTextColor,
+    TResult Function(Color color)? selectTextBackgroundColor,
+    TResult Function(IconData icon)? selectIcon,
+    TResult Function(Color color)? selectIconColor,
+    TResult Function()? applyNode,
+    required TResult orElse(),
+  }) {
+    if (applyNode != null) {
+      return applyNode();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_None value) none,
+    required TResult Function(_AddNewNode value) addNewNode,
+    required TResult Function(_SelectNode value) selectNode,
+    required TResult Function(_MoveNode value) moveNode,
+    required TResult Function(_RemoveNode value) removeNode,
+    required TResult Function(_ChangeNodeType value) changeNodeType,
+    required TResult Function(_UpdateText value) updateText,
+    required TResult Function(_UpdateFontSize value) updateFontSize,
+    required TResult Function(_SelectTextColor value) selectTextColor,
+    required TResult Function(_SelectTextBackgroundColor value)
+        selectTextBackgroundColor,
+    required TResult Function(_SelectIcon value) selectIcon,
+    required TResult Function(_SelectIconColor value) selectIconColor,
+    required TResult Function(_ApplyNode value) applyNode,
+  }) {
+    return applyNode(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+  }) {
+    return applyNode?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_None value)? none,
+    TResult Function(_AddNewNode value)? addNewNode,
+    TResult Function(_SelectNode value)? selectNode,
+    TResult Function(_MoveNode value)? moveNode,
+    TResult Function(_RemoveNode value)? removeNode,
+    TResult Function(_ChangeNodeType value)? changeNodeType,
+    TResult Function(_UpdateText value)? updateText,
+    TResult Function(_UpdateFontSize value)? updateFontSize,
+    TResult Function(_SelectTextColor value)? selectTextColor,
+    TResult Function(_SelectTextBackgroundColor value)?
+        selectTextBackgroundColor,
+    TResult Function(_SelectIcon value)? selectIcon,
+    TResult Function(_SelectIconColor value)? selectIconColor,
+    TResult Function(_ApplyNode value)? applyNode,
+    required TResult orElse(),
+  }) {
+    if (applyNode != null) {
+      return applyNode(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ApplyNode implements AppAction {
+  const factory _ApplyNode() = _$_ApplyNode;
 }

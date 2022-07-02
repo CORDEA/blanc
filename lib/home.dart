@@ -12,7 +12,7 @@ class Home extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final store = useReducer<AppState, AppAction>(
       reducer,
-      initialState: const AppState(),
+      initialState: AppState.empty,
       initialAction: const AppAction.none(),
     );
     return ProviderScope(

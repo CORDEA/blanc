@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'home.dart';
 
@@ -11,9 +12,11 @@ class _App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Demo',
-      home: Home(),
+    return const ProviderScope(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        home: Home(),
+      ),
     );
   }
 }

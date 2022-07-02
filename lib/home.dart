@@ -1,17 +1,28 @@
 import 'package:decoration_demo/decorator.dart';
 import 'package:decoration_demo/picker.dart';
+import 'package:decoration_demo/redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Home extends StatelessWidget {
+class Home extends HookConsumerWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: const Padding(
-        padding: EdgeInsets.all(16),
-        child: _Home(),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final store = useReducer<AppState, AppAction>(
+      reducer,
+      initialState: const AppState(),
+      initialAction: const AppAction.none(),
+    );
+    return ProviderScope(
+      overrides: [storeProvider.overrideWithValue(store)],
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Home')),
+        body: const Padding(
+          padding: EdgeInsets.all(16),
+          child: _Home(),
+        ),
       ),
     );
   }

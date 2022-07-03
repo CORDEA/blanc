@@ -1,4 +1,5 @@
 import 'package:decoration_demo/decorator.dart';
+import 'package:decoration_demo/handwriting_decorator.dart';
 import 'package:decoration_demo/picker.dart';
 import 'package:decoration_demo/redux.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,7 @@ class _Editor extends HookConsumerWidget {
         children = [_IconEditor()];
         break;
       case DecorationNodeType.handwriting:
-        children = [];
+        children = [_HandwritingEditor()];
         break;
     }
     return Column(
@@ -99,6 +100,10 @@ class _Editor extends HookConsumerWidget {
                 DropdownMenuItem(
                   value: DecorationNodeType.icon,
                   child: Text('Icon'),
+                ),
+                DropdownMenuItem(
+                  value: DecorationNodeType.handwriting,
+                  child: Text('Handwriting'),
                 ),
               ],
               onChanged: (value) =>
@@ -201,6 +206,43 @@ class _IconEditor extends HookConsumerWidget {
         ColorPicker(
           onSelected: (color) =>
               store.dispatch(AppAction.selectIconColor(color)),
+        ),
+      ],
+    );
+  }
+}
+
+class _HandwritingEditor extends HookConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final store = ref.read(appStoreProvider);
+    final state = ref.watch(appStoreProvider
+        .select((value) => value.state.editingState?.handwritingState));
+    if (state == null) {
+      return const SizedBox.shrink();
+    }
+    return Column(
+      children: [
+        AspectRatio(
+          aspectRatio: 16 / 9,
+          child: ColoredBox(
+            color: Colors.black12,
+            child: HandwritingDecorator(
+              layer: state.layer,
+              onDragStart: (v) => store.dispatch(AppAction.startHandwriting(v)),
+              onDragUpdate: (v) =>
+                  store.dispatch(AppAction.updateHandwriting(v)),
+              onDragEnd: () => store.dispatch(const AppAction.endHandwriting()),
+            ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 4),
+          child: Text('Color'),
+        ),
+        ColorPicker(
+          onSelected: (color) =>
+              store.dispatch(AppAction.selectHandwritingPathColor(color)),
         ),
       ],
     );

@@ -162,25 +162,17 @@ class AppEditingHandwritingState with _$AppEditingHandwritingState {
   const AppEditingHandwritingState._();
 
   const factory AppEditingHandwritingState({
-    required HandwritingDecorationLayer layer,
+    required List<HandwritingDecorationPath> paths,
     required String currentId,
   }) = _AppEditingHandwritingState;
 
-  static const empty = AppEditingHandwritingState(
-    layer: HandwritingDecorationLayer(paths: []),
-    currentId: '',
-  );
+  static const empty = AppEditingHandwritingState(paths: [], currentId: '');
 
   DecorationNode _asNode({
     required String id,
     required Offset position,
   }) =>
-      DecorationNode.handwriting(
-        id: id,
-        position: position,
-        size: const Size(100, 50),
-        layer: layer,
-      );
+      DecorationNode.handwriting(id: id, position: position, paths: paths);
 }
 
 @freezed
@@ -214,7 +206,10 @@ class AppAction with _$AppAction {
   const factory AppAction.selectHandwritingPathColor(Color color) =
       _SelectHandwritingPathColor;
 
-  const factory AppAction.startHandwriting(Offset position) = _StartHandwriting;
+  const factory AppAction.startHandwriting(
+    Size size,
+    Offset position,
+  ) = _StartHandwriting;
 
   const factory AppAction.updateHandwriting(Offset position) =
       _UpdateHandwriting;
@@ -260,7 +255,7 @@ AppState reducer(AppState state, AppAction action) {
           id: id,
           position: position,
           handwritingState: AppEditingHandwritingState(
-            layer: n.layer,
+            paths: n.paths,
             currentId: '',
           ),
         ),
@@ -368,40 +363,36 @@ AppState reducer(AppState state, AppAction action) {
         return state;
       }
       final id = editingState.handwritingState.currentId;
-      final layer = editingState.handwritingState.layer;
+      final paths = editingState.handwritingState.paths;
       return state.copyWith(
         editingState: editingState.copyWith(
           handwritingState: editingState.handwritingState.copyWith(
-            layer: layer.copyWith(
-              paths: layer.paths
-                  .map((e) => e.id == id ? e.copyWith(color: color) : e)
-                  .toList(growable: false),
-            ),
+            paths: paths
+                .map((e) => e.id == id ? e.copyWith(color: color) : e)
+                .toList(growable: false),
           ),
         ),
       );
     },
-    startHandwriting: (position) {
+    startHandwriting: (size, position) {
       final editingState = state.editingState;
       if (editingState == null) {
         return state;
       }
       final id = _uuid.v4();
-      final layer = editingState.handwritingState.layer;
+      final paths = editingState.handwritingState.paths;
       return state.copyWith(
         editingState: editingState.copyWith(
           handwritingState: editingState.handwritingState.copyWith(
             currentId: id,
-            layer: layer.copyWith(
-              paths: layer.paths +
-                  [
-                    HandwritingDecorationPath(
-                      id: id,
-                      color: ColorPicker.colors[1],
-                      path: Path()..moveTo(position.dx, position.dy),
-                    ),
-                  ],
-            ),
+            paths: paths +
+                [
+                  HandwritingDecorationPath(
+                    id: id,
+                    color: ColorPicker.colors[1],
+                    path: [position],
+                  ),
+                ],
           ),
         ),
       );
@@ -412,21 +403,15 @@ AppState reducer(AppState state, AppAction action) {
         return state;
       }
       final id = editingState.handwritingState.currentId;
-      final layer = editingState.handwritingState.layer;
+      final paths = editingState.handwritingState.paths;
       return state.copyWith(
         editingState: editingState.copyWith(
           handwritingState: editingState.handwritingState.copyWith(
-            layer: layer.copyWith(
-              paths: layer.paths
-                  .map(
-                    (e) => e.id == id
-                        ? e.copyWith(
-                            path: e.path..lineTo(position.dx, position.dy),
-                          )
-                        : e,
-                  )
-                  .toList(growable: false),
-            ),
+            paths: paths
+                .map(
+                  (e) => e.id == id ? e.copyWith(path: e.path + [position]) : e,
+                )
+                .toList(growable: false),
           ),
         ),
       );

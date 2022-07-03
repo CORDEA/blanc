@@ -924,7 +924,8 @@ abstract class _AppEditingIconState extends AppEditingIconState {
 
 /// @nodoc
 mixin _$AppEditingHandwritingState {
-  HandwritingDecorationLayer get layer => throw _privateConstructorUsedError;
+  List<HandwritingDecorationPath> get paths =>
+      throw _privateConstructorUsedError;
   String get currentId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -937,9 +938,7 @@ abstract class $AppEditingHandwritingStateCopyWith<$Res> {
   factory $AppEditingHandwritingStateCopyWith(AppEditingHandwritingState value,
           $Res Function(AppEditingHandwritingState) then) =
       _$AppEditingHandwritingStateCopyWithImpl<$Res>;
-  $Res call({HandwritingDecorationLayer layer, String currentId});
-
-  $HandwritingDecorationLayerCopyWith<$Res> get layer;
+  $Res call({List<HandwritingDecorationPath> paths, String currentId});
 }
 
 /// @nodoc
@@ -953,26 +952,19 @@ class _$AppEditingHandwritingStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? layer = freezed,
+    Object? paths = freezed,
     Object? currentId = freezed,
   }) {
     return _then(_value.copyWith(
-      layer: layer == freezed
-          ? _value.layer
-          : layer // ignore: cast_nullable_to_non_nullable
-              as HandwritingDecorationLayer,
+      paths: paths == freezed
+          ? _value.paths
+          : paths // ignore: cast_nullable_to_non_nullable
+              as List<HandwritingDecorationPath>,
       currentId: currentId == freezed
           ? _value.currentId
           : currentId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
-  }
-
-  @override
-  $HandwritingDecorationLayerCopyWith<$Res> get layer {
-    return $HandwritingDecorationLayerCopyWith<$Res>(_value.layer, (value) {
-      return _then(_value.copyWith(layer: value));
-    });
   }
 }
 
@@ -984,10 +976,7 @@ abstract class _$$_AppEditingHandwritingStateCopyWith<$Res>
           $Res Function(_$_AppEditingHandwritingState) then) =
       __$$_AppEditingHandwritingStateCopyWithImpl<$Res>;
   @override
-  $Res call({HandwritingDecorationLayer layer, String currentId});
-
-  @override
-  $HandwritingDecorationLayerCopyWith<$Res> get layer;
+  $Res call({List<HandwritingDecorationPath> paths, String currentId});
 }
 
 /// @nodoc
@@ -1005,14 +994,14 @@ class __$$_AppEditingHandwritingStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? layer = freezed,
+    Object? paths = freezed,
     Object? currentId = freezed,
   }) {
     return _then(_$_AppEditingHandwritingState(
-      layer: layer == freezed
-          ? _value.layer
-          : layer // ignore: cast_nullable_to_non_nullable
-              as HandwritingDecorationLayer,
+      paths: paths == freezed
+          ? _value._paths
+          : paths // ignore: cast_nullable_to_non_nullable
+              as List<HandwritingDecorationPath>,
       currentId: currentId == freezed
           ? _value.currentId
           : currentId // ignore: cast_nullable_to_non_nullable
@@ -1025,17 +1014,24 @@ class __$$_AppEditingHandwritingStateCopyWithImpl<$Res>
 
 class _$_AppEditingHandwritingState extends _AppEditingHandwritingState {
   const _$_AppEditingHandwritingState(
-      {required this.layer, required this.currentId})
-      : super._();
+      {required final List<HandwritingDecorationPath> paths,
+      required this.currentId})
+      : _paths = paths,
+        super._();
 
+  final List<HandwritingDecorationPath> _paths;
   @override
-  final HandwritingDecorationLayer layer;
+  List<HandwritingDecorationPath> get paths {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_paths);
+  }
+
   @override
   final String currentId;
 
   @override
   String toString() {
-    return 'AppEditingHandwritingState(layer: $layer, currentId: $currentId)';
+    return 'AppEditingHandwritingState(paths: $paths, currentId: $currentId)';
   }
 
   @override
@@ -1043,14 +1039,14 @@ class _$_AppEditingHandwritingState extends _AppEditingHandwritingState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppEditingHandwritingState &&
-            const DeepCollectionEquality().equals(other.layer, layer) &&
+            const DeepCollectionEquality().equals(other._paths, _paths) &&
             const DeepCollectionEquality().equals(other.currentId, currentId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(layer),
+      const DeepCollectionEquality().hash(_paths),
       const DeepCollectionEquality().hash(currentId));
 
   @JsonKey(ignore: true)
@@ -1062,12 +1058,13 @@ class _$_AppEditingHandwritingState extends _AppEditingHandwritingState {
 
 abstract class _AppEditingHandwritingState extends AppEditingHandwritingState {
   const factory _AppEditingHandwritingState(
-      {required final HandwritingDecorationLayer layer,
+      {required final List<HandwritingDecorationPath> paths,
       required final String currentId}) = _$_AppEditingHandwritingState;
   const _AppEditingHandwritingState._() : super._();
 
   @override
-  HandwritingDecorationLayer get layer => throw _privateConstructorUsedError;
+  List<HandwritingDecorationPath> get paths =>
+      throw _privateConstructorUsedError;
   @override
   String get currentId => throw _privateConstructorUsedError;
   @override
@@ -1093,7 +1090,7 @@ mixin _$AppAction {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -1114,7 +1111,7 @@ mixin _$AppAction {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -1135,7 +1132,7 @@ mixin _$AppAction {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -1280,7 +1277,7 @@ class _$_None implements _None {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -1304,7 +1301,7 @@ class _$_None implements _None {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -1328,7 +1325,7 @@ class _$_None implements _None {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -1504,7 +1501,7 @@ class _$_AddNewNode implements _AddNewNode {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -1528,7 +1525,7 @@ class _$_AddNewNode implements _AddNewNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -1552,7 +1549,7 @@ class _$_AddNewNode implements _AddNewNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -1743,7 +1740,7 @@ class _$_SelectNode implements _SelectNode {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -1767,7 +1764,7 @@ class _$_SelectNode implements _SelectNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -1791,7 +1788,7 @@ class _$_SelectNode implements _SelectNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -1984,7 +1981,7 @@ class _$_MoveNode implements _MoveNode {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -2008,7 +2005,7 @@ class _$_MoveNode implements _MoveNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2032,7 +2029,7 @@ class _$_MoveNode implements _MoveNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2190,7 +2187,7 @@ class _$_RemoveNode implements _RemoveNode {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -2214,7 +2211,7 @@ class _$_RemoveNode implements _RemoveNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2238,7 +2235,7 @@ class _$_RemoveNode implements _RemoveNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2415,7 +2412,7 @@ class _$_ChangeNodeType implements _ChangeNodeType {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -2439,7 +2436,7 @@ class _$_ChangeNodeType implements _ChangeNodeType {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2463,7 +2460,7 @@ class _$_ChangeNodeType implements _ChangeNodeType {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2645,7 +2642,7 @@ class _$_UpdateText implements _UpdateText {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -2669,7 +2666,7 @@ class _$_UpdateText implements _UpdateText {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2693,7 +2690,7 @@ class _$_UpdateText implements _UpdateText {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2875,7 +2872,7 @@ class _$_UpdateFontSize implements _UpdateFontSize {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -2899,7 +2896,7 @@ class _$_UpdateFontSize implements _UpdateFontSize {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -2923,7 +2920,7 @@ class _$_UpdateFontSize implements _UpdateFontSize {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -3105,7 +3102,7 @@ class _$_SelectTextColor implements _SelectTextColor {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -3129,7 +3126,7 @@ class _$_SelectTextColor implements _SelectTextColor {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -3153,7 +3150,7 @@ class _$_SelectTextColor implements _SelectTextColor {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -3339,7 +3336,7 @@ class _$_SelectTextBackgroundColor implements _SelectTextBackgroundColor {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -3363,7 +3360,7 @@ class _$_SelectTextBackgroundColor implements _SelectTextBackgroundColor {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -3387,7 +3384,7 @@ class _$_SelectTextBackgroundColor implements _SelectTextBackgroundColor {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -3569,7 +3566,7 @@ class _$_SelectIcon implements _SelectIcon {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -3593,7 +3590,7 @@ class _$_SelectIcon implements _SelectIcon {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -3617,7 +3614,7 @@ class _$_SelectIcon implements _SelectIcon {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -3799,7 +3796,7 @@ class _$_SelectIconColor implements _SelectIconColor {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -3823,7 +3820,7 @@ class _$_SelectIconColor implements _SelectIconColor {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -3847,7 +3844,7 @@ class _$_SelectIconColor implements _SelectIconColor {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -4033,7 +4030,7 @@ class _$_SelectHandwritingPathColor implements _SelectHandwritingPathColor {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -4057,7 +4054,7 @@ class _$_SelectHandwritingPathColor implements _SelectHandwritingPathColor {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -4081,7 +4078,7 @@ class _$_SelectHandwritingPathColor implements _SelectHandwritingPathColor {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -4191,7 +4188,7 @@ abstract class _$$_StartHandwritingCopyWith<$Res> {
   factory _$$_StartHandwritingCopyWith(
           _$_StartHandwriting value, $Res Function(_$_StartHandwriting) then) =
       __$$_StartHandwritingCopyWithImpl<$Res>;
-  $Res call({Offset position});
+  $Res call({Size size, Offset position});
 }
 
 /// @nodoc
@@ -4207,9 +4204,14 @@ class __$$_StartHandwritingCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? size = freezed,
     Object? position = freezed,
   }) {
     return _then(_$_StartHandwriting(
+      size == freezed
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as Size,
       position == freezed
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -4221,14 +4223,16 @@ class __$$_StartHandwritingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_StartHandwriting implements _StartHandwriting {
-  const _$_StartHandwriting(this.position);
+  const _$_StartHandwriting(this.size, this.position);
 
+  @override
+  final Size size;
   @override
   final Offset position;
 
   @override
   String toString() {
-    return 'AppAction.startHandwriting(position: $position)';
+    return 'AppAction.startHandwriting(size: $size, position: $position)';
   }
 
   @override
@@ -4236,12 +4240,15 @@ class _$_StartHandwriting implements _StartHandwriting {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_StartHandwriting &&
+            const DeepCollectionEquality().equals(other.size, size) &&
             const DeepCollectionEquality().equals(other.position, position));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(position));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(size),
+      const DeepCollectionEquality().hash(position));
 
   @JsonKey(ignore: true)
   @override
@@ -4264,12 +4271,12 @@ class _$_StartHandwriting implements _StartHandwriting {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
   }) {
-    return startHandwriting(position);
+    return startHandwriting(size, position);
   }
 
   @override
@@ -4288,12 +4295,12 @@ class _$_StartHandwriting implements _StartHandwriting {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
   }) {
-    return startHandwriting?.call(position);
+    return startHandwriting?.call(size, position);
   }
 
   @override
@@ -4312,14 +4319,14 @@ class _$_StartHandwriting implements _StartHandwriting {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
     required TResult orElse(),
   }) {
     if (startHandwriting != null) {
-      return startHandwriting(position);
+      return startHandwriting(size, position);
     }
     return orElse();
   }
@@ -4408,8 +4415,10 @@ class _$_StartHandwriting implements _StartHandwriting {
 }
 
 abstract class _StartHandwriting implements AppAction {
-  const factory _StartHandwriting(final Offset position) = _$_StartHandwriting;
+  const factory _StartHandwriting(final Size size, final Offset position) =
+      _$_StartHandwriting;
 
+  Size get size => throw _privateConstructorUsedError;
   Offset get position => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$_StartHandwritingCopyWith<_$_StartHandwriting> get copyWith =>
@@ -4495,7 +4504,7 @@ class _$_UpdateHandwriting implements _UpdateHandwriting {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -4519,7 +4528,7 @@ class _$_UpdateHandwriting implements _UpdateHandwriting {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -4543,7 +4552,7 @@ class _$_UpdateHandwriting implements _UpdateHandwriting {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -4702,7 +4711,7 @@ class _$_EndHandwriting implements _EndHandwriting {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -4726,7 +4735,7 @@ class _$_EndHandwriting implements _EndHandwriting {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -4750,7 +4759,7 @@ class _$_EndHandwriting implements _EndHandwriting {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -4902,7 +4911,7 @@ class _$_ApplyNode implements _ApplyNode {
     required TResult Function(IconData icon) selectIcon,
     required TResult Function(Color color) selectIconColor,
     required TResult Function(Color color) selectHandwritingPathColor,
-    required TResult Function(Offset position) startHandwriting,
+    required TResult Function(Size size, Offset position) startHandwriting,
     required TResult Function(Offset position) updateHandwriting,
     required TResult Function() endHandwriting,
     required TResult Function() applyNode,
@@ -4926,7 +4935,7 @@ class _$_ApplyNode implements _ApplyNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,
@@ -4950,7 +4959,7 @@ class _$_ApplyNode implements _ApplyNode {
     TResult Function(IconData icon)? selectIcon,
     TResult Function(Color color)? selectIconColor,
     TResult Function(Color color)? selectHandwritingPathColor,
-    TResult Function(Offset position)? startHandwriting,
+    TResult Function(Size size, Offset position)? startHandwriting,
     TResult Function(Offset position)? updateHandwriting,
     TResult Function()? endHandwriting,
     TResult Function()? applyNode,

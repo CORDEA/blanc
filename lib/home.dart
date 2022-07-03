@@ -1,5 +1,4 @@
 import 'package:decoration_demo/decorator.dart';
-import 'package:decoration_demo/handwriting_decorator.dart';
 import 'package:decoration_demo/picker.dart';
 import 'package:decoration_demo/redux.dart';
 import 'package:flutter/material.dart';
@@ -223,19 +222,6 @@ class _HandwritingEditor extends HookConsumerWidget {
     }
     return Column(
       children: [
-        AspectRatio(
-          aspectRatio: 16 / 9,
-          child: ColoredBox(
-            color: Colors.black12,
-            child: HandwritingDecorator(
-              layer: state.layer,
-              onDragStart: (v) => store.dispatch(AppAction.startHandwriting(v)),
-              onDragUpdate: (v) =>
-                  store.dispatch(AppAction.updateHandwriting(v)),
-              onDragEnd: () => store.dispatch(const AppAction.endHandwriting()),
-            ),
-          ),
-        ),
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 4),
           child: Text('Color'),

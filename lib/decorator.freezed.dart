@@ -727,7 +727,6 @@ abstract class _DecorationLayer implements DecorationLayer {
 /// @nodoc
 mixin _$DecorationNode {
   String get id => throw _privateConstructorUsedError;
-  Color get color => throw _privateConstructorUsedError;
   Offset get position => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -746,6 +745,9 @@ mixin _$DecorationNode {
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
+        handwriting,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -758,6 +760,9 @@ mixin _$DecorationNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -770,6 +775,9 @@ mixin _$DecorationNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -778,6 +786,7 @@ mixin _$DecorationNode {
     required TResult Function(DecorationTextNode value) text,
     required TResult Function(DecorationBoxNode value) box,
     required TResult Function(DecorationIconNode value) icon,
+    required TResult Function(DecorationHandwritingNode value) handwriting,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -785,6 +794,7 @@ mixin _$DecorationNode {
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -792,6 +802,7 @@ mixin _$DecorationNode {
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -806,7 +817,7 @@ abstract class $DecorationNodeCopyWith<$Res> {
   factory $DecorationNodeCopyWith(
           DecorationNode value, $Res Function(DecorationNode) then) =
       _$DecorationNodeCopyWithImpl<$Res>;
-  $Res call({String id, Color color, Offset position});
+  $Res call({String id, Offset position});
 }
 
 /// @nodoc
@@ -821,7 +832,6 @@ class _$DecorationNodeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? color = freezed,
     Object? position = freezed,
   }) {
     return _then(_value.copyWith(
@@ -829,10 +839,6 @@ class _$DecorationNodeCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      color: color == freezed
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
       position: position == freezed
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -996,6 +1002,9 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
+        handwriting,
   }) {
     return text(
         id, this.text, color, backgroundColor, fontSize, fontWeight, position);
@@ -1012,6 +1021,9 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
   }) {
     return text?.call(
         id, this.text, color, backgroundColor, fontSize, fontWeight, position);
@@ -1028,6 +1040,9 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
     required TResult orElse(),
   }) {
     if (text != null) {
@@ -1043,6 +1058,7 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
     required TResult Function(DecorationTextNode value) text,
     required TResult Function(DecorationBoxNode value) box,
     required TResult Function(DecorationIconNode value) icon,
+    required TResult Function(DecorationHandwritingNode value) handwriting,
   }) {
     return text(this);
   }
@@ -1053,6 +1069,7 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
   }) {
     return text?.call(this);
   }
@@ -1063,6 +1080,7 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
     required TResult orElse(),
   }) {
     if (text != null) {
@@ -1087,7 +1105,6 @@ abstract class DecorationTextNode extends DecorationNode
   @override
   String get id => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  @override
   Color get color => throw _privateConstructorUsedError;
   Color get backgroundColor => throw _privateConstructorUsedError;
   double get fontSize => throw _privateConstructorUsedError;
@@ -1226,6 +1243,9 @@ class _$DecorationBoxNode extends DecorationBoxNode {
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
+        handwriting,
   }) {
     return box(id, color, shape, position, size);
   }
@@ -1241,6 +1261,9 @@ class _$DecorationBoxNode extends DecorationBoxNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
   }) {
     return box?.call(id, color, shape, position, size);
   }
@@ -1256,6 +1279,9 @@ class _$DecorationBoxNode extends DecorationBoxNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
     required TResult orElse(),
   }) {
     if (box != null) {
@@ -1270,6 +1296,7 @@ class _$DecorationBoxNode extends DecorationBoxNode {
     required TResult Function(DecorationTextNode value) text,
     required TResult Function(DecorationBoxNode value) box,
     required TResult Function(DecorationIconNode value) icon,
+    required TResult Function(DecorationHandwritingNode value) handwriting,
   }) {
     return box(this);
   }
@@ -1280,6 +1307,7 @@ class _$DecorationBoxNode extends DecorationBoxNode {
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
   }) {
     return box?.call(this);
   }
@@ -1290,6 +1318,7 @@ class _$DecorationBoxNode extends DecorationBoxNode {
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
     required TResult orElse(),
   }) {
     if (box != null) {
@@ -1310,7 +1339,6 @@ abstract class DecorationBoxNode extends DecorationNode {
 
   @override
   String get id => throw _privateConstructorUsedError;
-  @override
   Color get color => throw _privateConstructorUsedError;
   BoxShape get shape => throw _privateConstructorUsedError;
   @override
@@ -1438,6 +1466,9 @@ class _$DecorationIconNode extends DecorationIconNode {
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
+        handwriting,
   }) {
     return icon(id, this.icon, color, position);
   }
@@ -1453,6 +1484,9 @@ class _$DecorationIconNode extends DecorationIconNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
   }) {
     return icon?.call(id, this.icon, color, position);
   }
@@ -1468,6 +1502,9 @@ class _$DecorationIconNode extends DecorationIconNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
     required TResult orElse(),
   }) {
     if (icon != null) {
@@ -1482,6 +1519,7 @@ class _$DecorationIconNode extends DecorationIconNode {
     required TResult Function(DecorationTextNode value) text,
     required TResult Function(DecorationBoxNode value) box,
     required TResult Function(DecorationIconNode value) icon,
+    required TResult Function(DecorationHandwritingNode value) handwriting,
   }) {
     return icon(this);
   }
@@ -1492,6 +1530,7 @@ class _$DecorationIconNode extends DecorationIconNode {
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
   }) {
     return icon?.call(this);
   }
@@ -1502,6 +1541,7 @@ class _$DecorationIconNode extends DecorationIconNode {
     TResult Function(DecorationTextNode value)? text,
     TResult Function(DecorationBoxNode value)? box,
     TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
     required TResult orElse(),
   }) {
     if (icon != null) {
@@ -1522,7 +1562,6 @@ abstract class DecorationIconNode extends DecorationNode {
   @override
   String get id => throw _privateConstructorUsedError;
   IconData get icon => throw _privateConstructorUsedError;
-  @override
   Color get color => throw _privateConstructorUsedError;
   @override
   Offset get position => throw _privateConstructorUsedError;
@@ -1530,4 +1569,241 @@ abstract class DecorationIconNode extends DecorationNode {
   @JsonKey(ignore: true)
   _$$DecorationIconNodeCopyWith<_$DecorationIconNode> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DecorationHandwritingNodeCopyWith<$Res>
+    implements $DecorationNodeCopyWith<$Res> {
+  factory _$$DecorationHandwritingNodeCopyWith(
+          _$DecorationHandwritingNode value,
+          $Res Function(_$DecorationHandwritingNode) then) =
+      __$$DecorationHandwritingNodeCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String id,
+      Offset position,
+      Size size,
+      HandwritingDecorationLayer layer});
+
+  $HandwritingDecorationLayerCopyWith<$Res> get layer;
+}
+
+/// @nodoc
+class __$$DecorationHandwritingNodeCopyWithImpl<$Res>
+    extends _$DecorationNodeCopyWithImpl<$Res>
+    implements _$$DecorationHandwritingNodeCopyWith<$Res> {
+  __$$DecorationHandwritingNodeCopyWithImpl(_$DecorationHandwritingNode _value,
+      $Res Function(_$DecorationHandwritingNode) _then)
+      : super(_value, (v) => _then(v as _$DecorationHandwritingNode));
+
+  @override
+  _$DecorationHandwritingNode get _value =>
+      super._value as _$DecorationHandwritingNode;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? position = freezed,
+    Object? size = freezed,
+    Object? layer = freezed,
+  }) {
+    return _then(_$DecorationHandwritingNode(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      position: position == freezed
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Offset,
+      size: size == freezed
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as Size,
+      layer: layer == freezed
+          ? _value.layer
+          : layer // ignore: cast_nullable_to_non_nullable
+              as HandwritingDecorationLayer,
+    ));
+  }
+
+  @override
+  $HandwritingDecorationLayerCopyWith<$Res> get layer {
+    return $HandwritingDecorationLayerCopyWith<$Res>(_value.layer, (value) {
+      return _then(_value.copyWith(layer: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$DecorationHandwritingNode extends DecorationHandwritingNode {
+  const _$DecorationHandwritingNode(
+      {required this.id,
+      required this.position,
+      required this.size,
+      required this.layer})
+      : super._();
+
+  @override
+  final String id;
+  @override
+  final Offset position;
+  @override
+  final Size size;
+  @override
+  final HandwritingDecorationLayer layer;
+
+  @override
+  String toString() {
+    return 'DecorationNode.handwriting(id: $id, position: $position, size: $size, layer: $layer)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DecorationHandwritingNode &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.position, position) &&
+            const DeepCollectionEquality().equals(other.size, size) &&
+            const DeepCollectionEquality().equals(other.layer, layer));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(position),
+      const DeepCollectionEquality().hash(size),
+      const DeepCollectionEquality().hash(layer));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$DecorationHandwritingNodeCopyWith<_$DecorationHandwritingNode>
+      get copyWith => __$$DecorationHandwritingNodeCopyWithImpl<
+          _$DecorationHandwritingNode>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            String id,
+            String text,
+            Color color,
+            Color backgroundColor,
+            double fontSize,
+            FontWeight fontWeight,
+            Offset position)
+        text,
+    required TResult Function(
+            String id, Color color, BoxShape shape, Offset position, Size size)
+        box,
+    required TResult Function(
+            String id, IconData icon, Color color, Offset position)
+        icon,
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
+        handwriting,
+  }) {
+    return handwriting(id, position, size, layer);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String id, String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
+    TResult Function(
+            String id, Color color, BoxShape shape, Offset position, Size size)?
+        box,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
+  }) {
+    return handwriting?.call(id, position, size, layer);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id, String text, Color color, Color backgroundColor,
+            double fontSize, FontWeight fontWeight, Offset position)?
+        text,
+    TResult Function(
+            String id, Color color, BoxShape shape, Offset position, Size size)?
+        box,
+    TResult Function(String id, IconData icon, Color color, Offset position)?
+        icon,
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
+        handwriting,
+    required TResult orElse(),
+  }) {
+    if (handwriting != null) {
+      return handwriting(id, position, size, layer);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(DecorationTextNode value) text,
+    required TResult Function(DecorationBoxNode value) box,
+    required TResult Function(DecorationIconNode value) icon,
+    required TResult Function(DecorationHandwritingNode value) handwriting,
+  }) {
+    return handwriting(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
+  }) {
+    return handwriting?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(DecorationTextNode value)? text,
+    TResult Function(DecorationBoxNode value)? box,
+    TResult Function(DecorationIconNode value)? icon,
+    TResult Function(DecorationHandwritingNode value)? handwriting,
+    required TResult orElse(),
+  }) {
+    if (handwriting != null) {
+      return handwriting(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DecorationHandwritingNode extends DecorationNode {
+  const factory DecorationHandwritingNode(
+          {required final String id,
+          required final Offset position,
+          required final Size size,
+          required final HandwritingDecorationLayer layer}) =
+      _$DecorationHandwritingNode;
+  const DecorationHandwritingNode._() : super._();
+
+  @override
+  String get id => throw _privateConstructorUsedError;
+  @override
+  Offset get position => throw _privateConstructorUsedError;
+  Size get size => throw _privateConstructorUsedError;
+  HandwritingDecorationLayer get layer => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$$DecorationHandwritingNodeCopyWith<_$DecorationHandwritingNode>
+      get copyWith => throw _privateConstructorUsedError;
 }

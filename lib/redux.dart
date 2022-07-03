@@ -214,6 +214,10 @@ AppState reducer(AppState state, AppAction action) {
           position: position,
           iconState: AppEditingIconState(icon: n.icon, color: n.color),
         ),
+        handwriting: (n) => AppEditingState.empty.copyWith(
+          id: id,
+          position: position,
+        ),
       );
       return state.copyWith(editingState: editingState);
     },

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:decoration_demo/gesture_recognizer.dart';
+import 'package:decoration_demo/handwriting_decorator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -136,6 +137,7 @@ class _Painter extends CustomPainter {
         text: (node) => _drawText(canvas, node),
         box: (node) => _drawBox(canvas, node),
         icon: (node) => _drawIcon(canvas, node),
+        handwriting: (node) => _drawHandwriting(canvas, node),
       );
     }
   }
@@ -179,6 +181,11 @@ class _Painter extends CustomPainter {
       textDirection: TextDirection.ltr,
     )..layout();
     painter.paint(canvas, node.position);
+  }
+
+  void _drawHandwriting(Canvas canvas, DecorationHandwritingNode node) {
+    final painter = HandwritingPainter(node.layer);
+    painter.paint(canvas, node.size);
   }
 
   @override
@@ -246,6 +253,13 @@ class DecorationNode with _$DecorationNode {
     required Offset position,
   }) = DecorationIconNode;
 
+  const factory DecorationNode.handwriting({
+    required String id,
+    required Offset position,
+    required Size size,
+    required HandwritingDecorationLayer layer,
+  }) = DecorationHandwritingNode;
+
   static const _iconSize = 24.0;
 }
 
@@ -283,15 +297,11 @@ mixin _TextNodeBase {
 
 extension DecorationNodeExt on DecorationNode {
   Rect get rect {
-    final position = map(
-      text: (e) => e.position,
-      box: (e) => e.position,
-      icon: (e) => e.position,
-    );
     final size = map(
       text: (e) => e.size,
       box: (e) => e.size,
       icon: (_) => const Size.square(DecorationNode._iconSize),
+      handwriting: (e) => e.size,
     );
     return Rect.fromLTWH(
       position.dx,

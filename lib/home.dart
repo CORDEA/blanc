@@ -79,6 +79,9 @@ class _Editor extends HookConsumerWidget {
       case DecorationNodeType.icon:
         children = [_IconEditor()];
         break;
+      case DecorationNodeType.handwriting:
+        children = [];
+        break;
     }
     return Column(
       children: <Widget>[
@@ -204,4 +207,4 @@ class _IconEditor extends HookConsumerWidget {
   }
 }
 
-enum DecorationNodeType { text, box, icon }
+enum DecorationNodeType { text, box, icon, handwriting }

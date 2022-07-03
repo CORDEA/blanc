@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:decoration_demo/decorator.dart';
+import 'package:decoration_demo/handwriting_decorator.dart';
 import 'package:decoration_demo/home.dart';
 import 'package:decoration_demo/picker.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class AppEditingState with _$AppEditingState {
     required AppEditingTextState textState,
     required AppEditingBoxState boxState,
     required AppEditingIconState iconState,
+    required AppEditingHandwritingState handwritingState,
   }) = _AppEditingState;
 
   static final empty = AppEditingState(
@@ -51,6 +53,7 @@ class AppEditingState with _$AppEditingState {
     textState: AppEditingTextState.empty,
     boxState: AppEditingBoxState.empty,
     iconState: AppEditingIconState.empty,
+    handwritingState: AppEditingHandwritingState.empty,
   );
 
   DecorationNode asNode([Offset? position]) {
@@ -61,6 +64,9 @@ class AppEditingState with _$AppEditingState {
         return boxState._asNode(id: id, position: position ?? this.position);
       case DecorationNodeType.icon:
         return iconState._asNode(id: id, position: position ?? this.position);
+      case DecorationNodeType.handwriting:
+        return handwritingState._asNode(
+            id: id, position: position ?? this.position);
     }
   }
 }
@@ -152,6 +158,32 @@ class AppEditingIconState with _$AppEditingIconState {
 }
 
 @freezed
+class AppEditingHandwritingState with _$AppEditingHandwritingState {
+  const AppEditingHandwritingState._();
+
+  const factory AppEditingHandwritingState({
+    required HandwritingDecorationLayer layer,
+    required String currentId,
+  }) = _AppEditingHandwritingState;
+
+  static const empty = AppEditingHandwritingState(
+    layer: HandwritingDecorationLayer(paths: []),
+    currentId: '',
+  );
+
+  DecorationNode _asNode({
+    required String id,
+    required Offset position,
+  }) =>
+      DecorationNode.handwriting(
+        id: id,
+        position: position,
+        size: const Size(100, 50),
+        layer: layer,
+      );
+}
+
+@freezed
 class AppAction with _$AppAction {
   const factory AppAction.none() = _None;
 
@@ -178,6 +210,16 @@ class AppAction with _$AppAction {
   const factory AppAction.selectIcon(IconData icon) = _SelectIcon;
 
   const factory AppAction.selectIconColor(Color color) = _SelectIconColor;
+
+  const factory AppAction.selectHandwritingPathColor(Color color) =
+      _SelectHandwritingPathColor;
+
+  const factory AppAction.startHandwriting(Offset position) = _StartHandwriting;
+
+  const factory AppAction.updateHandwriting(Offset position) =
+      _UpdateHandwriting;
+
+  const factory AppAction.endHandwriting() = _EndHandwriting;
 
   const factory AppAction.applyNode() = _ApplyNode;
 }
@@ -217,6 +259,10 @@ AppState reducer(AppState state, AppAction action) {
         handwriting: (n) => AppEditingState.empty.copyWith(
           id: id,
           position: position,
+          handwritingState: AppEditingHandwritingState(
+            layer: n.layer,
+            currentId: '',
+          ),
         ),
       );
       return state.copyWith(editingState: editingState);
@@ -313,6 +359,87 @@ AppState reducer(AppState state, AppAction action) {
       return state.copyWith(
         editingState: editingState.copyWith(
           iconState: editingState.iconState.copyWith(color: color),
+        ),
+      );
+    },
+    selectHandwritingPathColor: (color) {
+      final editingState = state.editingState;
+      if (editingState == null) {
+        return state;
+      }
+      final id = editingState.handwritingState.currentId;
+      final layer = editingState.handwritingState.layer;
+      return state.copyWith(
+        editingState: editingState.copyWith(
+          handwritingState: editingState.handwritingState.copyWith(
+            layer: layer.copyWith(
+              paths: layer.paths
+                  .map((e) => e.id == id ? e.copyWith(color: color) : e)
+                  .toList(growable: false),
+            ),
+          ),
+        ),
+      );
+    },
+    startHandwriting: (position) {
+      final editingState = state.editingState;
+      if (editingState == null) {
+        return state;
+      }
+      final id = _uuid.v4();
+      final layer = editingState.handwritingState.layer;
+      return state.copyWith(
+        editingState: editingState.copyWith(
+          handwritingState: editingState.handwritingState.copyWith(
+            currentId: id,
+            layer: layer.copyWith(
+              paths: layer.paths +
+                  [
+                    HandwritingDecorationPath(
+                      id: id,
+                      color: ColorPicker.colors[1],
+                      path: Path()..moveTo(position.dx, position.dy),
+                    ),
+                  ],
+            ),
+          ),
+        ),
+      );
+    },
+    updateHandwriting: (position) {
+      final editingState = state.editingState;
+      if (editingState == null) {
+        return state;
+      }
+      final id = editingState.handwritingState.currentId;
+      final layer = editingState.handwritingState.layer;
+      return state.copyWith(
+        editingState: editingState.copyWith(
+          handwritingState: editingState.handwritingState.copyWith(
+            layer: layer.copyWith(
+              paths: layer.paths
+                  .map(
+                    (e) => e.id == id
+                        ? e.copyWith(
+                            path: e.path..lineTo(position.dx, position.dy),
+                          )
+                        : e,
+                  )
+                  .toList(growable: false),
+            ),
+          ),
+        ),
+      );
+    },
+    endHandwriting: () {
+      final editingState = state.editingState;
+      if (editingState == null) {
+        return state;
+      }
+      return state.copyWith(
+        editingState: editingState.copyWith(
+          handwritingState:
+              editingState.handwritingState.copyWith(currentId: ''),
         ),
       );
     },

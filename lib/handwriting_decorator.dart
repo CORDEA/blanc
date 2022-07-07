@@ -1,27 +1,68 @@
-import 'dart:ui';
-
-import 'package:decoration_demo/decorator.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'handwriting_decorator.freezed.dart';
 
 @freezed
+class HandwritingDecorationLayer with _$HandwritingDecorationLayer {
+  const factory HandwritingDecorationLayer({
+    required List<HandwritingDecorationPath> paths,
+  }) = _HandwritingDecorationLayer;
+}
+
+@freezed
 class HandwritingDecorationPath with _$HandwritingDecorationPath {
   const factory HandwritingDecorationPath({
     required String id,
     required Color color,
-    required List<Offset> path,
+    required Path path,
   }) = _HandwritingDecorationPath;
 }
 
-class HandwritingPainter extends CustomPainter {
-  HandwritingPainter(DecorationHandwritingNode node)
-      : _offset = node.position - node.rawRect.topLeft,
-        _paths = node.paths;
+class HandwritingDecorator extends StatelessWidget {
+  const HandwritingDecorator({
+    Key? key,
+    required this.layer,
+    required this.onDragStart,
+    required this.onDragUpdate,
+    required this.onDragEnd,
+  }) : super(key: key);
 
-  final Offset _offset;
-  final List<HandwritingDecorationPath> _paths;
+  final HandwritingDecorationLayer layer;
+  final ValueChanged<Offset> onDragStart;
+  final ValueChanged<Offset> onDragUpdate;
+  final VoidCallback onDragEnd;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onVerticalDragStart: _onDragStart,
+      onHorizontalDragStart: _onDragStart,
+      onVerticalDragUpdate: _onDragUpdate,
+      onHorizontalDragUpdate: _onDragUpdate,
+      onVerticalDragEnd: _onDragEnd,
+      onHorizontalDragEnd: _onDragEnd,
+      child: CustomPaint(painter: HandwritingPainter(layer)),
+    );
+  }
+
+  void _onDragStart(DragStartDetails details) {
+    onDragStart(details.localPosition);
+  }
+
+  void _onDragUpdate(DragUpdateDetails details) {
+    onDragUpdate(details.localPosition);
+  }
+
+  void _onDragEnd(DragEndDetails details) {
+    onDragEnd();
+  }
+}
+
+class HandwritingPainter extends CustomPainter {
+  HandwritingPainter(this.layer);
+
+  final HandwritingDecorationLayer layer;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -29,10 +70,9 @@ class HandwritingPainter extends CustomPainter {
       return;
     }
 
-    for (final path in _paths) {
-      canvas.drawPoints(
-        PointMode.lines,
-        path.path.map((e) => e - _offset).toList(),
+    for (final path in layer.paths) {
+      canvas.drawPath(
+        path.path,
         Paint()
           ..color = path.color
           ..strokeWidth = 1

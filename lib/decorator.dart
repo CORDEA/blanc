@@ -137,7 +137,7 @@ class _Painter extends CustomPainter {
         text: (node) => _drawText(canvas, node),
         box: (node) => _drawBox(canvas, node),
         icon: (node) => _drawIcon(canvas, node),
-        handwriting: (node) => _drawHandwriting(canvas, size, node),
+        handwriting: (node) => _drawHandwriting(canvas, node),
       );
     }
   }
@@ -183,13 +183,9 @@ class _Painter extends CustomPainter {
     painter.paint(canvas, node.position);
   }
 
-  void _drawHandwriting(
-    Canvas canvas,
-    Size size,
-    DecorationHandwritingNode node,
-  ) {
-    final painter = HandwritingPainter(node);
-    painter.paint(canvas, size);
+  void _drawHandwriting(Canvas canvas, DecorationHandwritingNode node) {
+    final painter = HandwritingPainter(node.layer);
+    painter.paint(canvas, node.size);
   }
 
   @override
@@ -257,11 +253,11 @@ class DecorationNode with _$DecorationNode {
     required Offset position,
   }) = DecorationIconNode;
 
-  @With<_HandwritingNodeBase>()
   const factory DecorationNode.handwriting({
     required String id,
     required Offset position,
-    required List<HandwritingDecorationPath> paths,
+    required Size size,
+    required HandwritingDecorationLayer layer,
   }) = DecorationHandwritingNode;
 
   static const _iconSize = 24.0;
@@ -299,24 +295,12 @@ mixin _TextNodeBase {
   Size get size => (painter..layout()).size;
 }
 
-mixin _HandwritingNodeBase {
-  List<HandwritingDecorationPath> get paths;
-
-  Rect get rawRect {
-    final dx = paths.expand((e) => e.path.map((e) => e.dx));
-    final dy = paths.expand((e) => e.path.map((e) => e.dy));
-    return Rect.fromLTRB(dx.min, dy.min, dx.max, dy.max);
-  }
-
-  Size get size => rawRect.size;
-}
-
 extension DecorationNodeExt on DecorationNode {
   Rect get rect {
     final size = map(
       text: (e) => e.size,
       box: (e) => e.size,
-      icon: (e) => const Size.square(DecorationNode._iconSize),
+      icon: (_) => const Size.square(DecorationNode._iconSize),
       handwriting: (e) => e.size,
     );
     return Rect.fromLTWH(

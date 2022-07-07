@@ -745,8 +745,8 @@ mixin _$DecorationNode {
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
-    required TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
         handwriting,
   }) =>
       throw _privateConstructorUsedError;
@@ -760,8 +760,8 @@ mixin _$DecorationNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
   }) =>
       throw _privateConstructorUsedError;
@@ -775,8 +775,8 @@ mixin _$DecorationNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
     required TResult orElse(),
   }) =>
@@ -1002,8 +1002,8 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
-    required TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
         handwriting,
   }) {
     return text(
@@ -1021,8 +1021,8 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
   }) {
     return text?.call(
@@ -1040,8 +1040,8 @@ class _$DecorationTextNode extends DecorationTextNode with _TextNodeBase {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
     required TResult orElse(),
   }) {
@@ -1243,8 +1243,8 @@ class _$DecorationBoxNode extends DecorationBoxNode {
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
-    required TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
         handwriting,
   }) {
     return box(id, color, shape, position, size);
@@ -1261,8 +1261,8 @@ class _$DecorationBoxNode extends DecorationBoxNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
   }) {
     return box?.call(id, color, shape, position, size);
@@ -1279,8 +1279,8 @@ class _$DecorationBoxNode extends DecorationBoxNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
     required TResult orElse(),
   }) {
@@ -1466,8 +1466,8 @@ class _$DecorationIconNode extends DecorationIconNode {
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
-    required TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
         handwriting,
   }) {
     return icon(id, this.icon, color, position);
@@ -1484,8 +1484,8 @@ class _$DecorationIconNode extends DecorationIconNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
   }) {
     return icon?.call(id, this.icon, color, position);
@@ -1502,8 +1502,8 @@ class _$DecorationIconNode extends DecorationIconNode {
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
     required TResult orElse(),
   }) {
@@ -1580,7 +1580,12 @@ abstract class _$$DecorationHandwritingNodeCopyWith<$Res>
       __$$DecorationHandwritingNodeCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id, Offset position, List<HandwritingDecorationPath> paths});
+      {String id,
+      Offset position,
+      Size size,
+      HandwritingDecorationLayer layer});
+
+  $HandwritingDecorationLayerCopyWith<$Res> get layer;
 }
 
 /// @nodoc
@@ -1599,7 +1604,8 @@ class __$$DecorationHandwritingNodeCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? position = freezed,
-    Object? paths = freezed,
+    Object? size = freezed,
+    Object? layer = freezed,
   }) {
     return _then(_$DecorationHandwritingNode(
       id: id == freezed
@@ -1610,39 +1616,47 @@ class __$$DecorationHandwritingNodeCopyWithImpl<$Res>
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
               as Offset,
-      paths: paths == freezed
-          ? _value._paths
-          : paths // ignore: cast_nullable_to_non_nullable
-              as List<HandwritingDecorationPath>,
+      size: size == freezed
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as Size,
+      layer: layer == freezed
+          ? _value.layer
+          : layer // ignore: cast_nullable_to_non_nullable
+              as HandwritingDecorationLayer,
     ));
+  }
+
+  @override
+  $HandwritingDecorationLayerCopyWith<$Res> get layer {
+    return $HandwritingDecorationLayerCopyWith<$Res>(_value.layer, (value) {
+      return _then(_value.copyWith(layer: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$DecorationHandwritingNode extends DecorationHandwritingNode
-    with _HandwritingNodeBase {
+class _$DecorationHandwritingNode extends DecorationHandwritingNode {
   const _$DecorationHandwritingNode(
       {required this.id,
       required this.position,
-      required final List<HandwritingDecorationPath> paths})
-      : _paths = paths,
-        super._();
+      required this.size,
+      required this.layer})
+      : super._();
 
   @override
   final String id;
   @override
   final Offset position;
-  final List<HandwritingDecorationPath> _paths;
   @override
-  List<HandwritingDecorationPath> get paths {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_paths);
-  }
+  final Size size;
+  @override
+  final HandwritingDecorationLayer layer;
 
   @override
   String toString() {
-    return 'DecorationNode.handwriting(id: $id, position: $position, paths: $paths)';
+    return 'DecorationNode.handwriting(id: $id, position: $position, size: $size, layer: $layer)';
   }
 
   @override
@@ -1652,7 +1666,8 @@ class _$DecorationHandwritingNode extends DecorationHandwritingNode
             other is _$DecorationHandwritingNode &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.position, position) &&
-            const DeepCollectionEquality().equals(other._paths, _paths));
+            const DeepCollectionEquality().equals(other.size, size) &&
+            const DeepCollectionEquality().equals(other.layer, layer));
   }
 
   @override
@@ -1660,7 +1675,8 @@ class _$DecorationHandwritingNode extends DecorationHandwritingNode
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(position),
-      const DeepCollectionEquality().hash(_paths));
+      const DeepCollectionEquality().hash(size),
+      const DeepCollectionEquality().hash(layer));
 
   @JsonKey(ignore: true)
   @override
@@ -1686,11 +1702,11 @@ class _$DecorationHandwritingNode extends DecorationHandwritingNode
     required TResult Function(
             String id, IconData icon, Color color, Offset position)
         icon,
-    required TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)
+    required TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)
         handwriting,
   }) {
-    return handwriting(id, position, paths);
+    return handwriting(id, position, size, layer);
   }
 
   @override
@@ -1704,11 +1720,11 @@ class _$DecorationHandwritingNode extends DecorationHandwritingNode
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
   }) {
-    return handwriting?.call(id, position, paths);
+    return handwriting?.call(id, position, size, layer);
   }
 
   @override
@@ -1722,13 +1738,13 @@ class _$DecorationHandwritingNode extends DecorationHandwritingNode
         box,
     TResult Function(String id, IconData icon, Color color, Offset position)?
         icon,
-    TResult Function(
-            String id, Offset position, List<HandwritingDecorationPath> paths)?
+    TResult Function(String id, Offset position, Size size,
+            HandwritingDecorationLayer layer)?
         handwriting,
     required TResult orElse(),
   }) {
     if (handwriting != null) {
-      return handwriting(id, position, paths);
+      return handwriting(id, position, size, layer);
     }
     return orElse();
   }
@@ -1771,12 +1787,12 @@ class _$DecorationHandwritingNode extends DecorationHandwritingNode
   }
 }
 
-abstract class DecorationHandwritingNode extends DecorationNode
-    implements _HandwritingNodeBase {
+abstract class DecorationHandwritingNode extends DecorationNode {
   const factory DecorationHandwritingNode(
           {required final String id,
           required final Offset position,
-          required final List<HandwritingDecorationPath> paths}) =
+          required final Size size,
+          required final HandwritingDecorationLayer layer}) =
       _$DecorationHandwritingNode;
   const DecorationHandwritingNode._() : super._();
 
@@ -1784,8 +1800,8 @@ abstract class DecorationHandwritingNode extends DecorationNode
   String get id => throw _privateConstructorUsedError;
   @override
   Offset get position => throw _privateConstructorUsedError;
-  List<HandwritingDecorationPath> get paths =>
-      throw _privateConstructorUsedError;
+  Size get size => throw _privateConstructorUsedError;
+  HandwritingDecorationLayer get layer => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$DecorationHandwritingNodeCopyWith<_$DecorationHandwritingNode>

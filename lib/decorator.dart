@@ -71,7 +71,10 @@ class _DecoratorState extends State<Decorator> {
     );
     return RawGestureDetector(
       gestures: gestures,
-      child: CustomPaint(painter: _Painter(widget.layer)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(widget.layer.cornerRadius),
+        child: CustomPaint(painter: _Painter(widget.layer)),
+      ),
     );
   }
 
@@ -125,7 +128,7 @@ class _Painter extends CustomPainter {
         ..color = layer.backgroundColor,
     );
     canvas.drawRRect(
-      rect,
+      rect.deflate(layer.strokeWidth / 2),
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = layer.strokeWidth
@@ -184,7 +187,7 @@ class _Painter extends CustomPainter {
   }
 
   void _drawHandwriting(Canvas canvas, DecorationHandwritingNode node) {
-    final painter = HandwritingPainter(node.layer);
+    final painter = HandwritingPainter(node.layer, node.position);
     painter.paint(canvas, node.size);
   }
 
@@ -253,10 +256,10 @@ class DecorationNode with _$DecorationNode {
     required Offset position,
   }) = DecorationIconNode;
 
+  @With<_HandwritingNodeBase>()
   const factory DecorationNode.handwriting({
     required String id,
     required Offset position,
-    required Size size,
     required HandwritingDecorationLayer layer,
   }) = DecorationHandwritingNode;
 
@@ -293,6 +296,12 @@ mixin _TextNodeBase {
   TextPainter? _painter;
 
   Size get size => (painter..layout()).size;
+}
+
+mixin _HandwritingNodeBase {
+  HandwritingDecorationLayer get layer;
+
+  Size get size => layer.rect.size;
 }
 
 extension DecorationNodeExt on DecorationNode {

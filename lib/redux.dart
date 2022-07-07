@@ -66,7 +66,9 @@ class AppEditingState with _$AppEditingState {
         return iconState._asNode(id: id, position: position ?? this.position);
       case DecorationNodeType.handwriting:
         return handwritingState._asNode(
-            id: id, position: position ?? this.position);
+          id: id,
+          position: position ?? this.position,
+        );
     }
   }
 }
@@ -178,8 +180,7 @@ class AppEditingHandwritingState with _$AppEditingHandwritingState {
       DecorationNode.handwriting(
         id: id,
         position: position,
-        size: const Size(100, 50),
-        layer: layer,
+        layer: layer.shrink(),
       );
 }
 
@@ -398,7 +399,7 @@ AppState reducer(AppState state, AppAction action) {
                     HandwritingDecorationPath(
                       id: id,
                       color: ColorPicker.colors[1],
-                      path: Path()..moveTo(position.dx, position.dy),
+                      path: [position],
                     ),
                   ],
             ),
@@ -421,7 +422,7 @@ AppState reducer(AppState state, AppAction action) {
                   .map(
                     (e) => e.id == id
                         ? e.copyWith(
-                            path: e.path..lineTo(position.dx, position.dy),
+                            path: e.path + [position],
                           )
                         : e,
                   )
@@ -432,16 +433,7 @@ AppState reducer(AppState state, AppAction action) {
       );
     },
     endHandwriting: () {
-      final editingState = state.editingState;
-      if (editingState == null) {
-        return state;
-      }
-      return state.copyWith(
-        editingState: editingState.copyWith(
-          handwritingState:
-              editingState.handwritingState.copyWith(currentId: ''),
-        ),
-      );
+      return state;
     },
     applyNode: () {
       final editingState = state.editingState;
